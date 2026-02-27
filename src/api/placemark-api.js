@@ -1,7 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 
-export const trackApi = {
+export const placemarkApi = {
     find: {
         auth: false,
         handler: async function (request, h) {

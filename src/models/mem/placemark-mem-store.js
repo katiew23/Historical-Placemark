@@ -2,7 +2,7 @@ import { v4 } from "uuid";
 
 let tracks = [];
 
-export const trackMemStore = {
+export const placemarkMemStore = {
   async getAllTracks() {
     return tracks;
   },

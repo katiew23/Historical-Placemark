@@ -1,6 +1,6 @@
 import Mongoose from "mongoose";
 import { Playlist } from "./playlist.js";
-import { trackMongoStore } from "./track-mongo-store.js";
+import { placemarkMongoStore} from "./placemark-mongo-store.js";
 
 export const playlistMongoStore = {
   async getAllPlaylists() {

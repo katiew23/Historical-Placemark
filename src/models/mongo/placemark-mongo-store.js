@@ -1,7 +1,7 @@
 import Mongoose from "mongoose";
-import { Track } from "./track.js";
+import { Track } from "./placemark.js";
 
-export const trackMongoStore = {
+export const placemarkMongoStore = {
   async getAllTracks() {
     const tracks = await Track.find().lean();
     return tracks;

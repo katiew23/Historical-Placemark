@@ -5,27 +5,34 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "dd7eafa5-52b4-41e2-9d25-c8d581cc02da"
+      "_id": "21039d38-8856-43e7-8fe8-e67c257bd981"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "f5fc98b8-b99d-49b5-a6e8-f75f6882d8a6"
+      "_id": "3266af07-7964-45ba-9c5f-ccca0526456d"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "c2c6e442-9649-4a35-98f1-96e72b14bf9a"
+      "_id": "8a41f179-a9d6-462b-8bd2-d4c44a6e0008"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate0861",
+      "_id": "4e01c9e0-b94d-4fb1-91df-516d195873ec"
     }
   ],
   "playlists": [
     {
       "title": "Mozart Favourites",
-      "_id": "7caf4c9d-9dd1-419a-8a93-63db4d2341f3"
+      "_id": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
     }
   ],
   "tracks": [
@@ -33,22 +40,22 @@
       "title": "Piano Sonata No. 3",
       "artist": "Beethoven",
       "duration": 5,
-      "_id": "e74f5c65-195a-4853-9bc4-d6bd614d67e0",
-      "playlistid": "7caf4c9d-9dd1-419a-8a93-63db4d2341f3"
+      "_id": "2824a0b7-c377-4bb7-b144-a1d333b7fdee",
+      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
     },
     {
       "title": "Piano Sonata No. 7",
       "artist": "Beethoven",
       "duration": 6,
-      "_id": "58d5beb8-a3c1-45ed-9f83-3d4ba0e037ab",
-      "playlistid": "7caf4c9d-9dd1-419a-8a93-63db4d2341f3"
+      "_id": "7334bdc1-459c-4214-b7b0-6b4f9262c376",
+      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
     },
     {
       "title": "Piano Sonata No. 10",
       "artist": "Beethoven",
       "duration": 4,
-      "_id": "e0ceef6c-ca34-462f-9627-c9caa0638802",
-      "playlistid": "7caf4c9d-9dd1-419a-8a93-63db4d2341f3"
+      "_id": "ccb00055-7af8-4622-be95-528cfec1014c",
+      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
     }
   ]
 }

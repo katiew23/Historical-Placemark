@@ -1,7 +1,7 @@
 import { v4 } from "uuid";
 import { db } from "./store-utils.js";
 
-export const trackJsonStore = {
+export const placemarkJsonStore = {
   async getAllTracks() {
     await db.read();
     return db.data.tracks;

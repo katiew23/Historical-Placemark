@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { trackMemStore } from "./track-mem-store.js";
+import { placemarkMemStore } from "./placemark-mem-store.js";
 
 let playlists = [];
 
@@ -18,7 +18,7 @@ export const playlistMemStore = {
     if (!id) return null;
     const list = playlists.find((playlist) => playlist._id === id);
     if (!list) return null;
-    list.tracks = await trackMemStore.getTracksByPlaylistId(list._id);
+    list.placemarks = await placemarkMemStore.getTracksByPlaylistId(list._id);
     return list;
   },
   

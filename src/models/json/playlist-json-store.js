@@ -1,6 +1,6 @@
 import { v4 } from "uuid";
 import { db } from "./store-utils.js";
-import { trackJsonStore } from "./track-json-store.js";
+import { placemarkJsonStore } from "./placemark-json-store.js";
 
 export const playlistJsonStore = {
   async getAllPlaylists() {
@@ -20,7 +20,7 @@ export const playlistJsonStore = {
     await db.read();
     let list = db.data.playlists.find((playlist) => playlist._id === id);
     if (list) {
-      list.tracks = await trackJsonStore.getTracksByPlaylistId(list._id);
+      list.placemarks = await placemarkJsonStore.getTracksByPlaylistId(list._id);
     } else {
       list = null;
     }
