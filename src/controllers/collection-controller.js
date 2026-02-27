@@ -1,15 +1,15 @@
 import { db } from "../models/db.js";
 import { TrackSpec } from "../models/joi-schemas.js";
 
-export const playlistController = {
+export const collectionController = {
   index: {
     handler: async function (request, h) {
       const playlist = await db.playlistStore.getPlaylistById(request.params.id);
       const viewData = {
-        title: "Playlist",
+        title: "Collection",
         playlist: playlist,
       };
-      return h.view("playlist-view", viewData);
+      return h.view("collection-view", viewData);
     },
   },
   

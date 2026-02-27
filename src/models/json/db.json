@@ -5,39 +5,53 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "21039d38-8856-43e7-8fe8-e67c257bd981"
+      "_id": "daa6b389-3afa-4e50-9e63-cb52b1cb4953"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "3266af07-7964-45ba-9c5f-ccca0526456d"
+      "_id": "4d8c0078-61d9-41cc-82b3-816d3ef0f132"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "8a41f179-a9d6-462b-8bd2-d4c44a6e0008"
+      "_id": "bcbf057b-9712-4f77-a88b-5d2b24bbb524"
     },
     {
       "firstName": "kate",
       "lastName": "kate",
       "email": "katiew23@gmail.com",
-      "password": "kate0861",
-      "_id": "4e01c9e0-b94d-4fb1-91df-516d195873ec"
+      "password": "kate",
+      "_id": "6ea7da77-7a0d-4aae-be0b-3c8284fd7f50"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "81583ccf-3c81-42e7-9937-b45029f21d4c"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "09b2dcb6-4b76-4728-a62f-5e067b9880d5"
     }
   ],
   "playlists": [
     {
       "title": "Mozart Favourites",
-      "_id": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
+      "_id": "f65506e9-6a07-47d5-bc75-6468c9b0406a"
     },
     {
-      "userid": "4e01c9e0-b94d-4fb1-91df-516d195873ec",
-      "title": "kdajdlkfjakdfjkdajfkas",
-      "_id": "75f22446-b889-4f9f-9116-cf4adc580011"
+      "userid": "6ea7da77-7a0d-4aae-be0b-3c8284fd7f50",
+      "title": "dfajdlkfjals",
+      "_id": "44ef890f-8e87-492c-be83-836d0f96d099"
     }
   ],
   "tracks": [
@@ -45,36 +59,22 @@
       "title": "Piano Sonata No. 3",
       "artist": "Beethoven",
       "duration": 5,
-      "_id": "2824a0b7-c377-4bb7-b144-a1d333b7fdee",
-      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
+      "_id": "61425096-fe06-480f-b439-6de38256cee6",
+      "playlistid": "f65506e9-6a07-47d5-bc75-6468c9b0406a"
     },
     {
       "title": "Piano Sonata No. 7",
       "artist": "Beethoven",
       "duration": 6,
-      "_id": "7334bdc1-459c-4214-b7b0-6b4f9262c376",
-      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
+      "_id": "8c6813bc-4a65-4c50-ad68-03421fc59288",
+      "playlistid": "f65506e9-6a07-47d5-bc75-6468c9b0406a"
     },
     {
       "title": "Piano Sonata No. 10",
       "artist": "Beethoven",
       "duration": 4,
-      "_id": "ccb00055-7af8-4622-be95-528cfec1014c",
-      "playlistid": "6ee58d33-66cc-4df7-9de3-14b758b588b2"
-    },
-    {
-      "title": "dfadsf",
-      "artist": "adgfsdf",
-      "duration": 9,
-      "_id": "50747634-d400-42d8-b957-5935b43d1792",
-      "playlistid": "75f22446-b889-4f9f-9116-cf4adc580011"
-    },
-    {
-      "title": "dagsdfadsfa",
-      "artist": "dfadfadsfs",
-      "duration": 2,
-      "_id": "10b04b81-c1f9-45c3-93d1-a1c4c1b80e3c",
-      "playlistid": "75f22446-b889-4f9f-9116-cf4adc580011"
+      "_id": "02293032-d08b-436e-93b3-ac99764168df",
+      "playlistid": "f65506e9-6a07-47d5-bc75-6468c9b0406a"
     }
   ]
 }

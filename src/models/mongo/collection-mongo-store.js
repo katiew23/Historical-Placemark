@@ -1,5 +1,5 @@
 import Mongoose from "mongoose";
-import { Playlist } from "./playlist.js";
+import { Playlist } from "./collection.js";
 import { placemarkMongoStore} from "./placemark-mongo-store.js";
 
 export const playlistMongoStore = {

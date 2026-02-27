@@ -1,7 +1,7 @@
 import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
-import { playlistController } from "./controllers/playlist-controller.js";
+import { collectionController } from "./controllers/collection-controller.js";
 
 export const webRoutes = [
   { method: "GET", path: "/", config: accountsController.index },
@@ -17,8 +17,8 @@ export const webRoutes = [
   { method: "POST", path: "/dashboard/addplaylist", config: dashboardController.addPlaylist },
   { method: "GET", path: "/dashboard/deleteplaylist/{id}", config: dashboardController.deletePlaylist },
 
-  { method: "GET", path: "/playlist/{id}", config: playlistController.index },
-  { method: "POST", path: "/playlist/{id}/addtrack", config: playlistController.addTrack },
-  { method: "GET", path: "/playlist/{id}/deletetrack/{trackid}", config: playlistController.deleteTrack },
+  { method: "GET", path: "/playlist/{id}", config: collectionController.index },
+  { method: "POST", path: "/playlist/{id}/addtrack", config: collectionController.addTrack },
+  { method: "GET", path: "/playlist/{id}/deletetrack/{trackid}", config: collectionController.deleteTrack },
 
 ];

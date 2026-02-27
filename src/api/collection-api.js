@@ -1,7 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
 
-export const playlistApi = {
+export const collectionApi = {
 
   find: {
     auth: false,
