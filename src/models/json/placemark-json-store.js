@@ -2,52 +2,56 @@ import { v4 } from "uuid";
 import { db } from "./store-utils.js";
 
 export const placemarkJsonStore = {
-  async getAllTracks() {
+  async getAllPlacemarks() {
     await db.read();
-    return db.data.tracks;
+    return db.data.placemarks;
   },
   
-  async addTrack(playlistId, track) {
+  async addPlacemark(collectionId, placemark) {
     await db.read();
-    track._id = v4();
-    track.playlistid = playlistId;
-    db.data.tracks.push(track);
+    placemark._id = v4();
+    placemark.collectionid = collectionId;
+    db.data.placemarks.push(placemark);
     await db.write();
-    return track;
+    return placemark;
   },
   
-  async getTracksByPlaylistId(id) {
+  async getPlacemarksByCollectionId(id) {
     await db.read();
-    let foundTracks = db.data.tracks.filter((track) => track.playlistid === id);
-    if (!foundTracks) {
-      foundTracks = null;
+    let foundPlacemarks = db.data.placemarks.filter((placemark) => placemark.collectionid === id);
+    if (!foundPlacemarks) {
+      foundPlacemarks = null;
     }
-    return foundTracks;
+    return foundPlacemarks;
   },
   
-  async getTrackById(id) {
+  async getPlacemarkById(id) {
     await db.read();
-    let foundTrack = db.data.tracks.find((track) => track._id === id);
-    if (!foundTrack) {
-      foundTrack = null;
+    let foundPlacemark = db.data.placemarks.find((placemark) => placemark._id === id);
+    if (!foundPlacemark) {
+      foundPlacemark = null;
     }
-    return foundTrack;
+    return foundPlacemark;
   },
-  async deleteTrack(id) {
+  async deletePlacemark(id) {
     await db.read();
-    const index = db.data.tracks.findIndex((track) => track._id === id);
-    if (index !== -1) db.data.tracks.splice(index, 1);
+    const index = db.data.placemarks.findIndex((placemark) => placemark._id === id);
+    if (index !== -1) db.data.placemarks.splice(index, 1);
     await db.write();
   },
-  async deleteAllTracks() {
-    db.data.tracks = [];
+  async deleteAllPlacemarks() {
+    db.data.placemarks = [];
     await db.write();
   },
   
-  async updateTrack(track, updatedTrack) {
-    track.title = updatedTrack.title;
-    track.artist = updatedTrack.artist;
-    track.duration = updatedTrack.duration;
-    await db.write();
-  },
+  async updatePlacemark(placemark, updatedPlacemark) {
+  placemark.name = updatedPlacemark.name;
+  placemark.description = updatedPlacemark.description;
+  placemark.latitude = updatedPlacemark.latitude;
+  placemark.longitude = updatedPlacemark.longitude;
+  placemark.category = updatedPlacemark.category;
+  placemark.yearEstablished = updatedPlacemark.yearEstablished;
+  placemark.county = updatedPlacemark.county;
+  await db.write();
+},
 };

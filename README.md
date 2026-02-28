@@ -1,38 +1,40 @@
-# Full Stack Playtime App
+# Placemark App
 
 This repository contains coursework for the Full Stack Development module. It demonstrates the progressive development of a server-rendered web application using Node.js, Hapi, and Handlebars following an MVC structure.
 
+The project has been updated to reflect the assignment requirements using **Collections** and **Placemarks**.
+
 ---
 
-## Exercise 1 – Core MVC and Authentication
+## Core MVC and Authentication
 
 ### Features
 - User authentication (sign up, log in, log out)
 - Dashboard view for logged-in users
 - About page with active navigation highlighting
-- Playlists management (add and list playlists)
+- Collections management (add and list collections)
 - Session-based authentication
 - Handlebars layouts and partials
-- Clear separation of routes, controllers, models, and views
+- Clear separation of routes, controllers, models/stores, and views
 
 ---
 
-## Exercise 2 – Playlists and Tracks
+## Collections and Placemarks
 
-Exercise 2 extends the project by adding track functionality and expanding the MVC flow through additional controllers, views, and in-memory stores.
+Exercise 2 extends the project by adding placemark functionality and expanding the MVC flow through additional controllers, views, and stores.
 
 ### Features
-- Add and list **tracks** within a playlist
-- New playlist page/view to display a single playlist and its tracks
-- Additional Handlebars partials for track UI (add + list)
-- New in-memory data store to manage tracks
-- Controllers updated to support playlist/track interactions
+- Add and list **placemarks** within a collection
+- Collection page/view to display a single collection and its placemarks
+- Handlebars partials for placemark UI (add + list)
+- In-memory / JSON data store to manage placemarks
+- Controllers updated to support collection/placemark interactions
 
 ### Architecture Notes
 The project continues to follow MVC:
 - **Routes** define endpoints and map requests
-- **Controllers** handle request logic and choose views
-- **Models/Stores** manage in-memory data structures
+- **Controllers** handle request logic and select views
+- **Models/Stores** manage data storage and retrieval
 - **Views** render server-side using Handlebars templates and partials
 
 ---
@@ -42,12 +44,35 @@ The project continues to follow MVC:
 - Hapi.js
 - Handlebars (Vision)
 - Bulma CSS
+- JSON data store
 - Git & GitHub
 
 ---
 
 ## How to Run
+
 1. Install dependencies:
    ```bash
    npm install
+   ```
 
+2. Start the application:
+   ```bash
+   npm run start
+   ```
+
+3. Open your browser and navigate to:
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## Project Status
+
+This version reflects the updated assignment structure using:
+- Collections instead of playlists
+- Placemarks instead of tracks
+- JSON-based data storage
+
+.

@@ -1,7 +1,7 @@
 {
-  "name": "playtime",
+  "name": "Historical-Placemark",
   "version": "0.3.0",
-  "description": "A Playlist application for the HDip in Computing, WIT",
+  "description": "A historical placemark application for the HDip in Computing",
   "main": "src/server.js",
   "type": "module",
   "scripts": {

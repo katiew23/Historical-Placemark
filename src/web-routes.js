@@ -14,11 +14,10 @@ export const webRoutes = [
   { method: "GET", path: "/about", config: aboutController.index },
 
   { method: "GET", path: "/dashboard", config: dashboardController.index },
-  { method: "POST", path: "/dashboard/addplaylist", config: dashboardController.addPlaylist },
-  { method: "GET", path: "/dashboard/deleteplaylist/{id}", config: dashboardController.deletePlaylist },
+  { method: "POST", path: "/dashboard/addcollection", config: dashboardController.addCollection },
+  { method: "GET", path: "/dashboard/deletecollection/{id}", config: dashboardController.deleteCollection },
 
-  { method: "GET", path: "/playlist/{id}", config: collectionController.index },
-  { method: "POST", path: "/playlist/{id}/addtrack", config: collectionController.addTrack },
-  { method: "GET", path: "/playlist/{id}/deletetrack/{trackid}", config: collectionController.deleteTrack },
-
+  { method: "GET", path: "/collection/{id}", config: collectionController.index },
+  { method: "POST", path: "/collection/{id}/addplacemark", config: collectionController.addPlacemark },
+  { method: "GET", path: "/collection/{id}/deleteplacemark/{placemarkid}", config: collectionController.deletePlacemark },
 ];

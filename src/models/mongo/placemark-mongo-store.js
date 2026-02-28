@@ -1,20 +1,20 @@
 import Mongoose from "mongoose";
-import { Track } from "./placemark.js";
+import { Placemark } from "./placemark.js";
 
 export const placemarkMongoStore = {
-  async getAllTracks() {
-    const tracks = await Track.find().lean();
-    return tracks;
+
+  async getAllPlacemarks() {
+    return await Placemark.find().lean();
   },
-  
-  async addTrack(playlistId, track) {
-   const newTrack = new Track({
-      ...track,
-     playlistid: playlistId
+
+  async addPlacemark(collectionId, placemark) {
+    const newPlacemark = new Placemark({
+      ...placemark,
+      collectionid: collectionId
     });
-    
-    const trackObj = await newTrack.save();
-    return this.getTrackById(trackObj._id);
+
+    const placemarkObj = await newPlacemark.save();
+    return this.getPlacemarkById(placemarkObj._id);
   },
   
  // async addTrack(playlistId, track) {
@@ -25,36 +25,32 @@ export const placemarkMongoStore = {
   //},
 
   
-  async getTracksByPlaylistId(id) {
-    const tracks = await Track.find({ playlistid: id }).lean();
-    return tracks;
-  },
-  
-  async getTrackById(id) {
+ async getPlacemarkById(id) {
     if (Mongoose.isValidObjectId(id)) {
-      const track = await Track.findOne({ _id: id }).lean();
-      return track;
+      return await Placemark.findOne({ _id: id }).lean();
     }
     return null;
   },
-  
-  async deleteTrack(id) {
-    try {
-      await Track.deleteOne({ _id: id });
-    } catch (error) {
-      console.log("bad id");
-    }
+
+  async deletePlacemarkById(id) {
+  await Placemark.deleteOne({ _id: id });
+},
+
+  async deleteAllPlacemarks() {
+    await Placemark.deleteMany({});
   },
-  
-  async deleteAllTracks() {
-    await Track.deleteMany({});
-  },
-  
-  async updateTrack(track, updatedTrack) {
-    const trackDoc = await Track.findOne({ _id: track._id });
-    trackDoc.title = updatedTrack.title;
-    trackDoc.artist = updatedTrack.artist;
-    trackDoc.duration = updatedTrack.duration;
-    await trackDoc.save();
+
+  async updatePlacemark(placemark, updatedPlacemark) {
+    const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
+
+    placemarkDoc.name = updatedPlacemark.name;
+    placemarkDoc.description = updatedPlacemark.description;
+    placemarkDoc.latitude = updatedPlacemark.latitude;
+    placemarkDoc.longitude = updatedPlacemark.longitude;
+    placemarkDoc.category = updatedPlacemark.category;
+    placemarkDoc.yearEstablished = updatedPlacemark.yearEstablished;
+    placemarkDoc.county = updatedPlacemark.county;
+
+    await placemarkDoc.save();
   },
 };

@@ -6,8 +6,8 @@ export const placemarkApi = {
         auth: false,
         handler: async function (request, h) {
             try {
-                const tracks = await db.trackStore.getAllTracks();
-                return tracks;
+                const placemarks = await db.placemarkStore.getAllPlacemarks();
+                return placemarks;
             } catch (err) {
                 return Boom.serverUnavailable("Database Error");
             }
@@ -18,13 +18,13 @@ export const placemarkApi = {
         auth: false,
         handler: async function (request, h) {
             try {
-                const track = await db.trackStore.getTrackById(request.params.id);
-                if (!track) {
-                    return Boom.notFound("No track with this id");
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (!placemark) {
+                    return Boom.notFound("No placemark with this id");
                 }
-                return track;
+                return placemark;
             } catch (err) {
-                return Boom.serverUnavailable("No track with this id");
+                return Boom.serverUnavailable("No placemark with this id");
             }
         },
     },
@@ -33,14 +33,14 @@ export const placemarkApi = {
         auth: false,
         handler: async function (request, h) {
             try {
-                const track = await db.trackStore.addTrack(
+                const placemark = await db.placemarkStore.addPlacemark(
                     request.params.id,
                     request.payload
                 );
-                if (track) {
-                    return h.response(track).code(201);
+                if (placemark) {
+                    return h.response(placemark).code(201);
                 }
-                return Boom.badImplementation("error creating Track");
+                return Boom.badImplementation("error creating placemark");
             } catch (err) {
                 return Boom.serverUnavailable("Database Error");
             }
@@ -51,12 +51,12 @@ export const placemarkApi = {
         auth: false,
         async handler(request, h) {
             try {
-                const track = await db.trackStore.getTrackById(request.params.id);
-                if (!track) {
-                    return Boom.notFound("No track with this id");
+                const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                if (!placemark) {
+                    return Boom.notFound("No placemark with this id");
                 }
                 
-                await db.trackStore.deleteTrack(request.params.id);
+                await db.placemarkStore.deletePlacemarkById(request.params.id);
                 return h.response().code(204);
                 
             } catch (err) {
@@ -70,7 +70,7 @@ export const placemarkApi = {
         auth: false,
         handler: async function (request, h) {
             try {
-                await db.trackStore.deleteAllTracks();
+                await db.placemarkStore.deleteAllPlacemarks();
                 return h.response().code(204);
             } catch (err) {
                 return Boom.serverUnavailable("Database Error");

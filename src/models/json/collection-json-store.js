@@ -2,25 +2,25 @@ import { v4 } from "uuid";
 import { db } from "./store-utils.js";
 import { placemarkJsonStore } from "./placemark-json-store.js";
 
-export const playlistJsonStore = {
-  async getAllPlaylists() {
+export const collectionJsonStore = {
+  async getAllCollections() {
     await db.read();
-    return db.data.playlists;
+    return db.data.collections;
   },
 
-  async addPlaylist(playlist) {
+  async addCollection(collection) {
     await db.read();
-    playlist._id = v4();
-    db.data.playlists.push(playlist);
+    collection._id = v4();
+    db.data.collections.push(collection);
     await db.write();
-    return playlist;
+    return collection;
   },
 
-   async getPlaylistById(id) {
+   async getCollectionById(id) {
     await db.read();
-    let list = db.data.playlists.find((playlist) => playlist._id === id);
+    let list = db.data.collections.find((collection) => collection._id === id);
     if (list) {
-      list.placemarks = await placemarkJsonStore.getTracksByPlaylistId(list._id);
+      list.placemarks = await placemarkJsonStore.getPlacemarksByCollectionId(list._id);
     } else {
       list = null;
     }
@@ -28,24 +28,24 @@ export const playlistJsonStore = {
   },
 
 
-  async getUserPlaylists(userid) {
+  async getUserCollections(userid) {
     await db.read();
-    return db.data.playlists.filter((playlist) => playlist.userid === userid);
+    return db.data.collections.filter((collection) => collection.userid === userid);
   },
 
-async deletePlaylistById(id) {
+async deleteCollectionById(id) {
   await db.read();
-  const index = db.data.playlists.findIndex(
-    (playlist) => playlist._id === id
+  const index = db.data.collections.findIndex(
+    (collection) => collection._id === id
   );
   if (index !== -1) {
-    db.data.playlists.splice(index, 1);
+    db.data.collections.splice(index, 1);
   }
   await db.write();
 },
 
-  async deleteAllPlaylists() {
-    db.data.playlists = [];
+  async deleteAllCollections() {
+    db.data.collections = [];
     await db.write();
   },
   

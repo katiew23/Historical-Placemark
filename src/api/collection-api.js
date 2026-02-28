@@ -7,8 +7,8 @@ export const collectionApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlists = await db.playlistStore.getAllPlaylists();
-        return playlists;
+        const collections = await db.collectionStore.getAllCollections();
+        return collections;
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
@@ -19,13 +19,13 @@ export const collectionApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-        if (!playlist) {
-          return Boom.notFound("No Playlist with this id");
+        const collection = await db.collectionStore.getCollectionById(request.params.id);
+        if (!collection) {
+          return Boom.notFound("No Collection with this id");
         }
-        return playlist;
+        return collection;
       } catch (err) {
-        return Boom.serverUnavailable("No Playlist with this id");
+        return Boom.serverUnavailable("Database Error");
       }
     },
   },
@@ -34,11 +34,11 @@ export const collectionApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlist = await db.playlistStore.addPlaylist(request.payload);
-        if (playlist) {
-          return h.response(playlist).code(201);
+        const collection = await db.collectionStore.addCollection(request.payload);
+        if (collection) {
+          return h.response(collection).code(201);
         }
-        return Boom.badImplementation("error creating playlist");
+        return Boom.badImplementation("error creating collection");
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
@@ -49,11 +49,11 @@ export const collectionApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        const playlist = await db.playlistStore.getPlaylistById(request.params.id);
-        if (!playlist) {
-          return Boom.notFound("No Playlist with this id");
+        const collection = await db.collectionStore.getCollectionById(request.params.id);
+        if (!collection) {
+          return Boom.notFound("No Collection with this id");
         }
-        await db.playlistStore.deletePlaylistById(request.params.id);
+        await db.collectionStore.deleteCollectionById(request.params.id);
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -65,7 +65,7 @@ export const collectionApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        await db.playlistStore.deleteAllPlaylists();
+        await db.collectionStore.deleteAllCollections();
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");

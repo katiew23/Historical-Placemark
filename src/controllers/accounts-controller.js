@@ -5,14 +5,14 @@ export const accountsController = {
   index: {
     auth: false,
     handler: function (request, h) {
-      return h.view("main", { title: "Welcome to Playlist" });
+      return h.view("main", { title: "Welcome to Historical Placemark" });
     },
   },
 
   showSignup: {
     auth: false,
     handler: function (request, h) {
-      return h.view("signup-view", { title: "Sign up for Playlist" });
+      return h.view("signup-view", { title: "Log your Historical Placemark "});
     },
   },
 
@@ -41,7 +41,7 @@ export const accountsController = {
   showLogin: {
     auth: false,
     handler: function (request, h) {
-      return h.view("login-view", { title: "Login to Playlist" });
+      return h.view("login-view", { title: "Login to Historical Placemark" });
     },
   },
 

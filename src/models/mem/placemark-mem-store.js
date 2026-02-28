@@ -1,47 +1,51 @@
 import { v4 } from "uuid";
 
-let tracks = [];
+let placemarks = [];
 
 export const placemarkMemStore = {
-  async getAllTracks() {
-    return tracks;
+  async getAllPlacemarks() {
+    return placemarks;
   },
 
-  async addTrack(playlistId, track) {
-    track._id = v4();
-    track.playlistid = playlistId;
-    tracks.push(track);
-    return track;
+  async addPlacemark(collectionId, placemark) {
+    placemark._id = v4();
+    placemark.collectionid = collectionId;
+    placemarks.push(placemark);
+    return placemark;
   },
 
-  async getTracksByPlaylistId(id) {
-    return tracks.filter((track) => track.playlistid === id);
+  async getPlacemarksByCollectionId(id) {
+    return placemarks.filter((placemark) => placemark.collectionid === id);
   },
 
-  async getTrackById(id) {
-    let foundTrack = tracks.find((track) => track._id === id);
-    if (!foundTrack) {
-      foundTrack = null;
+  async getPlacemarkById(id) {
+    let foundPlacemark = placemarks.find((placemark) => placemark._id === id);
+    if (!foundPlacemark) {
+      foundPlacemark = null;
     }
-    return foundTrack;
+    return foundPlacemark;
   },
 
-   async getPlaylistTracks(playlistId) {
-    let foundTracks = tracks.filter((track) => track.playlistid === playlistId);
-    if (!foundTracks) {
-      foundTracks = null;
+   async getPlacemarksByCollectionIdAndCategory(collectionId, category) {
+    let foundPlacemarks = placemarks.filter((placemark) => placemark.collectionid === collectionId && placemark.category === category);
+    if (!foundPlacemarks) {
+      foundPlacemarks = null;
     }
-    return foundTracks;
+    return foundPlacemarks;
   },
 
-   async deleteTrack(id) {
-    const index = tracks.findIndex((track) => track._id === id);
-    if (index !== -1) tracks.splice(index, 1);
+   async deletePlacemark(id) {
+    const index = placemarks.findIndex((placemark) => placemark._id === id);
+    if (index !== -1) placemarks.splice(index, 1);
   },
 
-  async updateTrack(track, updatedTrack) {
-    track.title = updatedTrack.title;
-    track.artist = updatedTrack.artist;
-    track.duration = updatedTrack.duration;
+  async updatePlacemark(placemark, updatedPlacemark) {
+    placemark.name = updatedPlacemark.name;
+    placemark.description = updatedPlacemark.description;
+    placemark.latitude = updatedPlacemark.latitude;
+    placemark.longitude = updatedPlacemark.longitude;
+    placemark.category = updatedPlacemark.category;
+    placemark.yearEstablished = updatedPlacemark.yearEstablished;
+    placemark.county = updatedPlacemark.county;
   },
 };

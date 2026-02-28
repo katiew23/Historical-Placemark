@@ -6,49 +6,26 @@
       "email": "homer@simpson.com",
       "password": "secret",
       "_id": "e0f52519-bbfc-4510-9fdd-196b5efc054e"
-    },
-    {
-      "firstName": "Marge",
-      "lastName": "Simpson",
-      "email": "marge@simpson.com",
-      "password": "secret",
-      "_id": "9f5e1326-a216-4092-b574-6a63b35b472e"
-    },
-    {
-      "firstName": "Bart",
-      "lastName": "Simpson",
-      "email": "bart@simpson.com",
-      "password": "secret",
-      "_id": "2af5f4a4-446a-4a8b-90f6-744bbf46ac64"
     }
   ],
-  "playlists": [
+  "collections": [
     {
-      "title": "Mozart Favourites",
-      "_id": "20fef923-24a3-4212-b364-e2233401603c"
+      "title": "Cork Historical Sites",
+      "_id": "20fef923-24a3-4212-b364-e2233401603c",
+      "userid": "e0f52519-bbfc-4510-9fdd-196b5efc054e"
     }
   ],
-  "tracks": [
+  "placemarks": [
     {
-      "title": "Piano Sonata No. 3",
-      "artist": "Beethoven",
-      "duration": 5,
+      "name": "Blarney Castle",
+      "description": "Medieval stronghold in County Cork",
+      "latitude": 51.929,
+      "longitude": -8.570,
+      "category": "Castle",
+      "yearEstablished": 1446,
+      "county": "Cork",
       "_id": "232543ca-217c-4434-93d7-78d2425671d3",
-      "playlistid": "20fef923-24a3-4212-b364-e2233401603c"
-    },
-    {
-      "title": "Piano Sonata No. 7",
-      "artist": "Beethoven",
-      "duration": 6,
-      "_id": "8cf757e6-4a37-4b62-8b01-877dc69290bc",
-      "playlistid": "20fef923-24a3-4212-b364-e2233401603c"
-    },
-    {
-      "title": "Piano Sonata No. 10",
-      "artist": "Beethoven",
-      "duration": 4,
-      "_id": "c92a608b-e653-47ad-bba3-37d7ab52c531",
-      "playlistid": "20fef923-24a3-4212-b364-e2233401603c"
+      "collectionid": "20fef923-24a3-4212-b364-e2233401603c"
     }
   ]
 }

@@ -1,44 +1,40 @@
 import Mongoose from "mongoose";
-import { Playlist } from "./collection.js";
-import { placemarkMongoStore} from "./placemark-mongo-store.js";
+import { Collection } from "./collection.js";
+import { placemarkMongoStore } from "./placemark-mongo-store.js";
 
-export const playlistMongoStore = {
-  async getAllPlaylists() {
-    const playlists = await Playlist.find().lean();
-    return playlists;
+export const collectionMongoStore = {
+
+  async getAllCollections() {
+    return await Collection.find().lean();
   },
 
-  async getPlaylistById(id) {
+  async getCollectionById(id) {
     if (Mongoose.isValidObjectId(id)) {
-      const playlist = await Playlist.findOne({ _id: id }).lean();
-      if (playlist) {
-        playlist.tracks = await trackMongoStore.getTracksByPlaylistId(playlist._id);
+      const collection = await Collection.findOne({ _id: id }).lean();
+      if (collection) {
+        collection.placemarks =
+          await placemarkMongoStore.getPlacemarksByCollectionId(collection._id);
       }
-      return playlist;
+      return collection;
     }
     return null;
   },
 
-  async addPlaylist(playlist) {
-    const newPlaylist = new Playlist(playlist);
-    const playlistObj = await newPlaylist.save();
-    return this.getPlaylistById(playlistObj._id);
+  async addCollection(collection) {
+    const newCollection = new Collection(collection);
+    const collectionObj = await newCollection.save();
+    return this.getCollectionById(collectionObj._id);
   },
 
-  async getUserPlaylists(id) {
-    const playlist = await Playlist.find({ userid: id }).lean();
-    return playlist;
+  async getUserCollections(id) {
+    return await Collection.find({ userid: id }).lean();
   },
 
-  async deletePlaylistById(id) {
-    try {
-      await Playlist.deleteOne({ _id: id });
-    } catch (error) {
-      console.log("bad id");
-    }
+  async deleteCollectionById(id) {
+    await Collection.deleteOne({ _id: id });
   },
 
-  async deleteAllPlaylists() {
-    await Playlist.deleteMany({});
+  async deleteAllCollections() {
+    await Collection.deleteMany({});
   }
 };

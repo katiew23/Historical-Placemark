@@ -28,46 +28,56 @@ export const testUsers = [
   }
 ];
 
-export const mozart = {
-  title: "Mozart Favourites"
+export const corkSites = {
+  title: "Cork Historical Sites"
 };
 
-export const concerto = {
-  "title": "Violin Concerto No. 3",
-  "artist": "Mozart",
-  "duration": 15
+export const blarneyCastle = {
+  name: "Blarney Castle",
+  description: "Medieval stronghold in County Cork",
+  latitude: 51.929,
+  longitude: -8.570,
+  category: "Castle",
+  yearEstablished: 1446,
+  county: "Cork"
 };
 
-export const beethoven = {
-  title: "Mozart Favourites"
+export const waterfordSites = {
+  title: "Waterford Historical Sites"
 };
 
-export const testPlaylists = [
-  {
-    title: "Beethoven Sonatas"
-  },
-  {
-    title: "Beethoven Concertos"
-  },
-  {
-    title: "Beethoven Symphonies"
-  }
+export const testCollections = [
+  { title: "Cork Castles" },
+  { title: "Dublin Monuments" },
+  { title: "Ancient Ruins Ireland" }
 ];
 
-export const testTracks = [
+export const testPlacemarks = [
   {
-    "title": "Piano Sonata No. 3",
-    "artist": "Beethoven",
-    "duration": 5
+    name: "Reginald's Tower",
+    description: "Viking tower in Waterford",
+    latitude: 52.259,
+    longitude: -7.102,
+    category: "Tower",
+    yearEstablished: 1003,
+    county: "Waterford"
   },
   {
-    "title": "Piano Sonata No. 7",
-    "artist": "Beethoven",
-    "duration": 6
+    name: "Rock of Cashel",
+    description: "Historic fortress in Tipperary",
+    latitude: 52.520,
+    longitude: -7.890,
+    category: "Fortress",
+    yearEstablished: 1101,
+    county: "Tipperary"
   },
   {
-    "title": "Piano Sonata No. 10",
-    "artist": "Beethoven",
-    "duration": 4
+    name: "Clonmacnoise",
+    description: "Early Christian monastic site",
+    latitude: 53.326,
+    longitude: -7.986,
+    category: "Monastic Site",
+    yearEstablished: 544,
+    county: "Offaly"
   }
 ];

@@ -1,39 +1,39 @@
 import { v4 } from "uuid";
 import { placemarkMemStore } from "./placemark-mem-store.js";
 
-let playlists = [];
+let collections = [];
 
-export const playlistMemStore = {
-  async getAllPlaylists() {
-    return playlists;
+export const collectionMemStore = {
+  async getAllCollections() {
+    return collections;
   },
   
-  async addPlaylist(playlist) {
-    playlist._id = v4();
-    playlists.push(playlist);
-    return playlist;
+  async addCollection(collection) {
+    collection._id = v4();
+    collections.push(collection);
+    return collection;
   },
   
-  async getPlaylistById(id) {
+  async getCollectionById(id) {
     if (!id) return null;
-    const list = playlists.find((playlist) => playlist._id === id);
+    const list = collections.find((collection) => collection._id === id);
     if (!list) return null;
-    list.placemarks = await placemarkMemStore.getTracksByPlaylistId(list._id);
+    list.placemarks = await placemarkMemStore.getPlacemarksByCollectionId(list._id);
     return list;
   },
   
-  async getUserPlaylists(userid) {
-    return playlists.filter((playlist) => playlist.userid === userid);
+  async getUserCollections(userid) {
+    return collections.filter((collection) => collection.userid === userid);
   },
   
-  async deletePlaylistById(id) {
-    const index = playlists.findIndex((playlist) => playlist._id === id);
+  async deleteCollectionById(id) {
+    const index = collections.findIndex((collection) => collection._id === id);
     if (index !== -1) {
-      playlists.splice(index, 1);
+      collections.splice(index, 1);
     }
   },
   
-  async deleteAllPlaylists() {
-    playlists = [];
+  async deleteAllCollections() {
+    collections = [];
   },
 };
