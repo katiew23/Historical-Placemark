@@ -43,6 +43,15 @@ export const placemarkJsonStore = {
     db.data.placemarks = [];
     await db.write();
   },
+
+  async deletePlacemark(id) {
+  const placemarks = await this.getAllPlacemarks();
+  const placemark = placemarks.find(p => p._id === id);
+  if (placemark) {
+    placemarks.splice(placemarks.indexOf(placemark), 1);
+    await db.write();
+  }
+},
   
   async updatePlacemark(placemark, updatedPlacemark) {
   placemark.name = updatedPlacemark.name;

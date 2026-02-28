@@ -41,6 +41,13 @@
       "email": "katiew23@gmail.com",
       "password": "kate",
       "_id": "2ed74142-df6a-4cc6-ade2-96b93b3b60f3"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "09ca7231-21dd-4654-8175-bf2ec5e210b1"
     }
   ],
   "collections": [
@@ -87,6 +94,17 @@
       "county": "Offaly",
       "_id": "9572f65f-8a33-4753-a097-8201d16c4357",
       "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+    },
+    {
+      "name": "Reginalds Tower",
+      "description": "Tower",
+      "latitude": 52.282379,
+      "longitude": -7.162638,
+      "category": "Castle",
+      "yearEstablished": 1500,
+      "county": "Waterford",
+      "_id": "e9d81a2e-2fc5-45c3-a1b5-d36a6dca336f",
+      "collectionid": "60546644-68f4-4c4d-aebb-e6d674b070cb"
     }
   ]
 }

@@ -12,6 +12,70 @@
     </div>
   </div>
 
+  <!-- Map -->
+  <div id="collectionMap"></div>
+
   {{> list-placemarks}}
-  {{> add-placemark}}
+  {{> add-placemark collectionId=collection._id}}
 </section>
+
+<style>
+  #collectionMap {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 2em;
+  }
+
+  @media (max-width: 768px) {
+    #collectionMap {
+      height: 250px;
+    }
+  }
+</style>
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+<script>
+  const placemarks = {{{placemarksJson}}};
+
+  const map = L.map('collectionMap').setView([53.1424, -7.6921], 7);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  const markers = [];
+
+  placemarks.forEach(place => {
+    if (place.latitude && place.longitude) {
+      const marker = L.marker([place.latitude, place.longitude])
+        .addTo(map)
+        .bindPopup(place.name);
+      markers.push(marker);
+    }
+  });
+
+  if (markers.length > 0) {
+    const group = L.featureGroup(markers);
+    map.fitBounds(group.getBounds().pad(0.2));
+  }
+</script>
+<h3 class="subtitle">Placemarks in this Collection</h3>
+
+<ul>
+  {{#each placemarks}}
+    <li style="margin-bottom: 10px;">
+      <strong>{{name}}</strong> –
+      {{description}} –
+      ({{latitude}}, {{longitude}})
+
+      <a href="/collection/{{../collection._id}}/deleteplacemark/{{_id}}"
+         class="button is-small is-danger"
+         style="margin-left: 10px;">
+         🗑
+      </a>
+    </li>
+  {{/each}}
+</ul>

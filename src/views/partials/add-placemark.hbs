@@ -1,27 +1,46 @@
-<form class="box" action="/collection/{{collection._id}}/addplacemark" method="POST">
+<form action="/collection/{{collectionId}}/addplacemark" method="POST">
   <label>Enter Placemark Details:</label>
+
   <div class="field is-horizontal">
     <div class="field-body">
+
       <div class="field">
-        <input class="input" type="text" placeholder="Enter Title" name="title">
+        <input class="input" type="text" placeholder="Enter Name" name="name">
       </div>
+
       <div class="field">
-        <input class="input" type="text" placeholder="Enter Point of Interest" name="pointOfInterest">
+        <input class="input" type="text" placeholder="Enter Description" name="description">
       </div>
+
       <div class="field">
         <input class="input" type="text" placeholder="Enter Latitude" name="latitude">
       </div>
+
       <div class="field">
         <input class="input" type="text" placeholder="Enter Longitude" name="longitude">
       </div>
+
+      <div class="field">
+        <input class="input" type="text" placeholder="Enter Category" name="category">
+      </div>
+
+      <div class="field">
+        <input class="input" type="number" placeholder="Enter Year Established" name="yearEstablished">
+      </div>
+
+      <div class="field">
+        <input class="input" type="text" placeholder="Enter County" name="county">
+      </div>
+
     </div>
   </div>
+
   <button class="button is-primary">Add Placemark</button>
 
   <p>
-  Find coordinates here:
-  <a href="https://www.latlong.net/" target="_blank">
-    https://www.latlong.net/
-  </a>
-</p>
+    Find coordinates here:
+    <a href="https://www.latlong.net/" target="_blank">
+      https://www.latlong.net/
+    </a>
+  </p>
 </form>

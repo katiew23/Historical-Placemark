@@ -29,17 +29,17 @@ async function init() {
   await server.register(Cookie);
   server.validator(Joi);
 
-  server.views({
-    engines: {
-      hbs: Handlebars,
-    },
-    relativeTo: __dirname,
-    path: "./views",
-    layoutPath: "./views/layouts",
-    partialsPath: "./views/partials",
-    layout: true,
-    isCached: false,
-  });
+ server.views({
+  engines: {
+    hbs: Handlebars,
+  },
+  relativeTo: __dirname,
+  path: "./views",
+  layoutPath: "./views/layouts",
+  partialsPath: "./views/partials",
+  layout: true,
+  isCached: false,
+});
 
   server.auth.strategy("session", "cookie", {
     cookie: {
