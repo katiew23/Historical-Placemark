@@ -51,7 +51,11 @@ export const placemarkApi = {
         auth: false,
         async handler(request, h) {
             try {
+                console.log("DELETE ID:", request.params.id);
+                
                 const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+                console.log("FOUND:", placemark);
+                
                 if (!placemark) {
                     return Boom.notFound("No placemark with this id");
                 }
@@ -60,11 +64,11 @@ export const placemarkApi = {
                 return h.response().code(204);
                 
             } catch (err) {
+                console.log("ERROR:", err);
                 return Boom.serverUnavailable("Database Error");
             }
         },
     },
-    
     
     deleteAll: {
         auth: false,

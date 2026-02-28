@@ -5,27 +5,88 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "e0f52519-bbfc-4510-9fdd-196b5efc054e"
+      "_id": "cb71034a-d148-4619-8b58-5fa7dccaa9ae"
+    },
+    {
+      "firstName": "Marge",
+      "lastName": "Simpson",
+      "email": "marge@simpson.com",
+      "password": "secret",
+      "_id": "7784d65f-edff-43b6-b3ce-44e2e12ec104"
+    },
+    {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret",
+      "_id": "627e77ee-7e9b-4fe2-b58d-3e089e2ac458"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "eeb2f55a-0bd2-450e-889b-b123aa84de1a"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "b3f837e2-1733-4861-ab4f-db2ff7832bf2"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "2ed74142-df6a-4cc6-ade2-96b93b3b60f3"
     }
   ],
   "collections": [
     {
-      "title": "Cork Historical Sites",
-      "_id": "20fef923-24a3-4212-b364-e2233401603c",
-      "userid": "e0f52519-bbfc-4510-9fdd-196b5efc054e"
+      "title": "Cork Castles",
+      "_id": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+    },
+    {
+      "userid": "eeb2f55a-0bd2-450e-889b-b123aa84de1a",
+      "title": "Waterford",
+      "_id": "60546644-68f4-4c4d-aebb-e6d674b070cb"
     }
   ],
   "placemarks": [
     {
-      "name": "Blarney Castle",
-      "description": "Medieval stronghold in County Cork",
-      "latitude": 51.929,
-      "longitude": -8.570,
-      "category": "Castle",
-      "yearEstablished": 1446,
-      "county": "Cork",
-      "_id": "232543ca-217c-4434-93d7-78d2425671d3",
-      "collectionid": "20fef923-24a3-4212-b364-e2233401603c"
+      "name": "Reginald's Tower",
+      "description": "Viking tower in Waterford",
+      "latitude": 52.259,
+      "longitude": -7.102,
+      "category": "Tower",
+      "yearEstablished": 1003,
+      "county": "Waterford",
+      "_id": "f25b33b2-688e-4ce0-b56f-5f28daee0c9f",
+      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+    },
+    {
+      "name": "Rock of Cashel",
+      "description": "Historic fortress in Tipperary",
+      "latitude": 52.52,
+      "longitude": -7.89,
+      "category": "Fortress",
+      "yearEstablished": 1101,
+      "county": "Tipperary",
+      "_id": "77d2f500-4e70-4d6f-9a9f-1b7e100a62c2",
+      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+    },
+    {
+      "name": "Clonmacnoise",
+      "description": "Early Christian monastic site",
+      "latitude": 53.326,
+      "longitude": -7.986,
+      "category": "Monastic Site",
+      "yearEstablished": 544,
+      "county": "Offaly",
+      "_id": "9572f65f-8a33-4753-a097-8201d16c4357",
+      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
     }
   ]
 }

@@ -22,7 +22,7 @@ export const PlacemarkSpec = {
   county: Joi.string().required(),
 };
 
-export const PlaylistSpec = {
+export const CollectionSpec = {
   title: Joi.string().required(),
 };
 

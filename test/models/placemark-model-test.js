@@ -8,12 +8,12 @@ suite("Placemark Model tests", () => {
 
   setup(async () => {
     db.init("json");
-    await db.collectionStore.deleteAllcollections();
-    await db.placemarkStore.deleteAllplacemarks();
-    corkCollection = await db.collectionStore.addcollection(testCollections[0]);
+    await db.collectionStore.deleteAllCollections();
+    await db.placemarkStore.deleteAllPlacemarks();
+    corkCollection = await db.collectionStore.addCollection(testCollections[0]);
     for (let i = 0; i < testPlacemarks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testPlacemarks[i] = await db.placemarkStore.addplacemark(
+      testPlacemarks[i] = await db.placemarkStore.addPlacemark(
         corkCollection._id,
         testPlacemarks[i]
       );
@@ -21,8 +21,8 @@ suite("Placemark Model tests", () => {
   });
 
   test("create single placemark", async () => {
-    const dublinCollection = await db.collectionStore.addcollection(testCollections[1]);
-    const placemark = await db.placemarkStore.addplacemark(
+    const dublinCollection = await db.collectionStore.addCollection(testCollections[1]);
+    const placemark = await db.placemarkStore.addPlacemark(
       dublinCollection._id,
       blarneyCastle
     );
@@ -31,47 +31,47 @@ suite("Placemark Model tests", () => {
   });
 
   test("create multiple placemarkApi", async () => {
-    const collection = await db.collectionStore.getcollectionById(corkCollection._id);
-    const placemarks = await db.placemarkStore.getplacemarksBycollectionId(collection._id);
+    const collection = await db.collectionStore.getCollectionById(corkCollection._id);
+    const placemarks = await db.placemarkStore.getPlacemarksByCollectionId(collection._id);
     assert.equal(testPlacemarks.length, placemarks.length);
   });
 
   test("delete all placemarkApi", async () => {
-    const placemarks = await db.placemarkStore.getAllplacemarks();
+    const placemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(testPlacemarks.length, placemarks.length);
-    await db.placemarkStore.deleteAllplacemarks();
-    const newplacemarks = await db.placemarkStore.getAllplacemarks();
+    await db.placemarkStore.deleteAllPlacemarks();
+    const newplacemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(0, newplacemarks.length);
   });
 
   test("get a placemark - success", async () => {
-    const dublinCollection = await db.collectionStore.addcollection(testCollections[1]);
-    const placemark = await db.placemarkStore.addplacemark(
+    const dublinCollection = await db.collectionStore.addCollection(testCollections[1]);
+    const placemark = await db.placemarkStore.addPlacemark(
       dublinCollection._id,
       blarneyCastle
     );
-    const newplacemark = await db.placemarkStore.getplacemarkById(placemark._id);
+    const newplacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
     assertSubset(blarneyCastle, newplacemark);
   });
 
   test("delete One placemark - success", async () => {
-    await db.placemarkStore.deleteplacemark(testPlacemarks[0]._id);
-    const placemarks = await db.placemarkStore.getAllplacemarks();
+    await db.placemarkStore.deletePlacemarkById(testPlacemarks[0]._id);
+    const placemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(placemarks.length, testPlacemarks.length - 1);
-    const deletedplacemark = await db.placemarkStore.getplacemarkById(
+    const deletedplacemark = await db.placemarkStore.getPlacemarkById(
       testPlacemarks[0]._id
     );
     assert.isNull(deletedplacemark);
   });
 
   test("get a placemark - bad params", async () => {
-    assert.isNull(await db.placemarkStore.getplacemarkById(""));
-    assert.isNull(await db.placemarkStore.getplacemarkById());
+    assert.isNull(await db.placemarkStore.getPlacemarkById(""));
+    assert.isNull(await db.placemarkStore.getPlacemarkById());
   });
 
   test("delete one placemark - fail", async () => {
-    await db.placemarkStore.deleteplacemark("bad-id");
-    const placemarks = await db.placemarkStore.getAllplacemarks();
+    await db.placemarkStore.deletePlacemarkById("bad-id");
+    const placemarks = await db.placemarkStore.getAllPlacemarks();
     assert.equal(placemarks.length, testPlacemarks.length);
   });
 });
