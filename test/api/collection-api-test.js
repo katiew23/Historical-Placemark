@@ -6,12 +6,18 @@ import { db } from "../../src/models/db.js";
 
 suite("Collection API tests", () => {
 
+  let createdCollections = [];
+
   setup(async () => {
     db.init("json");
     await placemarkService.deleteAllCollections();
+
+    createdCollections = [];
+
     for (let i = 0; i < testCollections.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
-      testCollections[i] = await placemarkService.createCollection(testCollections[i]);
+      const created = await placemarkService.createCollection(testCollections[i]);
+      createdCollections.push(created);
     }
   });
 
@@ -27,24 +33,42 @@ suite("Collection API tests", () => {
   });
 
   test("get one collection - success", async () => {
-    const returnedCollection = await placemarkService.getCollection(testCollections[0]._id);
-    assert.equal(returnedCollection.title, testCollections[0].title);
+    const returnedCollection = await placemarkService.getCollection(createdCollections[0]._id);
+    assert.equal(returnedCollection.name, createdCollections[0].name);
   });
 
   test("delete a collection", async () => {
-  const collection = testCollections[0];
-  await placemarkService.deleteCollection(collection._id);
-  const collections = await placemarkService.getAllCollections();
-  assert.equal(collections.length, testCollections.length - 1);
-});
+    const collection = createdCollections[0];
+    await placemarkService.deleteCollection(collection._id);
+    const collections = await placemarkService.getAllCollections();
+    assert.equal(collections.length, createdCollections.length - 1);
+  });
 
-test("remove non-existent collection", async () => {
-  try {
-    await placemarkService.deleteCollection("non-existent-id");
-    assert.fail("should not succeed");
-  } catch (err) {
-    assert.equal(err.response.status, 404);
-  }
-});
+  test("remove non-existent collection", async () => {
+    try {
+      await placemarkService.deleteCollection("non-existent-id");
+      assert.fail("should not succeed");
+    } catch (err) {
+      assert.equal(err.response.status, 404);
+    }
+  });
+
+  test("get non-existent collection", async () => {
+    try {
+      await placemarkService.getCollection("non-existent-id");
+      assert.fail("should not succeed");
+    } catch (err) {
+      assert.equal(err.response.status, 404);
+    }
+  });
+
+  test("invalid information for creating collection", async () => {
+    try {
+      await placemarkService.createCollection({ name: "" });
+      assert.fail("should not succeed");
+    } catch (err) {
+      assert.equal(err.response.status, 400);
+    }
+  });
 
 });

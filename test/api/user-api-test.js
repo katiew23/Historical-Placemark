@@ -5,12 +5,15 @@ import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
 
 suite("User API tests", () => {
+
+    let createdUsers = [];
     setup(async () => {
         db.init("json");
         await placemarkService.deleteAllUsers();
+        createdUsers = [];
         for (let i = 0; i < testUsers.length; i += 1) {
             // eslint-disable-next-line no-await-in-loop
-            testUsers[i] = await placemarkService.createUser(testUsers[i]);
+            createdUsers[i] = await placemarkService.createUser(testUsers[i]);
         }
     });
     teardown(async () => {
@@ -31,8 +34,8 @@ suite("User API tests", () => {
     });
     
     test("get a user - success", async () => {
-        const returnedUser = await placemarkService.getUser(testUsers[0]._id);
-        assert.deepEqual(testUsers[0], returnedUser);
+        const returnedUser = await placemarkService.getUser(createdUsers[0]._id);
+        assert.deepEqual(createdUsers[0], returnedUser);
     });
     
     test("get a user - bad id", async () => {

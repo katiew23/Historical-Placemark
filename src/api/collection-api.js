@@ -1,10 +1,12 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { CollectionSpec } from "../models/joi-schemas.js";
+
 
 export const collectionApi = {
 
   find: {
-    auth: false,
+    auth: false,    
     handler: async function (request, h) {
       try {
         const collections = await db.collectionStore.getAllCollections();
@@ -32,6 +34,12 @@ export const collectionApi = {
 
   create: {
     auth: false,
+    validate: {
+      payload: CollectionSpec,
+      options: {
+        abortEarly: false,
+      },
+    },
     handler: async function (request, h) {
       try {
         const collection = await db.collectionStore.addCollection(request.payload);

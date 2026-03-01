@@ -21,14 +21,14 @@ export const dashboardController = {
       payload: CollectionSpec,
       options: { abortEarly: false },
       failAction: function (request, h, error) {
-        return h.view("dashboard-view", { title: "Add Collection error", errors: error.details }).takeover().code(400);
+        return h.view("dashboard-view", { name: "Add Collection error", errors: error.details }).takeover().code(400);
       },
     },
     handler: async function (request, h) {
       const loggedInUser = request.auth.credentials;
       const newCollection = {
         userid: loggedInUser._id,
-        title: request.payload.title,
+        name: request.payload.name,
       };
       await db.collectionStore.addCollection(newCollection);
       return h.redirect("/dashboard");

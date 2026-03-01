@@ -29,7 +29,7 @@ export const testUsers = [
 ];
 
 export const corkSites = {
-  title: "Cork Historical Sites"
+  name: "Cork Historical Sites"
 };
 
 export const blarneyCastle = {
@@ -43,13 +43,13 @@ export const blarneyCastle = {
 };
 
 export const waterfordSites = {
-  title: "Waterford Historical Sites"
+  name: "Waterford Historical Sites"
 };
 
 export const testCollections = [
-  { title: "Cork Castles" },
-  { title: "Dublin Monuments" },
-  { title: "Ancient Ruins Ireland" }
+  { name: "Cork Castles" },
+  { name: "Dublin Monuments" },
+  { name: "Ancient Ruins Ireland" }
 ];
 
 export const testPlacemarks = [

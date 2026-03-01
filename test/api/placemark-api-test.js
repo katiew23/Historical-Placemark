@@ -73,4 +73,23 @@ suite("Placemark API tests", () => {
     }
   });
 
+    test("get non-existent placemark", async () => {
+    try {
+      await placemarkService.getPlacemark("non-existent-id");
+      assert.fail("should not succeed");
+    } catch (err) {
+      assert.equal(err.response.status, 404);
+    }
+  });
+
+  test("invalid information for creating placemark", async () => {
+    try {
+      await placemarkService.createPlacemark(collection._id, { name: "" });
+      assert.fail("should not succeed");
+    } catch (err) {
+      assert.equal(err.response.status, 400);
+    }
+  });
+
+
 });

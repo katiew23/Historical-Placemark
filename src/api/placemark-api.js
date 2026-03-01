@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { PlacemarkSpec } from "../models/joi-schemas.js";
+
 
 export const placemarkApi = {
     find: {
@@ -31,6 +33,12 @@ export const placemarkApi = {
     
     create: {
         auth: false,
+        validate: {
+            payload: PlacemarkSpec,
+            options: {
+                abortEarly: false,
+            },
+        },
         handler: async function (request, h) {
             try {
                 const placemark = await db.placemarkStore.addPlacemark(

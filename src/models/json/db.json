@@ -5,60 +5,39 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "cb71034a-d148-4619-8b58-5fa7dccaa9ae"
+      "_id": "8ee8ecde-864b-49d2-bdfd-22ea955a2618"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "7784d65f-edff-43b6-b3ce-44e2e12ec104"
+      "_id": "19f3e583-47ac-4cdc-8961-8d57a585a025"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "627e77ee-7e9b-4fe2-b58d-3e089e2ac458"
+      "_id": "0f65897d-032a-4599-ae58-e768929e5caa"
     },
     {
       "firstName": "kate",
       "lastName": "kate",
       "email": "katiew23@gmail.com",
       "password": "kate",
-      "_id": "eeb2f55a-0bd2-450e-889b-b123aa84de1a"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "_id": "b3f837e2-1733-4861-ab4f-db2ff7832bf2"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "_id": "2ed74142-df6a-4cc6-ade2-96b93b3b60f3"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "_id": "09ca7231-21dd-4654-8175-bf2ec5e210b1"
+      "_id": "e5eb301b-191b-49da-ba54-2097aea38025"
     }
   ],
   "collections": [
     {
-      "title": "Cork Castles",
-      "_id": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+      "name": "Cork Castles",
+      "_id": "48200a9c-6a2d-41e8-bee6-c6273d0985ad"
     },
     {
-      "userid": "eeb2f55a-0bd2-450e-889b-b123aa84de1a",
-      "title": "Waterford",
-      "_id": "60546644-68f4-4c4d-aebb-e6d674b070cb"
+      "userid": "e5eb301b-191b-49da-ba54-2097aea38025",
+      "name": "Tipperary",
+      "_id": "bfe72f7d-9183-429c-8d93-283ab1558d86"
     }
   ],
   "placemarks": [
@@ -70,8 +49,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "f25b33b2-688e-4ce0-b56f-5f28daee0c9f",
-      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+      "_id": "50369f8a-b5c2-474d-be20-451596683173",
+      "collectionid": "48200a9c-6a2d-41e8-bee6-c6273d0985ad"
     },
     {
       "name": "Rock of Cashel",
@@ -81,8 +60,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "77d2f500-4e70-4d6f-9a9f-1b7e100a62c2",
-      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+      "_id": "cd741ecc-fa20-4c12-930b-6145b2bad987",
+      "collectionid": "48200a9c-6a2d-41e8-bee6-c6273d0985ad"
     },
     {
       "name": "Clonmacnoise",
@@ -92,8 +71,8 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "9572f65f-8a33-4753-a097-8201d16c4357",
-      "collectionid": "c9e1d1f0-cf18-467f-b1e3-487fc584249e"
+      "_id": "95f16f3a-c1c3-4d91-8fb1-27ed60745f48",
+      "collectionid": "48200a9c-6a2d-41e8-bee6-c6273d0985ad"
     },
     {
       "name": "Reginalds Tower",
@@ -103,8 +82,19 @@
       "category": "Castle",
       "yearEstablished": 1500,
       "county": "Waterford",
-      "_id": "e9d81a2e-2fc5-45c3-a1b5-d36a6dca336f",
-      "collectionid": "60546644-68f4-4c4d-aebb-e6d674b070cb"
+      "_id": "24dbb3e0-0341-4f87-adbb-a024821b8d6d",
+      "collectionid": "04ed1d60-0de1-4f4f-a051-2cc9e0d85db6"
+    },
+    {
+      "name": "Cashel Castle",
+      "description": "Castle",
+      "latitude": 52.510568,
+      "longitude": -7.883282,
+      "category": "Castle",
+      "yearEstablished": 1500,
+      "county": "Tipperary",
+      "_id": "76d675b0-4339-4884-aa13-66a56c3cac33",
+      "collectionid": "bfe72f7d-9183-429c-8d93-283ab1558d86"
     }
   ]
 }
