@@ -30,11 +30,17 @@ suite("Collection API tests", () => {
   test("get all collections", async () => {
     const collections = await placemarkService.getAllCollections();
     assert.equal(collections.length, testCollections.length);
+
+    for (let i = 0; i < testCollections.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const returnedCollection = await placemarkService.getCollection(createdCollections[i]._id);
+      assertSubset(testCollections[i], returnedCollection);
+    }
   });
 
   test("get one collection - success", async () => {
     const returnedCollection = await placemarkService.getCollection(createdCollections[0]._id);
-    assert.equal(returnedCollection.name, createdCollections[0].name);
+    assertSubset(createdCollections[0], returnedCollection);
   });
 
   test("delete a collection", async () => {

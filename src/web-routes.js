@@ -4,6 +4,7 @@ import { dashboardController } from "./controllers/dashboard-controller.js";
 import { collectionController } from "./controllers/collection-controller.js";
 
 export const webRoutes = [
+
   { method: "GET", path: "/", config: accountsController.index },
   { method: "GET", path: "/signup", config: accountsController.showSignup },
   { method: "GET", path: "/login", config: accountsController.showLogin },
@@ -20,4 +21,7 @@ export const webRoutes = [
   { method: "GET", path: "/collection/{id}", config: collectionController.index },
   { method: "POST", path: "/collection/{id}/addplacemark", config: collectionController.addPlacemark },
   { method: "GET", path: "/collection/{id}/deleteplacemark/{placemarkid}", config: collectionController.deletePlacemark },
+
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } }  //broke my heart getting the image to render
+
 ];

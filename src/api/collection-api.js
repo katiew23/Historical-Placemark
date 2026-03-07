@@ -1,6 +1,7 @@
 import Boom from "@hapi/boom";
+import { validationError } from "../logger.js";
 import { db } from "../models/db.js";
-import { CollectionSpec } from "../models/joi-schemas.js";
+import { CollectionSpec, CollectionArraySpec } from "../models/joi-schemas.js";
 
 
 export const collectionApi = {
@@ -15,6 +16,10 @@ export const collectionApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Get all collections",
+    notes: "Returns all collections in the database",
+    response: { schema: CollectionArraySpec, failAction: validationError },
   },
 
   findOne: {
@@ -30,6 +35,10 @@ export const collectionApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Get a collection",
+    notes: "Returns a collection with the id passed in the path",
+    response: { schema: CollectionSpec, failAction: validationError },
   },
 
   create: {
@@ -51,6 +60,10 @@ export const collectionApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Create a collection",
+    notes: "Creates a collection from the payload and returns the new collection",
+    response: { schema: CollectionSpec, failAction: validationError },
   },
 
   deleteOne: {
@@ -67,6 +80,9 @@ export const collectionApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete a collection",
+    notes: "Deletes a collection with the id passed in the path",
   },
 
   deleteAll: {
@@ -79,6 +95,9 @@ export const collectionApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Delete all collections",
+    notes: "Deletes all collections from the database",
   },
 
 };

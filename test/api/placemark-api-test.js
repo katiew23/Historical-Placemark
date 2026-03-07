@@ -47,18 +47,10 @@ suite("Placemark API tests", () => {
 
   test("get one placemark - success", async () => {
     const returnedPlacemark =
-      await placemarkService.getPlacemark(createdPlacemarks[0]._id);
-
-    assert.equal(
-      returnedPlacemark.name,
-      testPlacemarks[0].name
-    );
-
-    assert.equal(
-      returnedPlacemark.description,
-      testPlacemarks[0].description
-    );
+    await placemarkService.getPlacemark(createdPlacemarks[0]._id);
+    assertSubset(testPlacemarks[0], returnedPlacemark);
   });
+  
 
   test("delete a placemark", async () => {
     const placemark = createdPlacemarks[0];
