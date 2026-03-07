@@ -1,3 +1,81 @@
+# Historical Placemark
+
+A full-stack web application for storing and managing historical locations.
+
+## Overview
+
+Historical Placemark allows users to create collections of historical locations and store detailed placemark information including:
+
+- Name
+- Description
+- Latitude and Longitude
+- Category
+- Year Established
+- County
+
+Each placemark belongs to a collection and can be created, viewed, or deleted via the API.
+
+## Technologies Used
+
+- Node.js
+- Hapi.js
+- Joi validation
+- Swagger API documentation
+- JSON persistence
+- Mocha and Chai testing
+- Bulma CSS framework
+
+## Features
+
+- User authentication
+- Create and manage collections
+- Add and remove placemarks
+- REST API with validation
+- Swagger API documentation
+- Automated unit and API tests
+
+## API Testing
+
+All API and model tests are implemented using Mocha and Chai.
+
+Current test status:
+38 passing 
+0 failing 
+
+## Project Structure
+
+## Project Structure
+src/
+api/
+controllers/
+models/
+views/
+test/
+
+
+## Running the Project
+
+Install dependencies:
+
+
+npm install
+
+
+Run the application:
+
+
+npm start
+
+
+Run tests:
+
+
+npm run test
+
+
+## Author
+
+Kate Williams
 # Placemark App
 
 This repository contains coursework for the Full Stack Development module. It demonstrates the progressive development of a server-rendered web application using Node.js, Hapi, and Handlebars following an MVC structure.
