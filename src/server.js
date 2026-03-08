@@ -8,6 +8,8 @@ import Joi from "joi";
 import { fileURLToPath } from "url";
 import Handlebars from "handlebars";
 import HapiSwagger from "hapi-swagger";
+import jwt from "hapi-auth-jwt2";
+import { validate } from "./api/jwt-utils.js";
 import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
@@ -27,11 +29,11 @@ async function init() {
     port: process.env.PORT || 3000,
   });
 
-  
   await server.register([
     Vision,
     Inert,
     Cookie,
+    jwt,
     {
       plugin: HapiSwagger,
       options: {
@@ -57,7 +59,6 @@ async function init() {
     isCached: false,
   });
 
- 
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.cookie_name,
@@ -68,15 +69,19 @@ async function init() {
     validate: accountsController.validate,
   });
 
+  server.auth.strategy("jwt", "jwt", {
+    key: process.env.cookie_password,
+    validate: validate,
+    verifyOptions: { algorithms: ["HS256"] },
+  });
+
   server.auth.default("session");
 
   db.init("json");
 
- 
   server.route(webRoutes);
   server.route(apiRoutes);
 
-  
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }
