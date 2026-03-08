@@ -1,10 +1,10 @@
 import Boom from "@hapi/boom";
 import { validationError } from "../logger.js";
 import { db } from "../models/db.js";
-import { UserSpec, UserArraySpec } from "../models/joi-schemas.js";
-
+import { UserSpec, UserSpecPlus, UserArraySpec } from "../models/joi-schemas.js";
 
 export const userApi = {
+
   find: {
     auth: false,
     handler: async function (request, h) {
@@ -19,7 +19,7 @@ export const userApi = {
     description: "Get all users",
     notes: "Returns all users in the database",
     response: { schema: UserArraySpec, failAction: validationError },
-    },
+  },
 
   findOne: {
     auth: false,
@@ -37,17 +37,11 @@ export const userApi = {
     tags: ["api"],
     description: "Get a user",
     notes: "Returns a user with the id passed in the path",
-    response: { schema: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   create: {
     auth: false,
-    validate: {
-      payload: UserSpec,
-      options: {
-        abortEarly: false,
-      },
-    },
     handler: async function (request, h) {
       try {
         const user = await db.userStore.addUser(request.payload);
@@ -62,7 +56,8 @@ export const userApi = {
     tags: ["api"],
     description: "Create a user",
     notes: "Creates a user from the payload and returns the new user",
-    response: { schema: UserSpec, failAction: validationError },
+    validate: { payload: UserSpec, failAction: validationError },
+    response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   deleteAll: {

@@ -4,22 +4,24 @@ export const IdSpec = Joi.alternatives()
   .try(Joi.string(), Joi.object())
   .description("a valid ID"); // added this to make it clear that this is an ID, not just any string or object. It also allows for flexibility in the type of ID used (e.g. string for MongoDB, object for other databases).
 
-export const UserSpec = Joi.object({
+export const UserCredentialsSpec = Joi.object({
+  email: Joi.string().example("homer@simpson.com").email().required(),
+  password: Joi.string().example("secret").required(),
+}).label("UserCredentials");
+
+export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().example("Homer").required(),
   lastName: Joi.string().example("Simpson").required(),
-  email: Joi.string().example("homer@simpson.com").email().required(),
-  password: Joi.string().example("secret").required(),
-  _id: IdSpec,
-  __v: Joi.number(),}) 
-.label("UserSpec");
-export const UserArraySpec = Joi.array().items(UserSpec).label("UserArray");
+}).label("UserDetails");
 
-export const UserCredentialsSpec = Joi.object({ 
-  email: Joi.string().example("homer@simpson.com").email().required(),
-  password: Joi.string().example("secret").required(),
-})
-.label("UserCredentialsSpec");
-export const UserAuthSpec = UserCredentialsSpec.label("UserAuthSpec");
+export const UserSpecPlus = UserSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("UserDetailsPlus");
+
+export const UserArraySpec = Joi.array()
+  .items(UserSpecPlus)
+  .label("UserArray");
 
 // The response schema represents the object returned by the database store.
 // When a placemark is saved, the store automatically attaches the id of the
@@ -49,12 +51,28 @@ export const PlacemarkArraySpec = Joi.array()
   .items(PlacemarkResponseSpec)
   .label("PlacemarkArray");
 
+export const CollectionCreateSpec = Joi.object({
+  name: Joi.string().example("Cork Castles").required().min(1),
+  
+}).label("CollectionCreate");
+
 export const CollectionSpec = Joi.object({
   name: Joi.string().example("Cork Castles").required().min(1),
-  placemarks: Joi.array().items(PlacemarkSpec).optional(),
-   _id: IdSpec,
-  __v: Joi.number(),
-})
-.label("CollectionSpec");
-export const CollectionArraySpec = Joi.array().items(CollectionSpec).label("CollectionArray");
+  placemarks: PlacemarkArraySpec,
+}).label("Collection");
 
+export const CollectionSpecPlus = CollectionSpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("CollectionPlus");
+
+export const CollectionArraySpec = Joi.array()
+  .items(CollectionSpecPlus)
+  .label("CollectionArray");
+
+// additions
+
+export const AuthTokenSpec = Joi.object({
+  success: Joi.boolean().example(true).required(),
+  token: Joi.string().example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...").required()
+}).label("AuthTokenSpec");

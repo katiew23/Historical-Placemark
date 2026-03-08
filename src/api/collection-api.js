@@ -1,11 +1,11 @@
 import Boom from "@hapi/boom";
 import { validationError } from "../logger.js";
 import { db } from "../models/db.js";
-import { CollectionSpec, CollectionArraySpec } from "../models/joi-schemas.js";
+import { IdSpec, CollectionCreateSpec, CollectionSpecPlus, CollectionArraySpec } from "../models/joi-schemas.js";
 
 
 export const collectionApi = {
-
+  
   find: {
     auth: false,    
     handler: async function (request, h) {
@@ -21,7 +21,7 @@ export const collectionApi = {
     notes: "Returns all collections in the database",
     response: { schema: CollectionArraySpec, failAction: validationError },
   },
-
+  
   findOne: {
     auth: false,
     handler: async function (request, h) {
@@ -38,24 +38,19 @@ export const collectionApi = {
     tags: ["api"],
     description: "Get a collection",
     notes: "Returns a collection with the id passed in the path",
-    response: { schema: CollectionSpec, failAction: validationError },
+    response: { schema: CollectionSpecPlus, failAction: validationError },
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
-
+  
   create: {
     auth: false,
-    validate: {
-      payload: CollectionSpec,
-      options: {
-        abortEarly: false,
-      },
-    },
     handler: async function (request, h) {
       try {
         const collection = await db.collectionStore.addCollection(request.payload);
         if (collection) {
           return h.response(collection).code(201);
         }
-        return Boom.badImplementation("error creating collection");
+        return Boom.badRequest("Invalid collection data");
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
       }
@@ -63,9 +58,10 @@ export const collectionApi = {
     tags: ["api"],
     description: "Create a collection",
     notes: "Creates a collection from the payload and returns the new collection",
-    response: { schema: CollectionSpec, failAction: validationError },
+    response: { schema: CollectionSpecPlus, failAction: validationError },
+    validate: { payload: CollectionCreateSpec, failAction: function (request, h, error){ throw error; } },
   },
-
+  
   deleteOne: {
     auth: false,
     handler: async function (request, h) {
@@ -74,7 +70,7 @@ export const collectionApi = {
         if (!collection) {
           return Boom.notFound("No Collection with this id");
         }
-        await db.collectionStore.deleteCollectionById(request.params.id);
+        await db.collectionStore.deleteCollectionById(collection._id);
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -83,8 +79,9 @@ export const collectionApi = {
     tags: ["api"],
     description: "Delete a collection",
     notes: "Deletes a collection with the id passed in the path",
+    validate: { params: { id: IdSpec }, failAction: validationError },
   },
-
+  
   deleteAll: {
     auth: false,
     handler: async function (request, h) {
@@ -99,5 +96,5 @@ export const collectionApi = {
     description: "Delete all collections",
     notes: "Deletes all collections from the database",
   },
-
+  
 };
