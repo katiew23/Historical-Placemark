@@ -23,6 +23,11 @@ export const UserArraySpec = Joi.array()
   .items(UserSpecPlus)
   .label("UserArray");
 
+  export const maggieCredentials = {
+  email: "maggie@simpson.com",
+  password: "secret"
+};
+
 // The response schema represents the object returned by the database store.
 // When a placemark is saved, the store automatically attaches the id of the
 // collection it belongs to. In the Playtime → Placemark labs this field is

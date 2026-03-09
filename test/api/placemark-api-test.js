@@ -3,6 +3,7 @@ import { placemarkService } from "./placemark-service.js";
 import { corkSites, testPlacemarks, maggie } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
+import { maggieCredentials } from "../../src/models/joi-schemas.js";
 
 suite("Placemark API tests", () => {
 
@@ -15,7 +16,7 @@ suite("Placemark API tests", () => {
     placemarkService.clearAuth();
 
     await placemarkService.createUser(maggie);
-    await placemarkService.authenticate(maggie);
+    await placemarkService.authenticate(maggieCredentials);
 
     await placemarkService.deleteAllPlacemarks();
     await placemarkService.deleteAllCollections();

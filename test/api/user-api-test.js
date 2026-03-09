@@ -3,6 +3,7 @@ import { placemarkService } from "./placemark-service.js";
 import { testUsers, maggie } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
+import { maggieCredentials } from "../../src/models/joi-schemas.js";
 
 suite("User API tests", () => {
     
@@ -14,14 +15,14 @@ suite("User API tests", () => {
         placemarkService.clearAuth();
         
         let user = await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggie);
+        await placemarkService.authenticate(maggieCredentials);
         
         // clear database
         await placemarkService.deleteAllUsers();
         
         // recreate admin
         user = await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggie);
+        await placemarkService.authenticate(maggieCredentials);
         
         createdUsers = [];
         
@@ -47,7 +48,7 @@ suite("User API tests", () => {
         
         // recreate admin so authentication works again
         await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggie);
+        await placemarkService.authenticate(maggieCredentials);
         
         returnedUsers = await placemarkService.getAllUsers();
         assert.equal(returnedUsers.length, 1);
@@ -72,7 +73,7 @@ suite("User API tests", () => {
         
         // recreate admin to restore authentication
         await placemarkService.createUser(maggie);
-        await placemarkService.authenticate(maggie);
+        await placemarkService.authenticate(maggieCredentials);
         
         try {
             await placemarkService.getUser(createdUsers[0]._id);

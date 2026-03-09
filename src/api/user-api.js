@@ -1,7 +1,7 @@
 import Boom from "@hapi/boom";
 import { validationError } from "../logger.js";
 import { db } from "../models/db.js";
-import { UserSpec, UserSpecPlus, UserArraySpec } from "../models/joi-schemas.js";
+import { UserCredentialsSpec, UserSpec, UserSpecPlus, UserArraySpec, AuthTokenSpec}  from "../models/joi-schemas.js";
 import { createToken } from "./jwt-utils.js";
 
 export const userApi = {
@@ -23,6 +23,11 @@ export const userApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+    description: "Authenticate a user",
+    notes: "Returns a token if the email and password are valid",
+    validate: { payload: UserCredentialsSpec, failAction: validationError },
+    response: { schema: AuthTokenSpec, failAction: validationError },
   },
 
   find: {
@@ -56,7 +61,7 @@ export const userApi = {
     },
     tags: ["api"],
     description: "Get a user",
-    notes: "Returns a user with the id passed in the path",
+    notes: "Returns a user with the id passed in the path",    
     response: { schema: UserSpecPlus, failAction: validationError },
   },
 

@@ -24,6 +24,21 @@ if (result.error) {
   process.exit(1);
 }
 
+const swaggerOptions = {    //this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
+  info: {
+    title: "Historical Placemark API",
+    version: "0.1"
+  },
+  securityDefinitions: {
+    jwt: {
+      type: "apiKey",
+      name: "Authorization",
+      in: "header"
+    }
+  },
+  security: [{ jwt: [] }]
+};
+
 async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
@@ -36,12 +51,7 @@ async function init() {
     jwt,
     {
       plugin: HapiSwagger,
-      options: {
-        info: {
-          title: "Historical Placemark API",
-          version: "0.1",
-        },
-      },
+      options: swaggerOptions,
     },
   ]);
 
