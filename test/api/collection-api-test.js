@@ -5,6 +5,7 @@ import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
 import { maggieCredentials } from "../../src/models/joi-schemas.js";
 
+
 suite("Collection API tests", () => {
   
   let createdCollections = [];

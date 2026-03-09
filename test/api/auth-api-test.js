@@ -3,9 +3,11 @@ import { placemarkService } from "./placemark-service.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
 import { maggie } from "../fixtures.js";
 import { maggieCredentials } from "../../src/models/joi-schemas.js";
+import { db } from "../../src/models/db.js";
 
 suite("Authentication API tests", async () => {
   setup(async () => {
+    db.init("json");  // added this in to make it look to the JSON store for the tests, which is cleared after each test. If it looks to the MongoDB store, the data from one test will persist into the next test and cause failures.
     placemarkService.clearAuth();
     await placemarkService.createUser(maggie);
     await placemarkService.authenticate(maggieCredentials);

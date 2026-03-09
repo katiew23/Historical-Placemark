@@ -5,27 +5,39 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "4ffa9060-24e1-45c6-ba5e-d7ea719390b8"
+      "_id": "a420514b-f90b-42fa-8a20-a2e7e12f6bec"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "19d07343-a9ba-40de-8ce8-3f286749b3ed"
+      "_id": "cb289fe5-31fd-4e9a-a4be-f927c820d151"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "cebe96e3-331e-4413-b488-e7e5ea06a789"
+      "_id": "1aa548c3-9174-41a1-98a7-671811c8036c"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "_id": "3d687d7e-ce3c-4af1-b011-9eed6b0eb210"
     }
   ],
   "collections": [
     {
       "name": "Cork Castles",
-      "_id": "7e6f5a40-a193-4dcb-a0b2-d07cedfc8b51"
+      "_id": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+    },
+    {
+      "userid": "3d687d7e-ce3c-4af1-b011-9eed6b0eb210",
+      "name": "Waterford ",
+      "_id": "4230da14-ecd3-4d51-bf00-8d9a1b230e8f"
     }
   ],
   "placemarks": [
@@ -37,8 +49,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "b30a750b-4be3-4b21-8286-a83aeb890ba2",
-      "collectionid": "7e6f5a40-a193-4dcb-a0b2-d07cedfc8b51"
+      "_id": "399afb92-5b27-4bbc-8d92-12c13dd056ba",
+      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
     },
     {
       "name": "Rock of Cashel",
@@ -48,8 +60,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "be8fbbad-0046-4405-8a95-bc3c225296c9",
-      "collectionid": "7e6f5a40-a193-4dcb-a0b2-d07cedfc8b51"
+      "_id": "1b8adc23-0633-4378-a5a1-87fbc658c82d",
+      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
     },
     {
       "name": "Clonmacnoise",
@@ -59,8 +71,19 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "8e209ade-d474-4039-8aa7-25f0b4f16e74",
-      "collectionid": "7e6f5a40-a193-4dcb-a0b2-d07cedfc8b51"
+      "_id": "647a517d-6126-4c8a-b7cc-82373f3733be",
+      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+    },
+    {
+      "name": "Reginalds Tower",
+      "description": "Towe",
+      "latitude": 41.024927,
+      "longitude": -73.578246,
+      "category": "Castle",
+      "yearEstablished": 1600,
+      "county": "Waterford",
+      "_id": "f3874b29-4d8a-413e-94e1-f5a82699d24c",
+      "collectionid": "4230da14-ecd3-4d51-bf00-8d9a1b230e8f"
     }
   ]
 }
