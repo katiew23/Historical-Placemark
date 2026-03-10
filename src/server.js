@@ -48,7 +48,7 @@ const swaggerOptions = {    //this needs to be added first to ensure that the se
 async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
-    host: "0.0.0.0",
+    //host: "0.0.0.0",
   });
 
   await server.register([
