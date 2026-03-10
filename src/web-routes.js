@@ -2,6 +2,7 @@ import { aboutController } from "./controllers/about-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { collectionController } from "./controllers/collection-controller.js";
+import { adminController } from "./controllers/admin-controller.js";
 
 export const webRoutes = [
 
@@ -12,9 +13,12 @@ export const webRoutes = [
   { method: "POST", path: "/register", config: accountsController.signup },
   { method: "POST", path: "/authenticate", config: accountsController.login },
 
+  { method: "GET", path: "/dashboard", config: dashboardController.index },
+
+  { method: "GET", path: "/admin", config: adminController.index },  
+
   { method: "GET", path: "/about", config: aboutController.index },
 
-  { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "POST", path: "/dashboard/addcollection", config: dashboardController.addCollection },
   { method: "GET", path: "/dashboard/deletecollection/{id}", config: dashboardController.deleteCollection },
 
@@ -22,6 +26,8 @@ export const webRoutes = [
   { method: "POST", path: "/collection/{id}/addplacemark", config: collectionController.addPlacemark },
   { method: "GET", path: "/collection/{id}/deleteplacemark/{placemarkid}", config: collectionController.deletePlacemark },
 
-  { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } }  //broke my heart getting the image to render
+  { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } },
 
-];
+
+]; 
+

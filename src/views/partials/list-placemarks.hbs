@@ -1,16 +1,24 @@
-{{#each playlist.placemarks}}
-  <tr>
-    <td>{{title}}</td>
-    <td>{{pointOfInterest}}</td>
-    <td>{{latitude}}</td>
-    <td>{{longitude}}</td>
-    <td>
-      <a
-        href="/collection/{{../playlist._id}}/deleteplacemark/{{_id}}"
-        class="button is-danger is-small"
-      >
-        Delete
-      </a>
-    </td>
-  </tr>
+{{#each placemarks}}
+<tr>
+  <td>{{name}}</td>
+  <td>{{description}}</td>
+  <td>{{latitude}}</td>
+  <td>{{longitude}}</td>
+
+  <td>
+    <a
+      href="/collection/{{../collection._id}}/editplacemark/{{_id}}"
+      class="button is-warning is-small"
+    >
+      Edit
+    </a>
+
+    <a
+      href="/collection/{{../collection._id}}/deleteplacemark/{{_id}}"
+      class="button is-danger is-small"
+    >
+      Delete
+    </a>
+  </td>
+</tr>
 {{/each}}

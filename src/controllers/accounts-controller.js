@@ -2,6 +2,7 @@ import { db } from "../models/db.js";
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 
 export const accountsController = {
+
   index: {
     auth: false,
     handler: function (request, h) {
@@ -12,7 +13,7 @@ export const accountsController = {
   showSignup: {
     auth: false,
     handler: function (request, h) {
-      return h.view("signup-view", { title: "Log your Historical Placemark "});
+      return h.view("signup-view", { title: "Log your Historical Placemark" });
     },
   },
 
@@ -33,6 +34,12 @@ export const accountsController = {
     },
     handler: async function (request, h) {
       const user = request.payload;
+
+      //add role safely without breaking tests
+      if (!user.role) {
+        user.role = "user";
+      }
+
       await db.userStore.addUser(user);
       return h.redirect("/");
     },
@@ -80,7 +87,7 @@ export const accountsController = {
     },
   },
 
-  async validate(request, session) {
+  validate: async function (request, session) {
     const user = await db.userStore.getUserById(session.id);
     if (!user) {
       return { isValid: false };

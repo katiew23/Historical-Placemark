@@ -5,39 +5,37 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "a420514b-f90b-42fa-8a20-a2e7e12f6bec"
+      "_id": "483acb20-6c8a-47db-9f4a-b6a7a4721af6"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "cb289fe5-31fd-4e9a-a4be-f927c820d151"
+      "_id": "e6073f81-9acf-4f4a-b3b3-2f86e054f7a5"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "1aa548c3-9174-41a1-98a7-671811c8036c"
+      "_id": "51d9bb51-7bea-425e-b3bb-ef2846863538"
     },
     {
       "firstName": "kate",
       "lastName": "kate",
       "email": "katiew23@gmail.com",
       "password": "kate",
-      "_id": "3d687d7e-ce3c-4af1-b011-9eed6b0eb210"
-    }
-  ],
-  "collections": [
-    {
-      "name": "Cork Castles",
-      "_id": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+      "role": "user",
+      "_id": "124628a3-ae73-4552-b241-bd951a5a915e"
     },
     {
-      "userid": "3d687d7e-ce3c-4af1-b011-9eed6b0eb210",
-      "name": "Waterford ",
-      "_id": "4230da14-ecd3-4d51-bf00-8d9a1b230e8f"
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "katiew23@gmail.com",
+      "password": "kate",
+      "role": "user",
+      "_id": "9840d18d-954c-4f4a-8392-bef0283c3cd1"
     }
   ],
   "placemarks": [
@@ -49,8 +47,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "399afb92-5b27-4bbc-8d92-12c13dd056ba",
-      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+      "_id": "a3b73248-973d-4b38-9681-261598580a10",
+      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
     },
     {
       "name": "Rock of Cashel",
@@ -60,8 +58,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "1b8adc23-0633-4378-a5a1-87fbc658c82d",
-      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+      "_id": "31cd32da-3661-4aca-b3d0-5068b4c569d6",
+      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
     },
     {
       "name": "Clonmacnoise",
@@ -71,19 +69,41 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "647a517d-6126-4c8a-b7cc-82373f3733be",
-      "collectionid": "bacdc475-34b4-4e46-9273-94fcc1c57b66"
+      "_id": "3cbf183f-a1d3-4b52-89d8-143f920e0e6f",
+      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
     },
     {
       "name": "Reginalds Tower",
-      "description": "Towe",
-      "latitude": 41.024927,
-      "longitude": -73.578246,
-      "category": "Castle",
-      "yearEstablished": 1600,
+      "description": "Tower",
+      "latitude": 51.949664,
+      "longitude": -7.725427,
+      "category": "Tower",
+      "yearEstablished": 1584,
       "county": "Waterford",
-      "_id": "f3874b29-4d8a-413e-94e1-f5a82699d24c",
-      "collectionid": "4230da14-ecd3-4d51-bf00-8d9a1b230e8f"
+      "_id": "d760eda3-ac3f-455d-9fa9-95b1631661db",
+      "collectionid": "e176a377-b979-45b8-bb59-2e06d05a06da"
+    },
+    {
+      "name": "Bunratty Castel",
+      "description": "castle",
+      "latitude": 52.67,
+      "longitude": -8.81,
+      "category": "Castle",
+      "yearEstablished": 1234,
+      "county": "Tipperary",
+      "_id": "d39a0c3d-4da1-4d57-a9d3-39017b3fab19",
+      "collectionid": "e176a377-b979-45b8-bb59-2e06d05a06da"
+    }
+  ],
+  "collections": [
+    {
+      "name": "Cork Castles",
+      "_id": "99bee297-b12e-43c2-a03b-0d21606e8c48"
+    },
+    {
+      "userid": "124628a3-ae73-4552-b241-bd951a5a915e",
+      "name": "Waterford",
+      "_id": "e176a377-b979-45b8-bb59-2e06d05a06da"
     }
   ]
 }

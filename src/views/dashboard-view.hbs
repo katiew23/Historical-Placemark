@@ -1,6 +1,29 @@
 {{> menu active="dashboard"}}
 
 <section class="section">
-  {{> list-collections}}
-  {{> add-collection}}
+  <div class="container">
+
+   
+    <div class="level mb-5">
+      <div class="level-left">
+        <h1 class="title">Your Collections</h1>
+      </div>
+      <div class="level-right">
+        <span class="tag is-info is-light">Historical Placemark</span>
+      </div>
+    </div>
+
+  
+    <div class="box mb-5">
+      <h2 class="subtitle">Saved Collections</h2>
+      {{> list-collections}}
+    </div>
+
+   
+    <div class="box">
+      <h2 class="subtitle">Create New Collection</h2>
+      {{> add-collection}}
+    </div>
+
+  </div>
 </section>

@@ -1,0 +1,57 @@
+{{> menu}}
+
+<section class="section">
+  <div class="container">
+
+    <h1 class="title">Admin Dashboard</h1>
+
+    <div class="box">
+      <h2 class="subtitle">System Analytics</h2>
+      <div id="adminChart"></div>
+    </div>
+
+    <div class="box">
+      <h2 class="subtitle">Users</h2>
+
+      <table class="table is-fullwidth is-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each users}}
+          <tr>
+            <td>{{firstName}} {{lastName}}</td>
+            <td>{{email}}</td>
+            <td>{{role}}</td>
+          </tr>
+          {{/each}}
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+</section>
+
+<script src="https://unpkg.com/frappe-charts@1.6.2/dist/frappe-charts.min.iife.js"></script>
+
+<script>
+  const chart = new frappe.Chart("#adminChart", {
+    title: "Platform Overview",
+    type: "bar",
+    data: {
+      labels: ["Users", "Collections", "Placemarks"],
+      datasets: [
+        {
+          values: [{{userCount}}, {{collectionCount}}, {{placemarkCount}}]
+        }
+      ]
+    },
+    colors: ["#7cd6fd"]
+  });
+</script>

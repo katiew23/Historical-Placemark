@@ -1,11 +1,38 @@
 {{> welcome-menu}}
 
-<div class="columns is-vcentered ">
-  <div class="column has-text-centered">
-    <h> Sign up or Log in... </h>
-  </div>
-  <div class="column">
-    <img src="/images/reginalds.jpg" alt="Historical Placemark Image" class="welcome-logo">
-  </div>
-</div>
+<section class="section">
+  <div class="container">
 
+    <div class="columns is-vcentered is-centered">
+
+      <!-- Welcome Text -->
+      <div class="column is-half has-text-centered">
+        <h1 class="title">Historical Placemark</h1>
+        <p class="subtitle">
+          Explore and organise places of historical interest.
+        </p>
+
+        <p class="mb-5">
+          Sign up or log in to create collections and manage your placemarks.
+        </p>
+
+        <div class="buttons is-centered">
+          <a href="/signup" class="button is-primary">Sign Up</a>
+          <a href="/login" class="button is-light">Log In</a>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="column is-half has-text-centered">
+        <img 
+          src="/images/reginalds.jpg" 
+          alt="Historical Placemark Image" 
+          class="welcome-logo"
+          style="max-width: 350px; border-radius: 10px;"
+        >
+      </div>
+
+    </div>
+
+  </div>
+</section>
