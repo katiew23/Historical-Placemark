@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 const result = dotenv.config();
 if (result.error) {
   console.log(result.error.message);
-  process.exit(1);
+  //process.exit(1);  //as per render lab 
 }
 
 const swaggerOptions = {    //this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
