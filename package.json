@@ -4,6 +4,10 @@
   "description": "A historical placemark application for the HDip in Computing",
   "main": "src/server.js",
   "type": "module",
+
+   "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
@@ -39,4 +43,6 @@
     "mocha": "^11.7.5",
     "prettier": "^3.6.2"
   }
+   
+
 }

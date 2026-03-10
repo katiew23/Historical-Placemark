@@ -24,7 +24,11 @@ const __dirname = path.dirname(__filename);
   //process.exit(1);  //as per render lab 
 //}
 
-dotenv.config({ path: "./src/.env" });
+//dotenv.config({ path: "./src/.env" });
+
+
+
+dotenv.config();
 
 const swaggerOptions = {    //this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
   info: {
