@@ -5,21 +5,29 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "483acb20-6c8a-47db-9f4a-b6a7a4721af6"
+      "_id": "f55b7653-7dcb-4c58-ac97-c500a796cbfd"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "e6073f81-9acf-4f4a-b3b3-2f86e054f7a5"
+      "_id": "1d3ad586-8751-4523-97e0-1ba6f6921e3b"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "51d9bb51-7bea-425e-b3bb-ef2846863538"
+      "_id": "db6c1f2e-d9ed-4e68-a477-8f2321a1aa0f"
+    },
+    {
+      "firstName": "kate",
+      "lastName": "kate",
+      "email": "admin@placemark.com",
+      "password": "secret",
+      "role": "admin",
+      "_id": "da469705-4018-426f-9cff-ac5b0d390f89"
     },
     {
       "firstName": "kate",
@@ -27,15 +35,7 @@
       "email": "katiew23@gmail.com",
       "password": "kate",
       "role": "user",
-      "_id": "124628a3-ae73-4552-b241-bd951a5a915e"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "role": "user",
-      "_id": "9840d18d-954c-4f4a-8392-bef0283c3cd1"
+      "_id": "c5837881-ccb6-421d-a951-20bda60f14b4"
     }
   ],
   "placemarks": [
@@ -47,8 +47,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "a3b73248-973d-4b38-9681-261598580a10",
-      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
+      "_id": "29045462-5287-4339-b7cb-87b4fdab2ce4",
+      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
     },
     {
       "name": "Rock of Cashel",
@@ -58,8 +58,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "31cd32da-3661-4aca-b3d0-5068b4c569d6",
-      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
+      "_id": "104bb4da-8762-4087-80da-b722215e3d50",
+      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
     },
     {
       "name": "Clonmacnoise",
@@ -69,41 +69,44 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "3cbf183f-a1d3-4b52-89d8-143f920e0e6f",
-      "collectionid": "99bee297-b12e-43c2-a03b-0d21606e8c48"
+      "_id": "f9c9333a-c244-4bbd-b02a-05a89a16afc2",
+      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
     },
     {
       "name": "Reginalds Tower",
       "description": "Tower",
-      "latitude": 51.949664,
+      "latitude": 51.949665,
       "longitude": -7.725427,
       "category": "Tower",
-      "yearEstablished": 1584,
+      "yearEstablished": 1265,
       "county": "Waterford",
-      "_id": "d760eda3-ac3f-455d-9fa9-95b1631661db",
-      "collectionid": "e176a377-b979-45b8-bb59-2e06d05a06da"
-    },
-    {
-      "name": "Bunratty Castel",
-      "description": "castle",
-      "latitude": 52.67,
-      "longitude": -8.81,
-      "category": "Castle",
-      "yearEstablished": 1234,
-      "county": "Tipperary",
-      "_id": "d39a0c3d-4da1-4d57-a9d3-39017b3fab19",
-      "collectionid": "e176a377-b979-45b8-bb59-2e06d05a06da"
+      "_id": "09068802-ff11-4c14-bece-028f793ca0ae",
+      "collectionid": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a"
     }
   ],
   "collections": [
     {
       "name": "Cork Castles",
-      "_id": "99bee297-b12e-43c2-a03b-0d21606e8c48"
+      "_id": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
     },
     {
-      "userid": "124628a3-ae73-4552-b241-bd951a5a915e",
+      "userid": "da469705-4018-426f-9cff-ac5b0d390f89",
       "name": "Waterford",
-      "_id": "e176a377-b979-45b8-bb59-2e06d05a06da"
+      "_id": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a",
+      "placemarks": [
+        {
+          "name": "Reginalds Tower",
+          "description": "Tower",
+          "latitude": 51.949665,
+          "longitude": -7.725427,
+          "category": "Tower",
+          "yearEstablished": 1265,
+          "county": "Waterford",
+          "_id": "09068802-ff11-4c14-bece-028f793ca0ae",
+          "collectionid": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a"
+        }
+      ],
+      "img": "http://res.cloudinary.com/dpzvpt5f1/image/upload/v1773260638/ni9qt8c9j5ktyncfevco.jpg"
     }
   ]
 }

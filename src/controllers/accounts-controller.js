@@ -75,7 +75,7 @@ export const accountsController = {
         return h.redirect("/");
       }
 
-      request.cookieAuth.set({ id: user._id });
+      request.cookieAuth.set({ id: user._id, role: user.role, email: user.email });
       return h.redirect("/dashboard");
     },
   },

@@ -12,6 +12,8 @@
     </div>
   </div>
 
+  {{> collection-image}}
+
   <!-- Map -->
   <div id="collectionMap"></div>
 
@@ -31,7 +33,7 @@
           {{description}} –
           ({{latitude}}, {{longitude}})
 
-          <a href="/collection/{{../collection._id}}/deleteplacemark/{{_id}}"
+          <a href="/collection/{{../../collection._id}}/deleteplacemark/{{_id}}"
              class="button is-small is-danger"
              style="margin-left: 10px;">
              🗑
@@ -58,7 +60,6 @@
   }
 </style>
 
-<!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
 

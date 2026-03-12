@@ -48,5 +48,19 @@ async deleteCollectionById(id) {
     db.data.collections = [];
     await db.write();
   },
+
+  async updateCollection(updatedCollection) {
+  await db.read();
+
+  const index = db.data.collections.findIndex(
+    (collection) => collection._id === updatedCollection._id
+  );
+
+  if (index !== -1) {
+    db.data.collections[index] = updatedCollection;
+  }
+
+  await db.write();
+},
   
 };

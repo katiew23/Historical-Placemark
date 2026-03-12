@@ -1,19 +1,17 @@
 import { db } from "../models/db.js";
 import { PlacemarkSpec } from "../models/joi-schemas.js";
+import { imageStore } from "../models/image-store.js";
 
 export const collectionController = {
 
   index: {
     handler: async function (request, h) {
-
       const collection = await db.collectionStore.getCollectionById(request.params.id);
       const placemarks = await db.placemarkStore.getPlacemarksByCollectionId(collection._id);
 
-      // group placemarks by category
       const placemarksByCategory = {};
 
       placemarks.forEach(function (placemark) {
-
         const category = placemark.category || "Uncategorised";
 
         if (!placemarksByCategory[category]) {
@@ -21,7 +19,6 @@ export const collectionController = {
         }
 
         placemarksByCategory[category].push(placemark);
-
       });
 
       const viewData = {
@@ -49,7 +46,6 @@ export const collectionController = {
     },
 
     handler: async function (request, h) {
-
       const collection = await db.collectionStore.getCollectionById(request.params.id);
 
       const newPlacemark = {
@@ -70,10 +66,52 @@ export const collectionController = {
 
   deletePlacemark: {
     handler: async function (request, h) {
-
       const collection = await db.collectionStore.getCollectionById(request.params.id);
 
       await db.placemarkStore.deletePlacemark(request.params.placemarkid);
+
+      return h.redirect(`/collection/${collection._id}`);
+    }
+  },
+
+  uploadImage: {
+    handler: async function (request, h) {
+      try {
+        const collection = await db.collectionStore.getCollectionById(request.params.id);
+        const file = request.payload.imagefile;
+
+        if (file) {
+          const url = await imageStore.uploadImage(file);
+          console.log("IMAGE URL:", url);
+
+          collection.img = url;
+          await db.collectionStore.updateCollection(collection);
+        }
+
+        return h.redirect(`/collection/${collection._id}`);
+      } catch (err) {
+        console.log(err);
+        return h.redirect(`/collection/${request.params.id}`);
+      }
+    },
+
+    payload: {
+      multipart: true,
+      output: "file",
+      maxBytes: 209715200,
+      parse: true
+    }
+  },
+
+  deleteImage: {
+    handler: async function (request, h) {
+      const collection = await db.collectionStore.getCollectionById(request.params.id);
+
+      if (collection.img) {
+        await imageStore.deleteImage(collection.img);
+        collection.img = "";
+        await db.collectionStore.updateCollection(collection);
+      }
 
       return h.redirect(`/collection/${collection._id}`);
     }
