@@ -5,37 +5,21 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "f55b7653-7dcb-4c58-ac97-c500a796cbfd"
+      "_id": "3ead9040-507a-40aa-9b1b-36a9b2dc9f97"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "1d3ad586-8751-4523-97e0-1ba6f6921e3b"
+      "_id": "d1fce826-40d9-4d97-8961-7e99788e6307"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "db6c1f2e-d9ed-4e68-a477-8f2321a1aa0f"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "admin@placemark.com",
-      "password": "secret",
-      "role": "admin",
-      "_id": "da469705-4018-426f-9cff-ac5b0d390f89"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "role": "user",
-      "_id": "c5837881-ccb6-421d-a951-20bda60f14b4"
+      "_id": "48818e8b-f7c2-4df0-93dc-66de37f86309"
     }
   ],
   "placemarks": [
@@ -47,8 +31,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "29045462-5287-4339-b7cb-87b4fdab2ce4",
-      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
+      "_id": "677c044c-76b9-48f1-9320-8680a001d5d1",
+      "collectionid": "2d0e406d-49d9-4536-b204-c99b14f959f6"
     },
     {
       "name": "Rock of Cashel",
@@ -58,8 +42,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "104bb4da-8762-4087-80da-b722215e3d50",
-      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
+      "_id": "c9db48b1-93c4-4bab-9045-1ae73830ffb1",
+      "collectionid": "2d0e406d-49d9-4536-b204-c99b14f959f6"
     },
     {
       "name": "Clonmacnoise",
@@ -69,44 +53,14 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "f9c9333a-c244-4bbd-b02a-05a89a16afc2",
-      "collectionid": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
-    },
-    {
-      "name": "Reginalds Tower",
-      "description": "Tower",
-      "latitude": 51.949665,
-      "longitude": -7.725427,
-      "category": "Tower",
-      "yearEstablished": 1265,
-      "county": "Waterford",
-      "_id": "09068802-ff11-4c14-bece-028f793ca0ae",
-      "collectionid": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a"
+      "_id": "7ad4a848-9f22-431d-a292-bff6d55343d3",
+      "collectionid": "2d0e406d-49d9-4536-b204-c99b14f959f6"
     }
   ],
   "collections": [
     {
       "name": "Cork Castles",
-      "_id": "71cbc0b2-bb0a-4c02-ae5e-94a05257be37"
-    },
-    {
-      "userid": "da469705-4018-426f-9cff-ac5b0d390f89",
-      "name": "Waterford",
-      "_id": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a",
-      "placemarks": [
-        {
-          "name": "Reginalds Tower",
-          "description": "Tower",
-          "latitude": 51.949665,
-          "longitude": -7.725427,
-          "category": "Tower",
-          "yearEstablished": 1265,
-          "county": "Waterford",
-          "_id": "09068802-ff11-4c14-bece-028f793ca0ae",
-          "collectionid": "ae4df9a4-d0ee-45b7-ba11-632caddb1f7a"
-        }
-      ],
-      "img": "http://res.cloudinary.com/dpzvpt5f1/image/upload/v1773260638/ni9qt8c9j5ktyncfevco.jpg"
+      "_id": "2d0e406d-49d9-4536-b204-c99b14f959f6"
     }
   ]
 }

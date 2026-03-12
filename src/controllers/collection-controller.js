@@ -7,6 +7,7 @@ export const collectionController = {
 
   index: {
     handler: async function (request, h) {
+      const loggedInUser = request.auth.credentials;
       const collection = await db.collectionStore.getCollectionById(request.params.id);
       const placemarks = await db.placemarkStore.getPlacemarksByCollectionId(collection._id);
 
@@ -27,7 +28,8 @@ export const collectionController = {
         collection: collection,
         placemarks: placemarks,
         placemarksByCategory: placemarksByCategory,
-        placemarksJson: JSON.stringify(placemarks)
+        placemarksJson: JSON.stringify(placemarks),
+        role: loggedInUser.role
       };
 
       return h.view("collection-view", viewData);

@@ -20,7 +20,8 @@ export const adminController = {
         users: users,
         userCount: users.length,
         collectionCount: collections.length,
-        placemarkCount: placemarks.length
+        placemarkCount: placemarks.length,
+        role: loggedInUser.role        
       };
 
       return h.view("admin-dashboard-view", viewData);
