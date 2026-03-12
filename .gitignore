@@ -122,3 +122,6 @@ dist
 
 # Local MongoDB data
 db/
+
+# Firebase service account key
+src/config/firebase-key.json
