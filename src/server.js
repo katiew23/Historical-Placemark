@@ -28,7 +28,7 @@ if (result.error) {
 
 
 
-//dotenv.config();
+dotenv.config();
 
 const swaggerOptions = {    // this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
   info: {
@@ -48,7 +48,7 @@ const swaggerOptions = {    // this needs to be added first to ensure that the s
 async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
-    //host: "0.0.0.0",
+    host: "0.0.0.0",
   });
 
   await server.register([
