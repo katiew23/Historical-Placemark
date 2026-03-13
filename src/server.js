@@ -30,7 +30,7 @@ if (result.error) {
 
 //dotenv.config();
 
-const swaggerOptions = {    //this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
+const swaggerOptions = {    // this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
   info: {
     title: "Historical Placemark API",
     version: "0.1"
@@ -110,3 +110,6 @@ process.on("unhandledRejection", (err) => {
 });
 
 init();
+
+// this file configures and starts the hapi server, registers plugins, sets up authentication,
+// intialises the database and loads the web and api routes that define the application endpoint

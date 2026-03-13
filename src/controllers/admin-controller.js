@@ -7,13 +7,15 @@ export const adminController = {
 
       const loggedInUser = request.auth.credentials;
 
+      console.log("ADMIN PAGE ROLE:", loggedInUser.role);
+
       if (loggedInUser.role !== "admin") {
         return h.redirect("/dashboard");
-      }
+      }  // check if user is admin or not
 
       const users = await db.userStore.getAllUsers();
       const collections = await db.collectionStore.getAllCollections();
-      const placemarks = await db.placemarkStore.getAllPlacemarks();
+      const placemarks = await db.placemarkStore.getAllPlacemarks(); // this is for analytics
 
       const viewData = {
         title: "Admin Dashboard",
@@ -21,13 +23,12 @@ export const adminController = {
         userCount: users.length,
         collectionCount: collections.length,
         placemarkCount: placemarks.length,
-        role: loggedInUser.role        
+        user: loggedInUser      
       };
 
-      return h.view("admin-dashboard-view", viewData);
+      return h.view("admin-dashboard-view", viewData); // renders the page
     }
   }
-
 };
 
 //added an admin button and created an admin user in `db.json`. When the admin account logs in, the button becomes visible so admin-specific functionality can be accessed.

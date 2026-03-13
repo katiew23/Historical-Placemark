@@ -37,3 +37,7 @@ export const db = {
     }
   },
 };
+
+// this file decides which database implementation and the init function calls it 
+// controllers are calling db.collectionStore.addCollection() they dont care what database is used db.js decides cause of the init()
+// endpoint tests rely on this file too.

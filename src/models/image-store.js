@@ -28,3 +28,5 @@ export const imageStore = {
     await cloudinary.v2.uploader.destroy(img, {});
   }
 };
+
+// keeps storage logic away from controller

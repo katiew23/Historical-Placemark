@@ -37,3 +37,6 @@ export const collectionMemStore = {
     collections = [];
   },
 };
+
+// stores information in ram not a database
+// this is only used very early on in the building of the app 

@@ -28,7 +28,7 @@ export const userMemStore = {
   
   async deleteUserById(id) {
     const index = users.findIndex((user) => user._id === id);
-    if (index !== -1) {//only delete  if the user is found in the database, preventing unintended consequences of trying to delete a non-existent user.
+    if (index !== -1) { // only delete  if the user is found in the database, preventing unintended consequences of trying to delete a non-existent user.
       users.splice(index, 1);
     }
   },

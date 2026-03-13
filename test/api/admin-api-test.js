@@ -9,10 +9,10 @@ suite("Admin API tests", () => {
     
     let createdUsers = [];
     
-    setup(async () => {
+    setup(async () => {  // runs before ever test 
         db.init("json");
         
-        placemarkService.clearAuth();
+        placemarkService.clearAuth();  // remove any existing jwt session
         
         let user = await placemarkService.createUser(maggie);
         await placemarkService.authenticate(maggieCredentials);
@@ -31,13 +31,15 @@ suite("Admin API tests", () => {
             createdUsers[i] = await placemarkService.createUser(testUsers[i]);
         }
     });
+
+    // test users is my fixture data (fixtures.js) created users are the ones created in the database, this lets the tests compare expected vs actual return 
     
     teardown(async () => {});
     
     test("admin can get all users", async () => {
         const returnedUsers = await placemarkService.getAllUsers();
         assert.equal(returnedUsers.length, testUsers.length +1);
-    });
+    });// +1 is the admin exists
     
     test("admin can delete all users", async () => {
         let returnedUsers = await placemarkService.getAllUsers();
@@ -82,5 +84,5 @@ suite("Admin API tests", () => {
             assert.equal(error.response.data.statusCode, 404);
         }
     });
-    
+  
 });

@@ -3,8 +3,8 @@ export const serviceUrl = "http://localhost:3000";
 export const adminUser = {
   firstName: "Admin",
   lastName: "User",
-  email: "admin@test.com",
-  password: "secret",
+  email: "katiew23@gmail.com",
+  password: "kate",
   role: "admin"
 };
 

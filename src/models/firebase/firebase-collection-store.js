@@ -32,3 +32,5 @@ export const firebaseCollectionStore = {
   }
 
 };
+
+// models handle the data, controllers decide what action happens and tests call the api to check everything works

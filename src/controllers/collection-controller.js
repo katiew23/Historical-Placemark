@@ -13,7 +13,7 @@ export const collectionController = {
 
       const placemarksByCategory = {};
 
-      placemarks.forEach(function (placemark) {
+      placemarks.forEach( function (placemark) {
         const category = placemark.category || "Uncategorised";
 
         if (!placemarksByCategory[category]) {
@@ -21,7 +21,7 @@ export const collectionController = {
         }
 
         placemarksByCategory[category].push(placemark);
-      });
+      });  // loads collection, loads placemarks, groups placemarks by category
 
       const viewData = {
         title: "Collection",
@@ -36,17 +36,14 @@ export const collectionController = {
     }
   },
 
-  addPlacemark: {
-  validate: {
-    payload: PlacemarkSpec,
+  addPlacemark: { validate: {payload: PlacemarkSpec,
     options: { abortEarly: false },
-    failAction: function (request, h, error) {
-      return h.view("collection-view", {
+    failAction: function (request, h, error) { return h.view("collection-view", {
         title: "Add placemark error",
         errors: error.details
       }).takeover().code(400);
     }
-  },
+  }, 
 
   handler: async function (request, h) {
     const collection = await db.collectionStore.getCollectionById(request.params.id);
@@ -121,3 +118,11 @@ export const collectionController = {
   }
 
 };
+
+// controls what happens inside a collection page
+// handles placemark crud 
+// handles collection image upload/delete
+// prepares data for the collection view
+
+// validate payload checking the data being sent and ok to continue
+

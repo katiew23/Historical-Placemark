@@ -2,96 +2,91 @@ import { db } from "../models/db.js";
 import { UserSpec, UserCredentialsSpec } from "../models/joi-schemas.js";
 
 export const accountsController = {
-
-  index: {
-    auth: false,
-    handler: function (request, h) {
-      return h.view("main", { title: "Welcome to Historical Placemark" });
-    },
+  
+  index: { auth: false, handler: function (request, h) {
+    return h.view("main", { title: "Welcome to Historical Placemark" });
   },
+},
 
-  showSignup: {
-    auth: false,
-    handler: function (request, h) {
-      return h.view("signup-view", { title: "Log your Historical Placemark" });
-    },
+showSignup: { auth: false, handler: function (request, h) {
+  return h.view("signup-view", { title: "Log your Historical Placemark" });
+},
+},
+
+signup: { auth: false, validate: { payload: UserSpec, options: { abortEarly: false },
+failAction: function (request, h, error) { return h .view("signup-view", {
+  title: "Sign up error",
+  errors: error.details,
+})
+.takeover()
+.code(400);
+},
+},
+handler: async function (request, h) {
+  const user = request.payload;
+  
+  // add role safely without breaking tests
+  if (!user.role) {
+    user.role = "user";
+  }
+  
+  await db.userStore.addUser(user);
+  return h.redirect("/");
+},
+},
+
+showLogin: { auth: false, handler: function (request, h) {
+  return h.view("login-view", { title: "Login to Historical Placemark" });
+},
+},
+
+login: { auth: false,
+  validate: { payload: UserCredentialsSpec,
+    options: { abortEarly: false },
+    failAction: function (request, h, error) { return h .view("login-view", {
+      title: "Log in error",
+      errors: error.details,
+    })
+    .takeover()
+    .code(400);
   },
+},
+handler: async function (request, h) {
+  const { email, password } = request.payload;
+  const user = await db.userStore.getUserByEmail(email);
+  
+  if (!user || user.password !== password) {
+    return h.redirect("/");
+  }
+  
+  const role = user.email === "katiew23@gmail.com" ? "admin" : "user";
+  
+  console.log("LOGIN ROLE:", role);
+  
+  request.cookieAuth.set({
+    id: user._id,
+    role: role,
+    email: user.email
+  });
+  return h.redirect("/dashboard");
+},
+},
 
-  signup: {
-    auth: false,
-    validate: {
-      payload: UserSpec,
-      options: { abortEarly: false },
-      failAction: function (request, h, error) {
-        return h
-          .view("signup-view", {
-            title: "Sign up error",
-            errors: error.details,
-          })
-          .takeover()
-          .code(400);
-      },
-    },
-    handler: async function (request, h) {
-      const user = request.payload;
+logout: { handler: function (request, h) {
+  request.cookieAuth.clear();
+  return h.redirect("/");
+},
+},
 
-      //add role safely without breaking tests
-      if (!user.role) {
-        user.role = "user";
-      }
-
-      await db.userStore.addUser(user);
-      return h.redirect("/");
-    },
-  },
-
-  showLogin: {
-    auth: false,
-    handler: function (request, h) {
-      return h.view("login-view", { title: "Login to Historical Placemark" });
-    },
-  },
-
-  login: {
-    auth: false,
-    validate: {
-      payload: UserCredentialsSpec,
-      options: { abortEarly: false },
-      failAction: function (request, h, error) {
-        return h
-          .view("login-view", {
-            title: "Log in error",
-            errors: error.details,
-          })
-          .takeover()
-          .code(400);
-      },
-    },
-    handler: async function (request, h) {
-      const { email, password } = request.payload;
-      const user = await db.userStore.getUserByEmail(email);
-
-      if (!user || user.password !== password) {
-        return h.redirect("/");
-      }
-
-      request.cookieAuth.set({ id: user._id, role: user.role, email: user.email });
-      return h.redirect("/dashboard");
-    },
-  },
-
-  logout: {
-    handler: function (request, h) {
-      request.cookieAuth.clear();
-      return h.redirect("/");
-    },
-  },
-
-  validate: async function (request, session) {
-    const user = await db.userStore.getUserById(session.id);
-    if (!user) {
-      return { isValid: false };
-    }
-    return { isValid: true, credentials: user };
-  },
+validate: async function (request, session) {
+  const user = await db.userStore.getUserById(session.id);
+  if (!user) {
+    return { isValid: false };
+  }
+  return {isValid: true, credentials: {_id: user._id, email: user.email, role: session.role}
+}; // changed the validation it was resetting to user all the time added console logs too 
+},
 };
+
+// accounts controller manages user authentication and session creation
+// signup login logout validate 

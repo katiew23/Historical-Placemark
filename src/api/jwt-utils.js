@@ -35,3 +35,10 @@ export async function validate(decoded, request) {
   }
   return { isValid: true, credentials: user };
 }
+
+
+// Utility functions for JWT authentication used by the API routes
+// Handles creating tokens, decoding tokens, and validating the user
+// createToken: generates a signed JWT when a user logs in using the user id and email
+// decodeToken: verifies and reads the token payload so we can extract the user id and email
+// validate: used by the Hapi JWT auth strategy to check the user still exists in the database

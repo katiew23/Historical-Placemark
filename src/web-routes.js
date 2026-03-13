@@ -12,28 +12,25 @@ export const webRoutes = [
   { method: "GET", path: "/login", config: accountsController.showLogin },
   { method: "GET", path: "/logout", config: accountsController.logout },
   { method: "POST", path: "/register", config: accountsController.signup },
-  { method: "POST", path: "/authenticate", config: accountsController.login },
+  { method: "POST", path: "/authenticate", config: accountsController.login },  
 
-  { method: "GET", path: "/dashboard", config: dashboardController.index },
-
-  { method: "GET", path: "/admin", config: adminController.index},  
-  
-
+  { method: "GET", path: "/admin", config: adminController.index}, 
   { method: "GET", path: "/about", config: aboutController.index },
 
+  { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "POST", path: "/dashboard/addcollection", config: dashboardController.addCollection },
   { method: "GET", path: "/dashboard/deletecollection/{id}", config: dashboardController.deleteCollection },
 
   { method: "GET", path: "/collection/{id}", config: collectionController.index },
   { method: "POST", path: "/collection/{id}/addplacemark", config: collectionController.addPlacemark },
   { method: "GET", path: "/collection/{id}/deleteplacemark/{placemarkid}", config: collectionController.deletePlacemark },
-
   { method: "POST", path: "/collection/{id}/uploadimage", config: collectionController.uploadImage },
   { method: "GET", path: "/collection/{id}/deleteimage", config: collectionController.deleteImage },
 
-
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } },
 
-
 ]; 
+
+// this page defines the routes used by the website, each route maps a url and http method to the controller function
+// that handles the request and it reurns the view or action 
 

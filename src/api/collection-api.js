@@ -108,3 +108,9 @@ export const collectionApi = {
   },
   
 };
+
+// Collection API endpoints for CRUD operations on collections
+// Each handler is called by the Hapi routes when the API endpoints are hit
+// JWT auth protects the routes so only authenticated users can access the API
+// Joi schemas validate incoming params/payloads and also document responses for Swagger
+// Boom is used to return standard HTTP errors (404 not found, 400 bad request, 503 database error)

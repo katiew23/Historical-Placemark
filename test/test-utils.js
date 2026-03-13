@@ -1,38 +1,40 @@
 import { assert } from "chai";
 
+// helper file for the tests contains utility functions that make tests easier to write
+
 export function assertSubset(subset, superset) {
-  // If subset is null/undefined, it's only a subset if superset is also null/undefined
+  // if the small value is empty or null or undefined the big value must also be empty
   if (subset === null || subset === undefined) {
     return superset === null || superset === undefined;
   }
   
-  // If subset is a primitive, compare directly
+  // if its a simple value just compare it directly
   if (typeof subset !== "object") {
     return subset === superset;
   }
   
-  // If subset is an object but superset is not, they can't match
+  // if one is an object and the other isnt they dont match
   if (typeof superset !== "object" || superset === null) {
     return false;
   }
   
-  // Handle Date objects - both must be Dates with equal values
+  // Check that both values are dates and that they are the same date.
   if (subset instanceof Date) {
     return superset instanceof Date && subset.valueOf() === superset.valueOf();
   }
   
-  // Handle arrays - every element in subset must exist in superset
+  // check that every item in the small array also exists somewhere in the bigger array
   if (Array.isArray(subset)) {
     if (!Array.isArray(superset)) {
       return false;
     }
-    // For each element in subset, find a matching element in superset
+    // for each element in subset, find a matching element in superset
     return subset.every((subsetItem) => superset.some((supersetItem) => assertSubset(subsetItem, supersetItem)));
   }
   
-  // Handle objects - every key-value pair in subset must exist in superset
+  // check that every field in the small object also exists in the big object
   return Object.keys(subset).every((key) => {
-    // Key must exist in superset
+    // key must exist in superset
     if (!(key in superset)) {
       assert.fail(`Key ${key} not found in superset`);
       return false;
@@ -42,7 +44,7 @@ export function assertSubset(subset, superset) {
     const supersetValue = superset[key];
     assert.equal(subsetValue, supersetValue);
     
-    // Recursively check if subsetValue is a subset of supersetValue
+    // checks if one object contains some of the values of another object
     return assertSubset(subsetValue, supersetValue);
   });
 }

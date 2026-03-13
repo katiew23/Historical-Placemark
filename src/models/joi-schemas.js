@@ -28,9 +28,9 @@ export const UserArraySpec = Joi.array()
   password: "secret"
 };
 
-// The response schema represents the object returned by the database store.
-// When a placemark is saved, the store automatically attaches the id of the
-// collection it belongs to. In the Playtime → Placemark labs this field is
+// the response schema represents the object returned by the database store.
+// when a placemark is saved, the store automatically attaches the id of the
+// collection it belongs to. In the Playtime labs this field is
 // called `collectionid` (all lowercase). Joi response validation is strict,
 // so the field name here must match exactly what the store returns. If the
 // casing does not match (e.g. collectionId vs collectionid) Joi rejects the
@@ -75,7 +75,7 @@ export const CollectionArraySpec = Joi.array()
   .items(CollectionSpecPlus)
   .label("CollectionArray");
 
-// additions
+// additions authorisation
 
 export const AuthTokenSpec = Joi.object({
   success: Joi.boolean().example(true).required(),
