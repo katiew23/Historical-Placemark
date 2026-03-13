@@ -11,29 +11,36 @@
     </div>
 
     <div class="box">
-      <h2 class="subtitle">Users</h2>
+  <h2 class="subtitle">Users</h2>
 
-      <table class="table is-fullwidth is-striped">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-          </tr>
-        </thead>
+  <table class="table is-fullwidth is-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th></th>
+      </tr>
+    </thead>
 
-        <tbody>
-          {{#each users}}
-          <tr>
-            <td>{{firstName}} {{lastName}}</td>
-            <td>{{email}}</td>
-            <td>{{role}}</td>
-          </tr>
-          {{/each}}
-        </tbody>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <td>{{firstName}} {{lastName}}</td>
+        <td>{{email}}</td>
+        <td>{{role}}</td>
+        <td>
+          <a href="/admin/deleteuser/{{_id}}" class="button is-danger is-small">
+            Delete
+          </a>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
 
-      </table>
-    </div>
+  </table>
+</div>
+      
 
   </div>
 </section>

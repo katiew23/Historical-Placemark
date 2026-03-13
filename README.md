@@ -279,7 +279,7 @@ Local development:
 http://localhost:3000
 
 Deployment:
-http://<EC2-IP>:3000
+http://98.81.246.63:3000
 
 Run the full automated test suite:
 

@@ -28,7 +28,23 @@ export const adminController = {
 
       return h.view("admin-dashboard-view", viewData); // renders the page
     }
+  },
+  deleteUser: {
+  handler: async function (request, h) {
+
+    const loggedInUser = request.auth.credentials;
+
+    if (loggedInUser.role !== "admin") {
+      return h.redirect("/dashboard");
+    }
+
+    const userId = request.params.id;
+
+    await db.userStore.deleteUserById(userId);
+
+    return h.redirect("/admin");
   }
+}
 };
 
 //added an admin button and created an admin user in `db.json`. When the admin account logs in, the button becomes visible so admin-specific functionality can be accessed.
