@@ -5,7 +5,14 @@ import { placemarkMongoStore } from "./placemark-mongo-store.js";
 export const collectionMongoStore = {
 
   async getAllCollections() {
-    return await Collection.find().lean();
+    const collections = await Collection.find().lean();
+
+    for (const collection of collections) {
+      collection.placemarks =
+        await placemarkMongoStore.getPlacemarksByCollectionId(collection._id) || [];
+    }
+
+    return collections;
   },
 
   async getCollectionById(id) {
@@ -21,9 +28,10 @@ export const collectionMongoStore = {
   },
 
   async addCollection(collection) {
+    console.log("COLLECTION SAVED:", collection);
     const newCollection = new Collection(collection);
     const collectionObj = await newCollection.save();
-    return this.getCollectionById(collectionObj._id);
+    return collectionObj.toObject();
   },
 
   async getUserCollections(id) {
@@ -40,7 +48,7 @@ export const collectionMongoStore = {
 
   async updateCollection(updatedCollection) {
     const collection = await Collection.findOne({ _id: updatedCollection._id });
-    collection.title = updatedCollection.title;
+    collection.name = updatedCollection.name;
     collection.img = updatedCollection.img;
     await collection.save();
   }

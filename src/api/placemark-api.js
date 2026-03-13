@@ -90,10 +90,12 @@ export const placemarkApi = {
           return Boom.notFound("No placemark with this id");
         }
         
-        await db.placemarkStore.deletePlacemarkById(placemark._id);
+        await db.placemarkStore.deletePlacemarkById(request.params.id);
         return h.response().code(204);
         
       } catch (err) {
+        console.log("DELETE PLACEMARK ERROR:");
+        console.log(err);
         return Boom.serverUnavailable("Database Error");
       }
     },

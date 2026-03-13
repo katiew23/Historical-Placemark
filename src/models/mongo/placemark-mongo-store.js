@@ -16,25 +16,27 @@ export const placemarkMongoStore = {
     const placemarkObj = await newPlacemark.save();
     return this.getPlacemarkById(placemarkObj._id);
   },
-  
- // async addTrack(playlistId, track) {
-   // track.playlistid = playlistId;
-   // const newTrack = new Track(track);
-    //const trackObj = await newTrack.save();
-   // return this.getTrackById(trackObj._id);
-  //},
 
-  
- async getPlacemarkById(id) {
+  async getPlacemarkById(id) {
     if (Mongoose.isValidObjectId(id)) {
       return await Placemark.findOne({ _id: id }).lean();
     }
     return null;
   },
 
-  async deletePlacemarkById(id) {
+async deletePlacemark(id) {
   await Placemark.deleteOne({ _id: id });
 },
+
+async deletePlacemarkById(id) {
+  return this.deletePlacemark(id);
+},
+
+  async getPlacemarksByCollectionId(id) {
+    return await Placemark.find({ collectionid: id }).lean();
+  },
+
+ 
 
   async deleteAllPlacemarks() {
     await Placemark.deleteMany({});

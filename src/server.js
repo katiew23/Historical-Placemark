@@ -94,7 +94,7 @@ async function init() {
 
   server.auth.default("session");
 
-  db.init("json");
+  db.init("mongo"); // if this is mongo it will activate the mongo cloud database
  
 
   server.route(webRoutes);

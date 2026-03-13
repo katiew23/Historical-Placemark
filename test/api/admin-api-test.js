@@ -10,7 +10,7 @@ suite("Admin API tests", () => {
     let createdUsers = [];
     
     setup(async () => {  // runs before ever test 
-        db.init("json");
+        db.init("mongo");
         
         placemarkService.clearAuth();  // remove any existing jwt session
         

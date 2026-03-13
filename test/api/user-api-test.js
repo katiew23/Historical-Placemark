@@ -10,7 +10,7 @@ suite("User API tests", () => {
     let createdUsers = [];
     
     setup(async () => {
-        db.init("json");
+        db.init("mongo");
         
         placemarkService.clearAuth();
         

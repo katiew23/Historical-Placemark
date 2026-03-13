@@ -1,26 +1,25 @@
 {
   "users": [
     {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret",
+      "_id": "6a1541d7-7926-40db-9a96-2454caeb291e"
+    },
+    {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "8ba12811-c0af-4676-a517-ef176018c95e"
+      "_id": "1ef5217e-2997-49ea-8c87-c9ecadfd1e7e"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "6d3c7f4f-8015-474d-b188-682f780defb8"
-    },
-    {
-      "firstName": "kate",
-      "lastName": "kate",
-      "email": "katiew23@gmail.com",
-      "password": "kate",
-      "role": "user",
-      "_id": "78157f71-fc3e-417e-9740-ce413b47267c"
+      "_id": "cb8065dc-d310-45c0-b8ed-994bb892a6aa"
     }
   ],
   "placemarks": [
@@ -32,8 +31,8 @@
       "category": "Tower",
       "yearEstablished": 1003,
       "county": "Waterford",
-      "_id": "e4efa403-b473-4d50-a703-8617c7224261",
-      "collectionid": "b1cae527-5c52-4213-8ba1-108d3111308b"
+      "_id": "f7a7869f-e6a9-4ae7-9290-1f9615c88451",
+      "collectionid": "06a6c19f-3d0a-440a-b841-b28cbdce92a7"
     },
     {
       "name": "Rock of Cashel",
@@ -43,8 +42,8 @@
       "category": "Fortress",
       "yearEstablished": 1101,
       "county": "Tipperary",
-      "_id": "bba98848-6ff6-4bf9-8150-851833d0cb08",
-      "collectionid": "b1cae527-5c52-4213-8ba1-108d3111308b"
+      "_id": "1261c097-bd23-4442-abcc-f07b010e043e",
+      "collectionid": "06a6c19f-3d0a-440a-b841-b28cbdce92a7"
     },
     {
       "name": "Clonmacnoise",
@@ -54,44 +53,14 @@
       "category": "Monastic Site",
       "yearEstablished": 544,
       "county": "Offaly",
-      "_id": "45e621f4-6b83-4b59-a1ff-f69eb419587e",
-      "collectionid": "b1cae527-5c52-4213-8ba1-108d3111308b"
-    },
-    {
-      "name": "Reginalds Tower",
-      "description": "Tower",
-      "latitude": 41.024927,
-      "longitude": -7.725427,
-      "category": "Tower",
-      "yearEstablished": 9,
-      "county": "Waterford",
-      "_id": "c75f6134-6e04-4536-9808-2312ca5b9c3c",
-      "collectionid": "8ceb8958-e4a5-4380-a7da-127e92d9473b"
+      "_id": "870522a8-0343-4f4b-a81c-2d8693748a7f",
+      "collectionid": "06a6c19f-3d0a-440a-b841-b28cbdce92a7"
     }
   ],
   "collections": [
     {
       "name": "Cork Castles",
-      "_id": "b1cae527-5c52-4213-8ba1-108d3111308b"
-    },
-    {
-      "userid": "78157f71-fc3e-417e-9740-ce413b47267c",
-      "name": "Waterford",
-      "_id": "8ceb8958-e4a5-4380-a7da-127e92d9473b",
-      "placemarks": [
-        {
-          "name": "Reginalds Tower",
-          "description": "Tower",
-          "latitude": 41.024927,
-          "longitude": -7.725427,
-          "category": "Tower",
-          "yearEstablished": 9,
-          "county": "Waterford",
-          "_id": "c75f6134-6e04-4536-9808-2312ca5b9c3c",
-          "collectionid": "8ceb8958-e4a5-4380-a7da-127e92d9473b"
-        }
-      ],
-      "img": "http://res.cloudinary.com/dpzvpt5f1/image/upload/v1773417332/gomxwvbcg82fkircucco.jpg"
+      "_id": "06a6c19f-3d0a-440a-b841-b28cbdce92a7"
     }
   ]
 }

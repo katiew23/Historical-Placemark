@@ -3,13 +3,12 @@ import { validationError } from "../logger.js";
 import { db } from "../models/db.js";
 import { IdSpec, CollectionCreateSpec, CollectionSpecPlus, CollectionArraySpec } from "../models/joi-schemas.js";
 
-
 export const collectionApi = {
   
   find: {
     auth: {
       strategy: "jwt"
-    },    
+    },
     handler: async function (request, h) {
       try {
         const collections = await db.collectionStore.getAllCollections();
@@ -52,12 +51,18 @@ export const collectionApi = {
     },
     handler: async function (request, h) {
       try {
-        const collection = await db.collectionStore.addCollection(request.payload);
-        if (collection) {
-          return h.response(collection).code(201);
+        const collection = request.payload;
+        collection.userid = request.auth.credentials.id;
+        
+        const newCollection = await db.collectionStore.addCollection(collection);
+        
+        if (newCollection) {
+          return h.response(newCollection).code(201);
         }
         return Boom.badRequest("Invalid collection data");
+        
       } catch (err) {
+        console.log(err);
         return Boom.serverUnavailable("Database Error");
       }
     },
@@ -65,7 +70,7 @@ export const collectionApi = {
     description: "Create a collection",
     notes: "Creates a collection from the payload and returns the new collection",
     response: { schema: CollectionSpecPlus, failAction: validationError },
-    validate: { payload: CollectionCreateSpec, failAction: function (request, h, error){ throw error; } },
+    validate: { payload: CollectionCreateSpec, failAction: function (request, h, error) { throw error; } },
   },
   
   deleteOne: {

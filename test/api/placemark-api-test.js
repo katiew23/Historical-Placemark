@@ -12,7 +12,7 @@ suite("Placemark API tests", () => {
   let createdPlacemarks = [];
   
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     
     placemarkService.clearAuth();
     

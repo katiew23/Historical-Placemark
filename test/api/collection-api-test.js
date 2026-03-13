@@ -11,7 +11,7 @@ suite("Collection API tests", () => {
   let createdCollections = [];
   
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
     
     placemarkService.clearAuth();
     

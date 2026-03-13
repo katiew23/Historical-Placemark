@@ -12,25 +12,27 @@ export const UserCredentialsSpec = Joi.object({
 export const UserSpec = UserCredentialsSpec.keys({
   firstName: Joi.string().example("Homer").required(),
   lastName: Joi.string().example("Simpson").required(),
+  role: Joi.string().valid("user", "admin").default("user")
 }).label("UserDetails");
 
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
   __v: Joi.number(),
+  role: Joi.string(),
 }).label("UserDetailsPlus");
 
 export const UserArraySpec = Joi.array()
   .items(UserSpecPlus)
   .label("UserArray");
 
-  export const maggieCredentials = {
+export const maggieCredentials = {
   email: "maggie@simpson.com",
   password: "secret"
 };
 
 // the response schema represents the object returned by the database store.
 // when a placemark is saved, the store automatically attaches the id of the
-// collection it belongs to. In the Playtime labs this field is
+// collection it belongs to. In the Playtime  Placemark labs this field is
 // called `collectionid` (all lowercase). Joi response validation is strict,
 // so the field name here must match exactly what the store returns. If the
 // casing does not match (e.g. collectionId vs collectionid) Joi rejects the
@@ -58,24 +60,25 @@ export const PlacemarkArraySpec = Joi.array()
 
 export const CollectionCreateSpec = Joi.object({
   name: Joi.string().example("Cork Castles").required().min(1),
-  
 }).label("CollectionCreate");
 
 export const CollectionSpec = Joi.object({
   name: Joi.string().example("Cork Castles").required().min(1),
-  placemarks: PlacemarkArraySpec,
+  userid: IdSpec,
+  placemarks: PlacemarkArraySpec.optional(),
 }).label("Collection");
 
 export const CollectionSpecPlus = CollectionSpec.keys({
   _id: IdSpec,
   __v: Joi.number(),
+  userid: IdSpec,
 }).label("CollectionPlus");
 
 export const CollectionArraySpec = Joi.array()
   .items(CollectionSpecPlus)
   .label("CollectionArray");
 
-// additions authorisation
+// additions
 
 export const AuthTokenSpec = Joi.object({
   success: Joi.boolean().example(true).required(),
