@@ -7,7 +7,7 @@ import { maggieCredentials } from "../../src/models/joi-schemas.js";
 
 suite("Admin API tests", () => {
     
-    let createdUsers = [];
+    let createdUsers = []; // creating this as test users is different to created users.
     
     setup(async () => {  // runs before ever test 
         db.init("mongo");

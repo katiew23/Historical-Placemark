@@ -13,7 +13,7 @@ export const collectionController = {
 
       const placemarksByCategory = {};
 
-      placemarks.forEach( function (placemark) {
+      placemarks.forEach(function (placemark) {
         const category = placemark.category || "Uncategorised";
 
         if (!placemarksByCategory[category]) {

@@ -47,4 +47,4 @@ export const adminController = {
 }
 };
 
-//added an admin button and created an admin user in `db.json`. When the admin account logs in, the button becomes visible so admin-specific functionality can be accessed.
+// added an admin button and created an admin user in `db.json`. When the admin account logs in, the button becomes visible so admin-specific functionality can be accessed.

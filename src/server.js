@@ -21,10 +21,10 @@ const __dirname = path.dirname(__filename);
 const result = dotenv.config();
 if (result.error) {
   console.log(result.error.message);
-  //process.exit(1);  //as per render lab 
+  // process.exit(1);  //as per render lab 
 }
 
-//dotenv.config({ path: "./src/.env" });
+// dotenv.config({ path: "./src/.env" });
 
 
 

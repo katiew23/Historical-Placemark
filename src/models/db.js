@@ -46,7 +46,7 @@ export const db = {
         this.userStore = userMemStore;
         this.collectionStore = collectionMemStore;
         this.placemarkStore = placemarkMemStore;
-    }
+    } // ended up not being able to connect it 
   }
 };
 
