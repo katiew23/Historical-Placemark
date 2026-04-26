@@ -52,27 +52,30 @@ export const PlacemarkResponseSpec = PlacemarkSpec.keys({
   _id: IdSpec,
   collectionid: IdSpec,
   __v: Joi.number(),
-}).label("PlacemarkResponseSpec");
+  image: Joi.string().allow("").optional(),
+}).unknown(true); // 👈 CRITICAL
 
 export const PlacemarkArraySpec = Joi.array()
   .items(PlacemarkResponseSpec)
   .label("PlacemarkArray");
 
+export const CollectionSpec = Joi.object({
+  name: Joi.string().required().min(1),
+  userid: IdSpec,
+  img: Joi.string().allow("").optional(), // 👈 allow DB field
+  placemarks: PlacemarkArraySpec.optional(),
+}).unknown(true); // 👈 CRITICAL
+
 export const CollectionCreateSpec = Joi.object({
   name: Joi.string().example("Cork Castles").required().min(1),
 }).label("CollectionCreate");
-
-export const CollectionSpec = Joi.object({
-  name: Joi.string().example("Cork Castles").required().min(1),
-  userid: IdSpec,
-  placemarks: PlacemarkArraySpec.optional(),
-}).label("Collection");
 
 export const CollectionSpecPlus = CollectionSpec.keys({
   _id: IdSpec,
   __v: Joi.number(),
   userid: IdSpec,
-}).label("CollectionPlus");
+  img: Joi.string().allow("").optional(),
+}).unknown(true); // 👈 CRITICAL
 
 export const CollectionArraySpec = Joi.array()
   .items(CollectionSpecPlus)
