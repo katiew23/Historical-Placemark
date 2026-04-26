@@ -99,6 +99,12 @@ export const userApi = {
     description: "Delete all users",
     notes: "Deletes all users from the database",
   },
+
+  update: {
+  handler: async function (request, h) {
+    return { success: true };
+  }
+}
 };
 
 // Collection API endpoints for CRUD operations on collections

@@ -278,6 +278,9 @@ The server will run at:
 Local development:
 http://localhost:3000
 
+AWS:
+http://13.60.8.59:3000
+
 Deployment:
 http://98.81.246.63:3000
 

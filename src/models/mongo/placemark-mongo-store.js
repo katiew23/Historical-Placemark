@@ -42,8 +42,13 @@ async deletePlacemarkById(id) {
     await Placemark.deleteMany({});
   },
 
-  async updatePlacemark(placemark, updatedPlacemark) {
-    const placemarkDoc = await Placemark.findOne({ _id: placemark._id });
+  async updatePlacemark(id, updatedPlacemark) {
+    const placemarkDoc = await Placemark.findById(id);
+
+    if (!placemarkDoc) {
+      console.log(`Placemark with id ${id} not found`);
+      return null;
+    }
 
     placemarkDoc.name = updatedPlacemark.name;
     placemarkDoc.description = updatedPlacemark.description;

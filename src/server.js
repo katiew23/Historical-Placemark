@@ -18,19 +18,9 @@ import { apiRoutes } from "./api-routes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const result = dotenv.config();
-if (result.error) {
-  console.log(result.error.message);
-  // process.exit(1);  //as per render lab 
-}
-
-// dotenv.config({ path: "./src/.env" });
-
-
-
 dotenv.config();
 
-const swaggerOptions = {    // this needs to be added first to ensure that the security definitions are included in the generated documentation. If it is added after the routes, the security definitions will not be included and the documentation will not show that authentication is required for the protected routes.
+const swaggerOptions = {
   info: {
     title: "Historical Placemark API",
     version: "0.1"
@@ -49,6 +39,11 @@ async function init() {
   const server = Hapi.server({
     port: process.env.PORT || 3000,
     host: "0.0.0.0",
+    routes: {
+      cors: {
+        origin: ["*"]
+      }
+    }
   });
 
   await server.register([
@@ -94,8 +89,7 @@ async function init() {
 
   server.auth.default("session");
 
-  db.init("mongo"); // if this is mongo it will activate the mongo cloud database
- 
+  db.init("mongo");
 
   server.route(webRoutes);
   server.route(apiRoutes);

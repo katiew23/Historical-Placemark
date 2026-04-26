@@ -120,7 +120,40 @@ export const placemarkApi = {
     tags: ["api"],
     description: "Delete all placemarks",
     notes: "Deletes all placemarks from the database"
+  },
+   update: {
+    auth: {
+      strategy: "jwt"
+    },
+    handler: async function (request, h) {
+      try {
+        const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+        
+        if (!placemark) {
+          return Boom.notFound("No placemark with this id");
+        }
+        
+        await db.placemarkStore.updatePlacemark(
+          request.params.id,
+          request.payload
+        );
+        
+        return h.response().code(204);
+        
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Update a placemark",
+    notes: "Updates a placemark with the id passed in the path",
+    validate: {
+      params: { id: IdSpec },
+      payload: PlacemarkSpec,
+      failAction: validationError
+    }
   }
+ 
   
 };
 

@@ -1,0 +1,22 @@
+<form action="/collection/{{collection._id}}/updateplacemark/{{placemark._id}}" method="POST">
+
+  <input type="text" name="name" value="{{placemark.name}}" />
+  <input type="text" name="description" value="{{placemark.description}}" />
+  <input type="text" name="latitude" value="{{placemark.latitude}}" />
+  <input type="text" name="longitude" value="{{placemark.longitude}}" />
+
+  <div class="select">
+    <select name="category">
+      <option value="Castle">Castle</option>
+      <option value="Tower">Tower</option>
+      <option value="Abbey">Abbey</option>
+      <option value="Monument">Monument</option>
+      <option value="Historic Site">Historic Site</option>
+    </select>
+  </div>
+
+  <input type="number" name="yearEstablished" value="{{placemark.yearEstablished}}" />
+  <input type="text" name="county" value="{{placemark.county}}" />
+
+  <button class="button is-success">Update</button>
+</form>

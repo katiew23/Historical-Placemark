@@ -27,19 +27,25 @@
 
     <ul>
       {{#each this}}
-        <li style="margin-bottom: 10px;">
-          <strong>{{name}}</strong>
-          <span style="color:#888">({{category}})</span> –
-          {{description}} –
-          ({{latitude}}, {{longitude}})
+  <li style="margin-bottom: 10px;">
+    <strong>{{name}}</strong>
+    <span style="color:#888">({{category}})</span> –
+    {{description}} –
+    ({{latitude}}, {{longitude}})
 
-          <a href="/collection/{{../../collection._id}}/deleteplacemark/{{_id}}"
-             class="button is-small is-danger"
-             style="margin-left: 10px;">
-             🗑
-          </a>
-        </li>
-      {{/each}}
+    <a href="/collection/{{../../collection._id}}/editplacemark/{{_id}}"
+       class="button is-small is-warning"
+       style="margin-left: 10px;">
+       Edit
+    </a>
+
+    <a href="/collection/{{../../collection._id}}/deleteplacemark/{{_id}}"
+       class="button is-small is-danger"
+       style="margin-left: 5px;">
+       🗑
+    </a>
+  </li>
+{{/each}}
     </ul>
 
   {{/each}}

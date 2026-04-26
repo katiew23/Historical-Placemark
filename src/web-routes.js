@@ -27,6 +27,8 @@ export const webRoutes = [
   { method: "GET", path: "/collection/{id}/deleteplacemark/{placemarkid}", config: collectionController.deletePlacemark },
   { method: "POST", path: "/collection/{id}/uploadimage", config: collectionController.uploadImage },
   { method: "GET", path: "/collection/{id}/deleteimage", config: collectionController.deleteImage },
+  { method: "GET", path: "/collection/{id}/editplacemark/{placemarkid}", config: collectionController.showEditPlacemark},
+  { method: "POST", path: "/collection/{id}/updateplacemark/{placemarkid}", config: collectionController.updatePlacemark},
 
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } },
 

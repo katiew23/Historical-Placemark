@@ -11,8 +11,6 @@ import { userMongoStore } from "./mongo/user-mongo-store.js";
 import { collectionMongoStore } from "./mongo/collection-mongo-store.js";
 import { placemarkMongoStore } from "./mongo/placemark-mongo-store.js";
 
-import { firebaseCollectionStore } from "./firebase/firebase-collection-store.js";
-import { firebasePlacemarkStore } from "./firebase/firebase-placemark-store.js";
 
 export const db = {
   userStore: null,
@@ -33,13 +31,6 @@ export const db = {
         this.collectionStore = collectionMongoStore;
         this.placemarkStore = placemarkMongoStore;
         connectMongo();
-        break;
-
-      case "firebase":
-        connectMongo(); // users still come from Mongo
-        this.userStore = userMongoStore;
-        this.collectionStore = firebaseCollectionStore;
-        this.placemarkStore = firebasePlacemarkStore;
         break;
 
       default:
