@@ -22,5 +22,6 @@ export const apiRoutes = [
   { method: "GET", path: "/api/placemarks/{id}", config: placemarkApi.findOne },
   { method: "DELETE", path: "/api/placemarks", config: placemarkApi.deleteAll },
   { method: "DELETE", path: "/api/placemarks/{id}", config: placemarkApi.deleteOne },
+  { method: "PUT", path: "/api/placemarks/{id}", config: placemarkApi.update },
   
 ];

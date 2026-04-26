@@ -1,58 +1,16 @@
-<script>
-  let email = $state("");
-  let password = $state("");
-  let error = $state("");
-
-  async function login() {
-    error = "";
-
-    try {
-      const response = await fetch("http://localhost:3000/api/users/authenticate", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, password })
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        error = data.message || "Invalid email or password";
-        return;
-      }
-
-      localStorage.setItem("token", data.token);
-
-      // redirect like HBS would
-      window.location.href = "/dashboard";
-
-    } catch (err) {
-      error = "Server error";
-    }
-  }
-</script>
+{{> welcome-menu active="login"}}
 
 <section class="section">
-  <h1 class="title">Log in</h1>
-
-  {#if error}
-    <div class="notification is-danger">
-      {error}
+  <h1 class="name">Log in</h1>
+  <form action="/authenticate" method="POST">
+    <div class="field">
+      <label class="label">Email</label> <input class="input" type="text" placeholder="Enter email" name="email">
     </div>
-  {/if}
-
-  <div class="field">
-    <label class="label">Email</label>
-    <input class="input" bind:value={email} placeholder="Enter email" />
-  </div>
-
-  <div class="field">
-    <label class="label">Password</label>
-    <input type="password" class="input" bind:value={password} placeholder="Enter password" />
-  </div>
-
-  <button class="button is-link" onclick={login}>
-    Submit
-  </button>
+    <div class="field">
+      <label class="label">Password</label> <input class="input" type="password" placeholder="Enter Password" name="password">
+    </div>
+    <div class="field is-grouped">
+      <button class="button is-link">Submit</button>
+    </div>
+  </form>
 </section>
