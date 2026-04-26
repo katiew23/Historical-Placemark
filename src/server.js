@@ -14,6 +14,7 @@ import { webRoutes } from "./web-routes.js";
 import { db } from "./models/db.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { apiRoutes } from "./api-routes.js";
+import { placemarkApi } from "./api/placemark-api.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,14 +38,16 @@ const swaggerOptions = {
 
 async function init() {
   const server = Hapi.server({
-    port: process.env.PORT || 3000,
-    host: "0.0.0.0",
-    routes: {
-      cors: {
-        origin: ["*"]
-      }
+  port: 3000,
+  host: "localhost",
+  routes: {
+    cors: {
+      origin: ["*"],          // allow frontend
+      headers: ["Accept", "Content-Type", "Authorization"],
+      additionalHeaders: ["cache-control", "x-requested-with"]
     }
-  });
+  }
+});
 
   await server.register([
     Vision,
@@ -93,6 +96,12 @@ async function init() {
 
   server.route(webRoutes);
   server.route(apiRoutes);
+
+  server.route({
+  method: "POST",
+  path: "/api/placemarks/{id}/uploadimage",
+  config: placemarkApi.uploadImage
+});
 
   await server.start();
   console.log("Server running on %s", server.info.uri);

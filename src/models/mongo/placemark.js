@@ -10,6 +10,8 @@ const placemarkSchema = new Schema({
   category: String,
   yearEstablished: Number,
   county: String,
+  img: String,
+  imgId: String,
   collectionid:{
     type: Schema.Types.ObjectId,
     ref: "Collection"

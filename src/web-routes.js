@@ -3,7 +3,7 @@ import { accountsController } from "./controllers/accounts-controller.js";
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { collectionController } from "./controllers/collection-controller.js";
 import { adminController } from "./controllers/admin-controller.js";
-import { Placemark } from "./models/mongo/placemark.js";
+import { placemarkApi } from "./api/placemark-api.js";import { Placemark } from "./models/mongo/placemark.js";
 
 export const webRoutes = [
 
@@ -29,6 +29,8 @@ export const webRoutes = [
   { method: "GET", path: "/collection/{id}/deleteimage", config: collectionController.deleteImage },
   { method: "GET", path: "/collection/{id}/editplacemark/{placemarkid}", config: collectionController.showEditPlacemark},
   { method: "POST", path: "/collection/{id}/updateplacemark/{placemarkid}", config: collectionController.updatePlacemark},
+
+ 
 
   { method: "GET", path: "/{param*}", handler: { directory: { path: "./src/public" } }, config: { auth: false } },
 

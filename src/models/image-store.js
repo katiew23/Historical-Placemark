@@ -17,10 +17,15 @@ export const imageStore = {
   },
 
   uploadImage: async function (imagefile) {
-    console.log("UPLOAD FUNCTION RUNNING");
-    const response = await cloudinary.uploader.upload(imagefile.path);
-    return response.url;
-  },
+  console.log("UPLOAD FUNCTION RUNNING");
+
+  const response = await cloudinary.uploader.upload(imagefile.path);
+
+  return {
+    url: response.secure_url,
+    public_id: response.public_id
+  };
+},
 
   deleteImage: async function (img) {
     await cloudinary.uploader.destroy(img);
