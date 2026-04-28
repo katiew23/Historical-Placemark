@@ -10,6 +10,7 @@ export const apiRoutes = [
   { method: "DELETE", path: "/api/users", config: userApi.deleteAll },
   { method: "GET", path: "/api/users/{id}", config: userApi.findOne },
   { method: "PUT", path: "/api/users/{id}", config: userApi.update },
+  { method: "DELETE", path: "/api/users/{id}", config: userApi.deleteOne },
 
   { method: "POST", path: "/api/collections", config: collectionApi.create },
   { method: "GET", path: "/api/collections", config: collectionApi.find },

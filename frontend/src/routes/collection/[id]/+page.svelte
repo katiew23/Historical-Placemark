@@ -247,6 +247,13 @@
       <input class="input" placeholder="Description" bind:value={newPlaceDescription} />
       <input class="input" placeholder="Latitude" bind:value={newLatitude} />
       <input class="input" placeholder="Longitude" bind:value={newLongitude} />
+      <select class="input" bind:value={newCategory}>
+        <option value="Castle">Castle</option>
+        <option value="Tower">Tower</option>
+        <option value="Abbey">Abbey</option>
+        <option value="Monument">Monument</option>
+        <option value="Historic Site">Historic Site</option>
+      </select>
       <input class="input" placeholder="Year" bind:value={newYear} />
       <input class="input" placeholder="County" bind:value={newCounty} />
       

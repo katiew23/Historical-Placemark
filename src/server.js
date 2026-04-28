@@ -44,7 +44,8 @@ async function init() {
     cors: {
       origin: ["*"],          // allow frontend
       headers: ["Accept", "Content-Type", "Authorization"],
-      additionalHeaders: ["cache-control", "x-requested-with"]
+      additionalHeaders: ["cache-control", "x-requested-with"],
+      credentials: true
     }
   }
 });

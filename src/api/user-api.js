@@ -5,7 +5,7 @@ import { UserCredentialsSpec, UserSpec, UserSpecPlus, UserArraySpec, AuthTokenSp
 import { createToken } from "./jwt-utils.js";
 
 export const userApi = {
-
+  
   authenticate: {
     auth: false,
     handler: async function (request, h) {
@@ -29,7 +29,7 @@ export const userApi = {
     validate: { payload: UserCredentialsSpec, failAction: validationError },
     response: { schema: AuthTokenSpec, failAction: validationError },
   },
-
+  
   find: {
     auth: { strategy: "jwt" },
     handler: async function (request, h) {
@@ -45,7 +45,7 @@ export const userApi = {
     notes: "Returns all users in the database",
     response: { schema: UserArraySpec, failAction: validationError },
   },
-
+  
   findOne: {
     auth: { strategy: "jwt" },
     handler: async function (request, h) {
@@ -64,7 +64,7 @@ export const userApi = {
     notes: "Returns a user with the id passed in the path",    
     response: { schema: UserSpecPlus, failAction: validationError },
   },
-
+  
   create: {
     auth: false,
     handler: async function (request, h) {
@@ -84,7 +84,29 @@ export const userApi = {
     validate: { payload: UserSpec, failAction: validationError },
     response: { schema: UserSpecPlus, failAction: validationError },
   },
-
+  
+  deleteOne: {
+    auth: { strategy: "jwt" },
+    handler: async function (request, h) {
+      try {
+        const user = await db.userStore.getUserById(request.params.id);
+        
+        if (!user) {
+          return Boom.notFound("No User with this id");
+        }
+        
+        await db.userStore.deleteUserById(user._id);
+        return h.response().code(204);
+        
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error");
+      }
+    },
+    tags: ["api"],
+    description: "Delete a user",
+    notes: "Deletes a user by id",
+  },
+  
   deleteAll: {
     auth: { strategy: "jwt" },
     handler: async function (request, h) {
@@ -99,12 +121,12 @@ export const userApi = {
     description: "Delete all users",
     notes: "Deletes all users from the database",
   },
-
+  
   update: {
-  handler: async function (request, h) {
-    return { success: true };
+    handler: async function (request, h) {
+      return { success: true };
+    }
   }
-}
 };
 
 // Collection API endpoints for CRUD operations on collections
