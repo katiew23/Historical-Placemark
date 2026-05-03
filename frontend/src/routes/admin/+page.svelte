@@ -1,49 +1,60 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
 
-  let users = $state([]);
+  type User = {
+    _id: string;
+  };
+
+  type Collection = {
+    _id: string;
+  };
+
+  type Placemark = {
+    _id: string;
+  };
+
+  let users = $state([] as User[]);
   let userCount = $state(0);
   let collectionCount = $state(0);
   let placemarkCount = $state(0);
-  let collections = $state([]);
-  let placemarks = $state([]);
+  let collections = $state([] as Collection[]);
+  let placemarks = $state([] as Placemark[]);
 
-  onMount(async () => {
-    const token = localStorage.getItem("token");
+  onMount(async (): Promise<void> => {
+    const token = localStorage.getItem("token") ?? "";
 
     // USERS
     const res = await fetch("http://localhost:3000/api/users", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const usersData = await res.json();
-    users = usersData;
-    userCount = usersData.length;
+    users = usersData as User[];
+    userCount = users.length;
 
     // COLLECTIONS
     const colRes = await fetch("http://localhost:3000/api/collections", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const collectionsData = await colRes.json();
-    console.log("Collections:", collectionsData);
-    collections = collectionsData;
-    collectionCount = collectionsData.length;
+    collections = collectionsData as Collection[];
+    collectionCount = collections.length;
 
     // PLACEMARKS
     const placeRes = await fetch("http://localhost:3000/api/placemarks", {
       headers: { Authorization: `Bearer ${token}` }
     });
     const placemarksData = await placeRes.json();
-    placemarks = placemarksData;
-    placemarkCount = placemarksData.length;
+    placemarks = placemarksData as Placemark[];
+    placemarkCount = placemarks.length;
 
     loadChart();
   });
 
-  function deleteUser(id) {
+  function deleteUser(id: string): void {
     fetch(`http://localhost:3000/api/users/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
       }
     }).then(() => {
       users = users.filter(u => u._id !== id);
@@ -51,11 +62,11 @@
     });
   }
 
-  function deleteCollection(id) {
+  function deleteCollection(id: string): void {
     fetch(`http://localhost:3000/api/collections/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
       }
     }).then(() => {
       collections = collections.filter(c => c._id !== id);
@@ -63,11 +74,11 @@
     });
   }
 
-  function deletePlacemark(id) {
+  function deletePlacemark(id: string): void {
     fetch(`http://localhost:3000/api/placemarks/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
       }
     }).then(() => {
       placemarks = placemarks.filter(p => p._id !== id);
@@ -75,8 +86,8 @@
     });
   }
 
-  function loadChart() {
-    new frappe.Chart("#adminChart", {
+  function loadChart(): void {
+    new (window as any).frappe.Chart("#adminChart", {
       title: "Platform Overview",
       type: "bar",
       height: 300,

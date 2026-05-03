@@ -1,10 +1,28 @@
-<script>
+<script lang="ts">
   import { onMount, tick } from "svelte";
   const { params } = $props();
-  
-  let collection = $state(null);
+
+  type Placemark = {
+    _id: string;
+    name: string;
+    description: string;
+    latitude: number;
+    longitude: number;
+    category: string;
+    yearEstablished: number;
+    county: string;
+    img?: string;
+  };
+
+  type Collection = {
+    _id: string;
+    name: string;
+    placemarks?: Placemark[];
+  };
+
+  let collection = $state(null as Collection | null);
   let error = $state("");
-  
+
   let newPlaceName = $state("");
   let newPlaceDescription = $state("");
   let newLatitude = $state("");
@@ -12,9 +30,9 @@
   let newCategory = $state("General");
   let newYear = $state("");
   let newCounty = $state("");
-  let selectedFile = null;
-  
-  let editingId = $state(null);
+  let selectedFile: File | null = null;
+
+  let editingId = $state<string | null>(null);
   let editedName = $state("");
   let editedDescription = $state("");
   let editedLatitude = $state("");
@@ -22,55 +40,55 @@
   let editedCategory = $state("");
   let editedYear = $state("");
   let editedCounty = $state("");
-  
-  let map;
-  
-  function handleFile(e) {
-    selectedFile = e.target.files?.[0] ?? null;
+
+  let map: any;
+
+  function handleFile(e: Event): void {
+    const target = e.target as HTMLInputElement;
+    selectedFile = target.files?.[0] ?? null;
   }
-  
-  onMount(() => {
-    loadCollection();
+
+  onMount(async (): Promise<void> => {
+    await loadCollection();
   });
-  
-  async function loadCollection() {
+
+  async function loadCollection(): Promise<void> {
     try {
       const res = await fetch(`http://localhost:3000/api/collections/${params.id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+          Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
         }
       });
-      
+
       if (!res.ok) {
         error = "Failed to load collection";
         return;
       }
-      
+
       const data = await res.json();
-      collection = data;
-      
+      collection = data as Collection;
+
       await tick();
       initMap();
-      
+
     } catch {
       error = "Server error";
     }
   }
-  
-  function initMap() {
+
+  function initMap(): void {
     if (map) map.remove();
-    
-    map = L.map("map").setView([52.26, -7.11], 10);
-    
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-    
-    // existing markers
+
+    map = (window as any).L.map("map").setView([52.26, -7.11], 10);
+
+    (window as any).L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+
     if (collection?.placemarks?.length) {
-      collection.placemarks.forEach((p) => {
+      collection.placemarks.forEach((p: Placemark) => {
         if (!isNaN(p.latitude) && !isNaN(p.longitude)) {
-          L.marker([p.latitude, p.longitude])
-          .addTo(map)
-          .bindPopup(`
+          (window as any).L.marker([p.latitude, p.longitude])
+            .addTo(map)
+            .bindPopup(`
               <b>${p.name}</b><br/>
               ${p.description || ""}<br/>
               ${p.img ? `<img src="${p.img}" width="140"/>` : ""}
@@ -78,31 +96,30 @@
         }
       });
     }
-    
-    // ✅ LAT/LONG HELPER (THIS IS THE FIX)
-    map.on("click", (e) => {
+
+    map.on("click", (e: any) => {
       newLatitude = e.latlng.lat.toFixed(6);
       newLongitude = e.latlng.lng.toFixed(6);
-      
-      if (window.__tempMarker) {
-        map.removeLayer(window.__tempMarker);
+
+      if ((window as any).__tempMarker) {
+        map.removeLayer((window as any).__tempMarker);
       }
-      
-      window.__tempMarker = L.marker(e.latlng).addTo(map);
+
+      (window as any).__tempMarker = (window as any).L.marker(e.latlng).addTo(map);
     });
   }
-  
-  async function addPlacemark() {
+
+  async function addPlacemark(): Promise<void> {
     if (!selectedFile) {
       error = "Image required";
       return;
     }
-    
+
     if (!newPlaceName || !newPlaceDescription || !newLatitude || !newLongitude || !newYear || !newCounty) {
       error = "All fields are required";
       return;
     }
-    
+
     const fd = new FormData();
     fd.append("name", newPlaceName);
     fd.append("description", newPlaceDescription);
@@ -112,27 +129,26 @@
     fd.append("yearEstablished", newYear);
     fd.append("county", newCounty);
     fd.append("imagefile", selectedFile);
-    
+
     try {
       const res = await fetch(
-      `http://localhost:3000/api/collections/${params.id}/placemarks`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: fd
-      }
+        `http://localhost:3000/api/collections/${params.id}/placemarks`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
+          },
+          body: fd
+        }
       );
-      
+
       if (!res.ok) {
         const text = await res.text();
         console.log("CREATE ERROR:", text);
         error = "Failed to add placemark";
         return;
       }
-      
-      // reset
+
       selectedFile = null;
       newPlaceName = "";
       newPlaceDescription = "";
@@ -141,42 +157,42 @@
       newCategory = "General";
       newYear = "";
       newCounty = "";
-      
+
       loadCollection();
-      
-    } catch (err) {
+
+    } catch (err: any) {
       console.log(err);
       error = "Server error";
     }
   }
-  
-  async function deletePlacemark(id) {
+
+  async function deletePlacemark(id: string): Promise<void> {
     await fetch(`http://localhost:3000/api/placemarks/${id}`, {
       method: "DELETE",
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
       }
     });
     loadCollection();
   }
-  
-  function startEdit(p) {
+
+  function startEdit(p: Placemark): void {
     editingId = p._id;
     editedName = p.name;
     editedDescription = p.description;
-    editedLatitude = p.latitude;
-    editedLongitude = p.longitude;
+    editedLatitude = String(p.latitude);
+    editedLongitude = String(p.longitude);
     editedCategory = p.category;
-    editedYear = p.yearEstablished;
+    editedYear = String(p.yearEstablished);
     editedCounty = p.county;
   }
-  
-  async function saveEdit(id) {
+
+  async function saveEdit(id: string): Promise<void> {
     await fetch(`http://localhost:3000/api/placemarks/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`
+        Authorization: `Bearer ${localStorage.getItem("token") ?? ""}`
       },
       body: JSON.stringify({
         name: editedName,
@@ -188,7 +204,7 @@
         county: editedCounty
       })
     });
-    
+
     editingId = null;
     loadCollection();
   }

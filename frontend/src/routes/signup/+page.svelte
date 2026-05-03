@@ -1,11 +1,10 @@
-<script>
+<script lang="ts">
   let firstName = $state("");
   let lastName = $state("");  
   let email = $state("");
   let password = $state("");
- 
-  
-  async function signup() {
+
+  async function signup(): Promise<void> {
     try {
       const response = await fetch("http://localhost:3000/api/users", {
         method: "POST",
@@ -19,19 +18,19 @@
           password
         })
       });
-      
-      const text = await response.text();   // ← change this
+
+      const text: string = await response.text();
       console.log("STATUS:", response.status);
       console.log("RAW:", text);
-      
+
       if (!response.ok) {
         alert("Signup failed");
         return;
       }
-      
+
       window.location.href = "/login";
-      
-    } catch (err) {
+
+    } catch (err: any) {
       console.error(err);
       alert("Server error");
     }

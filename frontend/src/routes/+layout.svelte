@@ -1,17 +1,17 @@
-<script>
+<script lang="ts">
   import favicon from '$lib/assets/favicon.svg';
   import { onMount } from "svelte";
 
   const { children } = $props();
 
-  function logout() {
+  function logout(): void {
     localStorage.removeItem("token");
     window.location.href = "/login";
   }
 
-  onMount(async () => {
+  onMount(async (): Promise<void> => {
     // load Leaflet properly
-    if (!window.L) {
+    if (!(window as any).L) {
       await import("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
     }
   });

@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
     let email = $state("");
     let password = $state("");
     let error = $state("");
     
-    async function login() {
+    async function login(): Promise<void> {
         error = "";
         
         try {
@@ -15,9 +15,9 @@
                 body: JSON.stringify({ email, password })
             });
             
-            const data = await response.json();
+            const data = await response.json() as { token?: string };
             
-            if (!response.ok) {
+            if (!response.ok || !data.token) {
                 error = "Login failed";
                 return;
             }
@@ -26,9 +26,8 @@
             window.location.href = "/dashboard";
             
             console.log("Logged in:", data);
-            // next step: store token + redirect
             
-        } catch (err) {
+        } catch (err: any) {
             error = "Server error";
         }
     }

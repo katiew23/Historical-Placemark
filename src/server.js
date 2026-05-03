@@ -38,18 +38,25 @@ const swaggerOptions = {
 
 async function init() {
   const server = Hapi.server({
-  port: 3000,
-  host: "localhost",
-  routes: {
-    cors: {
-      origin: ["*"],          // allow frontend
-      headers: ["Accept", "Content-Type", "Authorization"],
-      additionalHeaders: ["cache-control", "x-requested-with"],
-      credentials: true
+    port: 3000,
+    host: "localhost",
+    routes: {
+      cors: {
+        origin: ["http://localhost:5173"],
+        headers: ["Accept", "Content-Type", "Authorization"],
+        additionalHeaders: ["cache-control", "x-requested-with"],
+        additionalExposedHeaders: ["Authorization"],
+        credentials: true
+      }
     }
-  }
-});
-
+  });
+  server.ext("onPreResponse", (request, h) => {
+    request.response.header("Access-Control-Allow-Origin", "http://localhost:5173");
+    request.response.header("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
+    request.response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    return h.continue;
+  });
+  
   await server.register([
     Vision,
     Inert,
@@ -60,9 +67,9 @@ async function init() {
       options: swaggerOptions,
     },
   ]);
-
+  
   server.validator(Joi);
-
+  
   server.views({
     engines: {
       hbs: Handlebars,
@@ -74,7 +81,7 @@ async function init() {
     layout: true,
     isCached: false,
   });
-
+  
   server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.cookie_name,
@@ -84,26 +91,26 @@ async function init() {
     redirectTo: "/",
     validate: accountsController.validate,
   });
-
+  
   server.auth.strategy("jwt", "jwt", {
     key: process.env.cookie_password,
     validate: validate,
     verifyOptions: { algorithms: ["HS256"] },
   });
-
+  
   server.auth.default("session");
-
+  
   db.init("mongo");
-
+  
   server.route(webRoutes);
   server.route(apiRoutes);
-
+  
   server.route({
-  method: "POST",
-  path: "/api/placemarks/{id}/uploadimage",
-  config: placemarkApi.uploadImage
-});
-
+    method: "POST",
+    path: "/api/placemarks/{id}/uploadimage",
+    config: placemarkApi.uploadImage
+  });
+  
   await server.start();
   console.log("Server running on %s", server.info.uri);
 }

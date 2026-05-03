@@ -1,17 +1,23 @@
-<script>
-    let collections = $state([]);
+<script lang="ts">
+    type Collection = {
+        _id: string;
+        name: string;
+        img?: string;
+    };
+
+    let collections = $state([] as Collection[]);
     let error = $state("");
 
     let newCollectionName = $state("");
 
-    let editingId = $state(null);
+    let editingId = $state<string | null>(null);
     let editedName = $state("");
 
-    async function loadCollections() {
+    async function loadCollections(): Promise<void> {
         try {
             const response = await fetch("http://localhost:3000/api/collections", {
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${localStorage.getItem("token") ?? ""}`
                 }
             });
 
@@ -22,20 +28,20 @@
                 return;
             }
 
-            collections = data;
+            collections = data as Collection[];
 
         } catch {
             error = "Server error";
         }
     }
 
-    async function addCollection() {
+    async function addCollection(): Promise<void> {
         try {
             const response = await fetch("http://localhost:3000/api/collections", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${localStorage.getItem("token") ?? ""}`
                 },
                 body: JSON.stringify({ name: newCollectionName })
             });
@@ -48,12 +54,12 @@
         } catch {}
     }
 
-    async function deleteCollection(id) {
+    async function deleteCollection(id: string): Promise<void> {
         try {
             await fetch(`http://localhost:3000/api/collections/${id}`, {
                 method: "DELETE",
                 headers: {
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${localStorage.getItem("token") ?? ""}`
                 }
             });
 
@@ -62,18 +68,18 @@
         } catch {}
     }
 
-    function startEdit(collection) {
+    function startEdit(collection: Collection): void {
         editingId = collection._id;
         editedName = collection.name;
     }
 
-    async function saveEdit(id) {
+    async function saveEdit(id: string): Promise<void> {
         try {
             await fetch(`http://localhost:3000/api/collections/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                    "Authorization": `Bearer ${localStorage.getItem("token") ?? ""}`
                 },
                 body: JSON.stringify({ name: editedName })
             });
