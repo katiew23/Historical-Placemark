@@ -50,12 +50,12 @@ async function init() {
       }
     }
   });
-  server.ext("onPreResponse", (request, h) => {
-    request.response.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    request.response.header("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
-    request.response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    return h.continue;
-  });
+ // server.ext("onPreResponse", (request, h) => {
+  //  request.response.header("Access-Control-Allow-Origin", "http://localhost:5173");
+   // request.response.header("Access-Control-Allow-Headers", "Accept, Content-Type, Authorization");
+   // request.response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+   // return h.continue;
+ // });
   
   await server.register([
     Vision,

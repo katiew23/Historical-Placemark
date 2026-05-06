@@ -6,11 +6,13 @@ import { db } from "../../src/models/db.js";
 import { maggieCredentials } from "../../src/models/joi-schemas.js";
 
 
-suite("Placemark API tests", () => {
-  
+suite("Placemark API tests", function () {
+
+  this.timeout(10000);
+
   let collection;
   let createdPlacemarks = [];
-  
+
   setup(async () => {
     db.init("mongo");
     

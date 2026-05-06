@@ -111,6 +111,27 @@ export const collectionApi = {
     description: "Delete all collections",
     notes: "Deletes all collections from the database",
   },
+  update: {
+
+  auth: {
+    strategy: "jwt"
+  },
+
+  handler: async function (request, h) {
+
+    const collection = await db.collectionStore.getCollectionById(request.params.id);
+
+    if (!collection) {
+      return h.response({ error: "Collection not found" }).code(404);
+    }
+
+    collection.name = request.payload.name;
+
+    await db.collectionStore.updateCollection(collection);
+
+    return h.response(collection).code(200);
+  }
+},
   
 };
 

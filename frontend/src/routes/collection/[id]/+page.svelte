@@ -247,12 +247,27 @@
               <img src={place.img} />
               {/if}
               
-              {#if editingId === place._id}
-              <input class="input" bind:value={editedName} />
-              <input class="input" bind:value={editedDescription} />
-              <button class="button is-success" on:click={() => saveEdit(place._id)}>
+              {#if editingId === place._id}              
+              <input class="input mb-2" bind:value={editedName} placeholder="Name" />              
+              <input class="input mb-2" bind:value={editedDescription} placeholder="Description" />              
+              <input class="input mb-2" bind:value={editedLatitude} placeholder="Latitude" />              
+              <input class="input mb-2" bind:value={editedLongitude} placeholder="Longitude" />              
+              <select class="input mb-2" bind:value={editedCategory}>
+                <option value="Castle">Castle</option>
+                <option value="Tower">Tower</option>
+                <option value="Abbey">Abbey</option>
+                <option value="Monument">Monument</option>
+                <option value="Historic Site">Historic Site</option>
+              </select>
+              <input class="input mb-2" bind:value={editedYear} placeholder="Year Established" />              
+              <input class="input mb-2" bind:value={editedCounty} placeholder="County" />              
+              <button class="button is-success mt-2" on:click={() => saveEdit(place._id)}>
                 Save
+              </button>              
+              <button class="button is-light mt-2 ml-2" on:click={() => editingId = null}>
+                Cancel
               </button>
+              
               {:else}
               <p class="title is-6">{place.name}</p>
               <p>{place.description}</p>

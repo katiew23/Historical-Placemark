@@ -15,6 +15,7 @@ export const apiRoutes = [
   { method: "POST", path: "/api/collections", config: collectionApi.create },
   { method: "GET", path: "/api/collections", config: collectionApi.find },
   { method: "GET", path: "/api/collections/{id}", config: collectionApi.findOne },
+  { method: "PUT", path: "/api/collections/{id}", config: collectionApi.update },
   { method: "DELETE", path: "/api/collections", config: collectionApi.deleteAll },
   { method: "DELETE", path: "/api/collections/{id}", config: collectionApi.deleteOne },
 
