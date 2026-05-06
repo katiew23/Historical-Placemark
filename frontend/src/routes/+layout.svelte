@@ -6,7 +6,7 @@
 
   function logout(): void {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   }
 
   onMount(async (): Promise<void> => {

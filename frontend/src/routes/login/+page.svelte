@@ -2,11 +2,15 @@
     let email = $state("");
     let password = $state("");
     let error = $state("");
-
+    
     async function login(): Promise<void> {
+        
         error = "";
-
+        
+        localStorage.setItem("savedEmail", email);
+        
         try {
+            
             const response = await fetch("http://localhost:3000/api/users/authenticate", {
                 method: "POST",
                 headers: {
@@ -14,18 +18,20 @@
                 },
                 body: JSON.stringify({ email, password })
             });
-
+            
             const data = await response.json() as { token?: string };
-
+            
             if (!response.ok || !data.token) {
                 error = "Login failed";
                 return;
             }
-
+            
             localStorage.setItem("token", data.token);
+            
             window.location.href = "/dashboard";
-
+            
         } catch {
+            
             error = "Server error";
         }
     }
