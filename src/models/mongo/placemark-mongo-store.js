@@ -43,29 +43,56 @@ export const placemarkMongoStore = {
   },
   
   async updatePlacemark(id, updatedPlacemark) {
-    const placemarkDoc = await Placemark.findById(id);
-    
-    if (!placemarkDoc) {
-      console.log(`Placemark with id ${id} not found`);
-      return null;
-    }
-    
-    placemarkDoc.name = updatedPlacemark.name;
-    placemarkDoc.description = updatedPlacemark.description;
-    placemarkDoc.latitude = updatedPlacemark.latitude;
-    placemarkDoc.longitude = updatedPlacemark.longitude;
-    placemarkDoc.category = updatedPlacemark.category;
-    placemarkDoc.yearEstablished = updatedPlacemark.yearEstablished;
-    placemarkDoc.county = updatedPlacemark.county;
-    
-    if (updatedPlacemark.img) {
-      placemarkDoc.img = updatedPlacemark.img;
-    }
-    
-    if (updatedPlacemark.imgId) {
-      placemarkDoc.imgId = updatedPlacemark.imgId;
-    }
-    
-    await placemarkDoc.save();
+
+  const placemarkDoc = await Placemark.findById(id);
+
+  if (!placemarkDoc) {
+    console.log(`Placemark with id ${id} not found`);
+    return null;
   }
+
+  // only update fields if they exist
+
+  if (updatedPlacemark.name !== undefined) {
+    placemarkDoc.name = updatedPlacemark.name;
+  }
+
+  if (updatedPlacemark.description !== undefined) {
+    placemarkDoc.description = updatedPlacemark.description;
+  }
+
+  if (updatedPlacemark.latitude !== undefined) {
+    placemarkDoc.latitude = updatedPlacemark.latitude;
+  }
+
+  if (updatedPlacemark.longitude !== undefined) {
+    placemarkDoc.longitude = updatedPlacemark.longitude;
+  }
+
+  if (updatedPlacemark.category !== undefined) {
+    placemarkDoc.category = updatedPlacemark.category;
+  }
+
+  if (updatedPlacemark.yearEstablished !== undefined) {
+    placemarkDoc.yearEstablished = updatedPlacemark.yearEstablished;
+  }
+
+  if (updatedPlacemark.county !== undefined) {
+    placemarkDoc.county = updatedPlacemark.county;
+  }
+
+  if (updatedPlacemark.img !== undefined) {
+    placemarkDoc.img = updatedPlacemark.img;
+  }
+
+  if (updatedPlacemark.imgId !== undefined) {
+    placemarkDoc.imgId = updatedPlacemark.imgId;
+  }
+
+  if (updatedPlacemark.images !== undefined) {
+    placemarkDoc.images = updatedPlacemark.images;
+  }
+
+  await placemarkDoc.save();
+}
 };

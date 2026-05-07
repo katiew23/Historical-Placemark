@@ -98,11 +98,7 @@ async function init() {
   server.route(webRoutes);
   server.route(apiRoutes);
 
-  server.route({
-  method: "POST",
-  path: "/api/placemarks/{id}/uploadimage",
-  config: placemarkApi.uploadImage
-});
+
 
   await server.start();
   console.log("Server running on %s", server.info.uri);

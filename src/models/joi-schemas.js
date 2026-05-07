@@ -46,13 +46,34 @@ export const PlacemarkSpec = Joi.object({
   category: Joi.string().example("Monastery").required(),
   yearEstablished: Joi.number().example(544).integer().required(),
   county: Joi.string().example("Offaly").required(),
+
+  // image support
+  img: Joi.string().allow("").optional(),
+  imgId: Joi.string().allow("").optional(),
+
+  // multiple images support
+  images: Joi.array()
+    .items(Joi.string())
+    .allow(null)
+    .optional(),
+
 }).label("PlacemarkSpec");
 
 export const PlacemarkResponseSpec = PlacemarkSpec.keys({
   _id: IdSpec,
   collectionid: IdSpec,
   __v: Joi.number(),
-  image: Joi.string().allow("").optional(),
+
+  // single image
+  img: Joi.string().allow("").optional(),
+  imgId: Joi.string().allow("").optional(),
+
+  // gallery images
+  images: Joi.array()
+    .items(Joi.string())
+    .allow(null)
+    .optional(),
+
 }).unknown(true); // 👈 CRITICAL
 
 export const PlacemarkArraySpec = Joi.array()
@@ -63,7 +84,7 @@ export const CollectionSpec = Joi.object({
   name: Joi.string().required().min(1),
   userid: IdSpec,
   img: Joi.string().allow("").optional(), // 👈 allow DB field
-  placemarks: PlacemarkArraySpec.optional(),
+  placemarks: Joi.array().optional(),
 }).unknown(true); // 👈 CRITICAL
 
 export const CollectionCreateSpec = Joi.object({

@@ -24,6 +24,5 @@ export const apiRoutes = [
   { method: "DELETE", path: "/api/placemarks", config: placemarkApi.deleteAll },
   { method: "DELETE", path: "/api/placemarks/{id}", config: placemarkApi.deleteOne },
   { method: "PUT", path: "/api/placemarks/{id}", config: placemarkApi.update },
-  { method: "POST", path: "/api/upload", config: placemarkApi.uploadImage },
-  
+  { method: "POST", path: "/api/placemarks/{id}/uploadimage", config: placemarkApi.uploadImage },
 ];

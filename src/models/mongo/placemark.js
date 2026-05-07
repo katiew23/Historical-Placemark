@@ -10,11 +10,21 @@ const placemarkSchema = new Schema({
   category: String,
   yearEstablished: Number,
   county: String,
+
+  // existing single image
   img: String,
   imgId: String,
-  collectionid:{
+
+  // multiple images 
+  images: {
+    type: [String],
+    default: []
+  },
+
+  collectionid: {
     type: Schema.Types.ObjectId,
     ref: "Collection"
   },
 });
+
 export const Placemark = Mongoose.model("Placemark", placemarkSchema);

@@ -43,7 +43,7 @@ export const placemarkApi = {
     },
     handler: async function (request, h) {
       try {
-        const file = request.payload.imagefile;
+        const file = request.payload.imagefiles;
         
         let imageUrl = "";
         let imageId = "";
@@ -63,7 +63,9 @@ export const placemarkApi = {
           yearEstablished: Number(request.payload.yearEstablished),
           county: request.payload.county,
           img: imageUrl,
-          imgId: imageId
+          imgId: imageId,
+
+          images: imageUrl ? [imageUrl] : []
         };
         
         const placemark = await db.placemarkStore.addPlacemark(
@@ -165,15 +167,26 @@ export const placemarkApi = {
       multipart: true
     },
     
+    validate: {
+      params: { id: IdSpec },
+      failAction: validationError
+    },
+    
     handler: async function (request, h) {
+      
       try {
-        const file = request.payload.imagefile;
         
-        if (!file) {
+        console.log("UPLOAD FUNCTION RUNNING");
+        
+        let files = request.payload.imagefiles;
+        
+        if (!files) {
           return Boom.badRequest("No file uploaded");
         }
         
-        const imageUrl = await imageStore.uploadImage(file);
+        if (!Array.isArray(files)) {
+          files = [files];
+        }
         
         const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
         
@@ -181,21 +194,36 @@ export const placemarkApi = {
           return Boom.notFound("Placemark not found");
         }
         
+        const uploadedImages = [];
+        
+        for (const file of files) {
+          
+          const uploaded = await imageStore.uploadImage(file);
+          
+          uploadedImages.push(uploaded.url);
+        }
+        
+        const existingImages = placemark.images || [];
+        
         await db.placemarkStore.updatePlacemark(request.params.id, {
-          img: imageUrl.url,
-          imgId: imageUrl.public_id
+          
+          images: [...existingImages, ...uploadedImages],
+          
+          img: placemark.img || uploadedImages[0]
         });
         
         return { success: true };
         
       } catch (err) {
+        
         console.log("UPLOAD ERROR:", err);
+        
         return Boom.serverUnavailable("Upload failed");
       }
     },
     
     tags: ["api"],
-    description: "Upload image for placemark"
+    description: "Upload images for placemark"
   }
   
 };
