@@ -94,5 +94,49 @@ export const placemarkMongoStore = {
   }
 
   await placemarkDoc.save();
-}
+},
+async addReview(id, review) {
+
+  const placemark = await Placemark.findById(id);
+
+  if (!placemark) {
+    return null;
+  }
+
+  placemark.reviews.push(review);
+
+  await placemark.save();
+
+  return placemark;
+},
+
+async deleteReview(placemarkId, reviewIndex) {
+
+  const placemark = await Placemark.findById(placemarkId);
+
+  if (!placemark) {
+    return null;
+  }
+
+  placemark.reviews.splice(reviewIndex, 1);
+
+  await placemark.save();
+
+  return placemark;
+},
+
+async updateReview(placemarkId, reviewIndex, updatedReview) {
+
+  const placemark = await Placemark.findById(placemarkId);
+
+  if (!placemark) {
+    return null;
+  }
+
+  placemark.reviews[reviewIndex] = updatedReview;
+
+  await placemark.save();
+
+  return placemark;
+},
 };

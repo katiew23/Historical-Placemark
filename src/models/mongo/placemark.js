@@ -10,17 +10,24 @@ const placemarkSchema = new Schema({
   category: String,
   yearEstablished: Number,
   county: String,
-
+  
   // existing single image
   img: String,
   imgId: String,
-
+  
   // multiple images 
   images: {
     type: [String],
     default: []
   },
-
+  
+  reviews: [
+    {
+      name: String,
+      text: String,
+      rating: Number
+    }
+  ],
   collectionid: {
     type: Schema.Types.ObjectId,
     ref: "Collection"
