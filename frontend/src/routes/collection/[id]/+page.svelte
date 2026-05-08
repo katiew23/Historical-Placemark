@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount, tick } from "svelte";
-  import L from "leaflet";
-  import "leaflet/dist/leaflet.css";
+  let L;
   
   const { params } = $props();
   
@@ -32,8 +31,14 @@
     selectedFiles = Array.from(e.target.files);
   }
   
-  onMount(() => {
+  onMount(async () => {
+    
+    const leaflet = await import("leaflet");
+    
+    L = leaflet.default;
+    
     loadCollection();
+    
   });
   
   async function loadCollection() {
@@ -235,7 +240,7 @@
       }
       
       // RESET
-      selectedFile = null;
+      selectedFiles = [];
       newPlaceName = "";
       newPlaceDescription = "";
       newLatitude = "";

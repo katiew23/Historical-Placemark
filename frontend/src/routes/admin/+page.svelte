@@ -9,13 +9,22 @@
   let placemarks = $state([]);
 
   onMount(async () => {
+
+    // ADMIN PROTECTION
+    if (localStorage.getItem("role") !== "admin") {
+      window.location.href = "/dashboard";
+      return;
+    }
+
     const token = localStorage.getItem("token");
 
     // USERS
     const res = await fetch("http://localhost:3000/api/users", {
       headers: { Authorization: `Bearer ${token}` }
     });
+
     const usersData = await res.json();
+
     users = usersData;
     userCount = usersData.length;
 
@@ -23,8 +32,9 @@
     const colRes = await fetch("http://localhost:3000/api/collections", {
       headers: { Authorization: `Bearer ${token}` }
     });
+
     const collectionsData = await colRes.json();
-    console.log("Collections:", collectionsData);
+
     collections = collectionsData;
     collectionCount = collectionsData.length;
 
@@ -32,7 +42,9 @@
     const placeRes = await fetch("http://localhost:3000/api/placemarks", {
       headers: { Authorization: `Bearer ${token}` }
     });
+
     const placemarksData = await placeRes.json();
+
     placemarks = placemarksData;
     placemarkCount = placemarksData.length;
 
@@ -130,7 +142,7 @@
               <td>
                 <button
                   class="button is-danger is-small"
-                  on:click={() => deleteUser(user._id)}>
+                  onclick={() => deleteUser(user._id)}>
                   Delete
                 </button>
               </td>
@@ -159,7 +171,7 @@
               <td>
                 <button
                   class="button is-danger is-small"
-                  on:click={() => deleteCollection(collection._id)}>
+                  onclick={() => deleteCollection(collection._id)}>
                   Delete
                 </button>
               </td>
@@ -190,7 +202,7 @@
               <td>
                 <button
                   class="button is-danger is-small"
-                  on:click={() => deletePlacemark(placemark._id)}>
+                  onclick={() => deletePlacemark(placemark._id)}>
                   Delete
                 </button>
               </td>

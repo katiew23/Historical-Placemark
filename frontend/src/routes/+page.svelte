@@ -28,6 +28,7 @@
             }
 
             localStorage.setItem("token", data.token);
+            localStorage.setItem("role", data.role);
 
             window.location.href = "/dashboard";
 

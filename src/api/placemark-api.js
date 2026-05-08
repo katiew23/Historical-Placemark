@@ -70,11 +70,11 @@ export const placemarkApi = {
   create: {
     auth: { strategy: "jwt" },
     
-    //payload: {
-    // output: "file",
-    // parse: true,
-    //  // multipart: true
-    // },
+    payload: {
+    output: "file",
+    parse: true,
+    multipart: true
+     },
     validate: {
       params: { id: IdSpec },
       payload: PlacemarkSpec,
