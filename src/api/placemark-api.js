@@ -79,7 +79,7 @@ export const placemarkApi = {
 
     validate: {
       params: { id: IdSpec },
-      payload: PlacemarkSpec,
+      //payload: PlacemarkSpec,
       failAction: validationError
     },
 
