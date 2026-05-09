@@ -106,5 +106,6 @@ export const CollectionArraySpec = Joi.array()
 
 export const AuthTokenSpec = Joi.object({
   success: Joi.boolean().example(true).required(),
-  token: Joi.string().example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...").required()
+  token: Joi.string().example("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...").required(),
+  role: Joi.string().valid("user", "admin").default("user")
 }).label("AuthTokenSpec");

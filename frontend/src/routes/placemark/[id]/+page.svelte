@@ -47,9 +47,15 @@
         return;
       }
 
-      placemark = await res.json();
+      const data = await res.json();
 
-    } catch {
+      placemark = structuredClone(data);
+
+      console.log("FRONTEND PLACEMARK:", placemark);
+
+    } catch (err) {
+
+      console.log("LOAD ERROR:", err);
 
       error = "Server error";
     }
@@ -68,9 +74,9 @@
       fd.append("imagefiles", file);
     });
 
-    fd.append("reviewName", reviewName);
-    fd.append("reviewText", reviewText);
-    fd.append("reviewStars", reviewStars);
+    fd.append("reviewer", reviewName);
+    fd.append("review", reviewText);
+    fd.append("rating", reviewStars);
 
     try {
 
@@ -98,7 +104,9 @@
 
       await loadPlacemark();
 
-    } catch {
+    } catch (err) {
+
+      console.log("UPLOAD ERROR:", err);
 
       uploadError = "Server error";
     }
@@ -120,43 +128,59 @@
 
   async function saveReview(index) {
 
-    await fetch(
-      `http://localhost:3000/api/placemarks/${params.id}/reviews/${index}`,
-      {
-        method: "PUT",
+    try {
 
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
+      await fetch(
+        `http://localhost:3000/api/placemarks/${params.id}/reviews/${index}`,
+        {
+          method: "PUT",
 
-        body: JSON.stringify({
-          name: editedReviewName,
-          text: editedReviewText,
-          rating: editedReviewStars
-        })
-      }
-    );
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          },
 
-    editingReviewIndex = null;
+          body: JSON.stringify({
+            name: editedReviewName,
+            text: editedReviewText,
+            rating: editedReviewStars
+          })
+        }
+      );
 
-    await loadPlacemark();
+      editingReviewIndex = null;
+
+      await loadPlacemark();
+
+    } catch (err) {
+
+      console.log("SAVE REVIEW ERROR:", err);
+    }
   }
 
   async function deleteReview(index) {
 
-    await fetch(
-      `http://localhost:3000/api/placemarks/${params.id}/reviews/${index}`,
-      {
-        method: "DELETE",
+    try {
 
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
+      const res = await fetch(
+        `http://localhost:3000/api/placemarks/${params.id}/reviews/${index}`,
+        {
+          method: "DELETE",
+
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`
+          }
         }
-      }
-    );
+      );
 
-    await loadPlacemark();
+      console.log("DELETE RESPONSE:", res.status);
+
+      await loadPlacemark();
+
+    } catch (err) {
+
+      console.log("DELETE REVIEW ERROR:", err);
+    }
   }
 </script>
 
@@ -184,19 +208,21 @@
 
         <div class="column is-half">
 
-          {#if placemark.images?.length}
+          {#if placemark.reviews?.length}
 
             <div class="image-grid">
 
-              {#each placemark.images as image, index}
+              {#each placemark.reviews as review, index}
 
                 <div class="image-tile">
 
-                  <img
-                    src={image}
-                    alt={placemark.name}
-                    class="gallery-image"
-                  />
+                  {#if placemark.images?.[index]}
+                    <img
+                      src={placemark.images[index]}
+                      alt={placemark.name}
+                      class="gallery-image"
+                    />
+                  {/if}
 
                   <div class="review-card">
 
@@ -234,20 +260,15 @@
                     {:else}
 
                       <p class="has-text-weight-bold">
-                        {placemark.reviews?.[index]?.name || "Anonymous"}
+                        {review.name}
                       </p>
 
                       <p>
-                        {"⭐".repeat(
-                          Number(
-                            placemark.reviews?.[index]?.rating || 0
-                          )
-                        )}
+                        {"⭐".repeat(Number(review.rating || 0))}
                       </p>
 
                       <p>
-                        {placemark.reviews?.[index]?.text ||
-                          "No review added yet."}
+                        {review.text}
                       </p>
 
                       <button

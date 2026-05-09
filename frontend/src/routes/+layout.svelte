@@ -4,12 +4,19 @@
 
   const { children } = $props();
 
+  let role = $state("");
+
   function logout() {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+
     window.location.href = "/";
   }
 
   onMount(async () => {
+
+    role = localStorage.getItem("role") || "";
+
     // load Leaflet properly
     if (!window.L) {
       await import("https://unpkg.com/leaflet@1.9.4/dist/leaflet.js");
@@ -29,13 +36,28 @@
       Historical Placemark
     </a>
   </div>
-  
+
   <div class="navbar-end">
     <div class="navbar-item">
-      <a href="/dashboard" class="button is-light">Dashboard</a>
-      <a href="/admin" class="button is-light">Admin</a>
-      <a href="/about" class="button is-light">About</a>
-      <button class="button is-light" onclick={logout}>Logout</button>
+
+      <a href="/dashboard" class="button is-light">
+        Dashboard
+      </a>
+
+      {#if role === "admin"}
+        <a href="/admin" class="button is-light">
+          Admin
+        </a>
+      {/if}
+
+      <a href="/about" class="button is-light">
+        About
+      </a>
+
+      <button class="button is-light" onclick={logout}>
+        Logout
+      </button>
+
     </div>
   </div>
 </nav>
