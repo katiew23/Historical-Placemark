@@ -73,9 +73,9 @@ export const placemarkApi = {
 
     payload: {
       output: "file",
-      parse: true,
-      multipart: true
-    },
+     parse: true,
+     multipart: true
+    },//this is turned off for tests
 
     validate: {
       params: { id: IdSpec },
@@ -87,7 +87,7 @@ export const placemarkApi = {
 
       try {
 
-        const file = request.payload.imagefiles;
+        const file = request.payload?.imagefiles || null;
 
         let imageUrl = "";
         let imageId = "";
@@ -99,6 +99,8 @@ export const placemarkApi = {
           imageUrl = uploaded.url;
           imageId = uploaded.public_id;
         }
+
+        console.log(request.payload);
 
         const placemarkData = {
           name: request.payload.name,

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import ReviewCard from "$lib/ui/ReviewCard.svelte";
 
   const { params } = $props();
 
@@ -50,8 +51,6 @@
       const data = await res.json();
 
       placemark = structuredClone(data);
-
-      console.log("FRONTEND PLACEMARK:", placemark);
 
     } catch (err) {
 
@@ -162,7 +161,7 @@
 
     try {
 
-      const res = await fetch(
+      await fetch(
         `http://localhost:3000/api/placemarks/${params.id}/reviews/${index}`,
         {
           method: "DELETE",
@@ -172,8 +171,6 @@
           }
         }
       );
-
-      console.log("DELETE RESPONSE:", res.status);
 
       await loadPlacemark();
 
@@ -214,82 +211,18 @@
 
               {#each placemark.reviews as review, index}
 
-                <div class="image-tile">
-
-                  {#if placemark.images?.[index]}
-                    <img
-                      src={placemark.images[index]}
-                      alt={placemark.name}
-                      class="gallery-image"
-                    />
-                  {/if}
-
-                  <div class="review-card">
-
-                    {#if editingReviewIndex === index}
-
-                      <input
-                        class="input"
-                        bind:value={editedReviewName}
-                      />
-
-                      <textarea
-                        class="textarea mt-2"
-                        bind:value={editedReviewText}
-                      ></textarea>
-
-                      <div class="select mt-2">
-
-                        <select bind:value={editedReviewStars}>
-                          <option value="1">⭐</option>
-                          <option value="2">⭐⭐</option>
-                          <option value="3">⭐⭐⭐</option>
-                          <option value="4">⭐⭐⭐⭐</option>
-                          <option value="5">⭐⭐⭐⭐⭐</option>
-                        </select>
-
-                      </div>
-
-                      <button
-                        class="button is-success mt-3 mr-2"
-                        onclick={() => saveReview(index)}
-                      >
-                        Save
-                      </button>
-
-                    {:else}
-
-                      <p class="has-text-weight-bold">
-                        {review.name}
-                      </p>
-
-                      <p>
-                        {"⭐".repeat(Number(review.rating || 0))}
-                      </p>
-
-                      <p>
-                        {review.text}
-                      </p>
-
-                      <button
-                        class="button is-small is-warning mt-3 mr-2"
-                        onclick={() => startReviewEdit(index)}
-                      >
-                        Edit
-                      </button>
-
-                      <button
-                        class="button is-small is-danger mt-3"
-                        onclick={() => deleteReview(index)}
-                      >
-                        Delete
-                      </button>
-
-                    {/if}
-
-                  </div>
-
-                </div>
+                <ReviewCard
+                  {placemark}
+                  {review}
+                  {index}
+                  {editingReviewIndex}
+                  bind:editedReviewName
+                  bind:editedReviewText
+                  bind:editedReviewStars
+                  {startReviewEdit}
+                  {saveReview}
+                  {deleteReview}
+                />
 
               {/each}
 
@@ -411,12 +344,6 @@
 
   .gallery-image:hover {
     transform: scale(1.02);
-  }
-
-  .review-card {
-    background: #f5f5f5;
-    padding: 16px;
-    border-radius: 0 0 12px 12px;
   }
 
 </style>
