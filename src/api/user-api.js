@@ -29,7 +29,8 @@ export const userApi = {
         return h.response({
           success: true,
           token: token,
-          role: role
+          role: role,
+            _id: user._id.toString()
         }).code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");

@@ -19,10 +19,8 @@ export const collectionApi = {
       
       try {
         
-        const userid = request.auth.credentials._id;
-        
         const collections =
-        await db.collectionStore.getUserCollections(userid);
+        await db.collectionStore.getAllCollections();
         
         return collections;
         
@@ -36,9 +34,9 @@ export const collectionApi = {
     
     tags: ["api"],
     
-    description: "Get user collections",
+    description: "Get all collections",
     
-    notes: "Returns collections for logged in user only",
+    notes: "Returns all collections",
     
     response: {
       schema: CollectionArraySpec,

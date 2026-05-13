@@ -3,128 +3,132 @@
   import AddPlacemarkForm from "$lib/ui/AddPlacemarkForm.svelte";
   import PlacemarkCard from "$lib/ui/PlacemarkCard.svelte";
   import { collectionService } from "$lib/services/collection-service";
-
+  import { currentPlacemarks } from "$lib/runes.svelte";
+  
   let L;
-
+  
   const { params } = $props();
-
+  
   let collection = $state<any>(null);
-  let error = $state("");
-
-  let newPlaceName = $state("");
-  let newPlaceDescription = $state("");
-  let newLatitude = $state(0);
-  let newLongitude = $state(0);
-  let newCategory = $state("General");
-  let newYear = $state(0);
-  let newCounty = $state("");
-
-  let selectedFiles: File[] = [];
-
-  let editingId = $state<string | null>(null);
-
-  let editedName = $state("");
-  let editedDescription = $state("");
-  let editedLatitude = $state("");
-  let editedLongitude = $state("");
-  let editedCategory = $state("");
-  let editedYear = $state("");
-  let editedCounty = $state("");
-
-  let map: L.Map;
-
-  function handleFile(e) {
-    selectedFiles = Array.from(e.target.files);
-  }
-
-  onMount(async () => {
-
-    const leaflet = await import("leaflet");
-
-    L = leaflet.default;
-
-    loadCollection();
-
-  });
-
-  async function loadCollection() {
-
-    try {
-
-      const data = await collectionService.getCollection(params.id);
-
-      collection = data;
-
-      await tick();
-
-      initMap();
-
-    } catch {
-
-      error = "Server error";
-    }
-  }
-
-  function initMap() {
-
-    if (map) map.remove();
-
-    map = L.map("map").setView([52.26, -7.11], 10);
-
-    const baseLayer = L.tileLayer(
-      "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-      {
-        attribution: "&copy; OpenStreetMap contributors"
+    let error = $state("");
+    
+    let newPlaceName = $state("");
+    let newPlaceDescription = $state("");
+    let newLatitude = $state(0);
+    let newLongitude = $state(0);
+    let newCategory = $state("General");
+    let newYear = $state(0);
+    let newCounty = $state("");
+    
+    let selectedFiles: File[] = [];
+    
+    let editingId = $state<string | null>(null);
+      
+      let editedName = $state("");
+      let editedDescription = $state("");
+      let editedLatitude = $state("");
+      let editedLongitude = $state("");
+      let editedCategory = $state("");
+      let editedYear = $state("");
+      let editedCounty = $state("");
+      
+      let map: L.Map;
+      
+      function handleFile(e) {
+        selectedFiles = Array.from(e.target.files);
       }
-    ).addTo(map);
-
-    const precipitationLayer = L.tileLayer(
-      "https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-      {
-        attribution: "OpenWeatherMap"
+      
+      onMount(async () => {
+        
+        const leaflet = await import("leaflet");
+        
+        L = leaflet.default;
+        
+        loadCollection();
+        
+      });
+      
+      async function loadCollection() {
+        
+        try {
+          
+          const data = await collectionService.getCollection(params.id);
+          
+          collection = data;
+          
+          currentPlacemarks.placemarks =
+          data.placemarks || [];
+          
+          await tick();
+          
+          initMap();
+          
+        } catch {
+          
+          error = "Server error";
+        }
       }
-    );
-
-    const tempLayer = L.tileLayer(
-      "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-      {
-        attribution: "OpenWeatherMap"
-      }
-    );
-
-    const cloudsLayer = L.tileLayer(
-      "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-      {
-        attribution: "OpenWeatherMap"
-      }
-    );
-
-    L.control.layers(
-      {
-        "OpenStreetMap": baseLayer
-      },
-      {
-        "Precipitation": precipitationLayer,
-        "Temperature": tempLayer,
-        "Clouds": cloudsLayer
-      }
-    ).addTo(map);
-
-    if (collection?.placemarks?.length) {
-
-      const markers: L.Marker[] = [];
-
-      collection.placemarks.forEach((p) => {
-
-        if (!isNaN(p.latitude) && !isNaN(p.longitude)) {
-
-          fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${p.latitude}&lon=${p.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
-          )
-            .then((res) => res.json())
-            .then((weather) => {
-
-              const marker = L.marker([p.latitude, p.longitude])
+      
+      function initMap() {
+        
+        if (map) map.remove();
+        
+        map = L.map("map").setView([52.26, -7.11], 10);
+        
+        const baseLayer = L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+          attribution: "&copy; OpenStreetMap contributors"
+        }
+        ).addTo(map);
+        
+        const precipitationLayer = L.tileLayer(
+        "https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
+        {
+          attribution: "OpenWeatherMap"
+        }
+        );
+        
+        const tempLayer = L.tileLayer(
+        "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
+        {
+          attribution: "OpenWeatherMap"
+        }
+        );
+        
+        const cloudsLayer = L.tileLayer(
+        "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
+        {
+          attribution: "OpenWeatherMap"
+        }
+        );
+        
+        L.control.layers(
+        {
+          "OpenStreetMap": baseLayer
+        },
+        {
+          "Precipitation": precipitationLayer,
+          "Temperature": tempLayer,
+          "Clouds": cloudsLayer
+        }
+        ).addTo(map);
+        
+        if (currentPlacemarks.placemarks?.length) {
+          
+          const markers: L.Marker[] = [];
+          
+          currentPlacemarks.placemarks.forEach((p) => {
+            
+            if (!isNaN(p.latitude) && !isNaN(p.longitude)) {
+              
+              fetch(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${p.latitude}&lon=${p.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
+              )
+              .then((res) => res.json())
+              .then((weather) => {
+                
+                const marker = L.marker([p.latitude, p.longitude])
                 .addTo(map)
                 .bindPopup(`
                   <b>${p.name}</b><br/>
@@ -142,169 +146,169 @@
 
                   ${p.img ? `<img src="${p.img}" width="140"/>` : ""}
                 `);
-
-              markers.push(marker);
-
-              if (markers.length > 0) {
-
-                const group = L.featureGroup(markers);
-
-                map.fitBounds(group.getBounds().pad(0.2));
-              }
-            });
+                
+                markers.push(marker);
+                
+                if (markers.length > 0) {
+                  
+                  const group = L.featureGroup(markers);
+                  
+                  map.fitBounds(group.getBounds().pad(0.2));
+                }
+              });
+            }
+          });
         }
-      });
-    }
-
-    map.on("click", (e: L.LeafletMouseEvent) => {
-
-      newLatitude = Number(e.latlng.lat.toFixed(6));
-      newLongitude = Number(e.latlng.lng.toFixed(6));
-
-      if ((window as any).__tempMarker) {
-        map.removeLayer((window as any).__tempMarker);
+        
+        map.on("click", (e: L.LeafletMouseEvent) => {
+          
+          newLatitude = Number(e.latlng.lat.toFixed(6));
+          newLongitude = Number(e.latlng.lng.toFixed(6));
+          
+          if ((window as any).__tempMarker) {
+            map.removeLayer((window as any).__tempMarker);
+          }
+          
+          (window as any).__tempMarker =
+          L.marker(e.latlng).addTo(map);
+        });
       }
-
-      (window as any).__tempMarker =
-        L.marker(e.latlng).addTo(map);
-    });
-  }
-
-  async function addPlacemark() {
-
-    if (!selectedFiles.length) {
-      error = "Image required";
-      return;
-    }
-
-    if (
-      !newPlaceName ||
-      !newPlaceDescription ||
-      !newLatitude ||
-      !newLongitude ||
-      !newYear ||
-      !newCounty
-    ) {
-      error = "All fields are required";
-      return;
-    }
-
-    const fd = new FormData();
-
-    fd.append("name", newPlaceName);
-    fd.append("description", newPlaceDescription);
-    fd.append("latitude", String(newLatitude));
-    fd.append("longitude", String(newLongitude));
-    fd.append("category", newCategory);
-    fd.append("yearEstablished", String(newYear));
-    fd.append("county", newCounty);
-
-    selectedFiles.forEach((file) => {
-      fd.append("imagefiles", file);
-    });
-
-    try {
-
-      await collectionService.addPlacemark(params.id, fd);
-
-      selectedFiles = [];
-
-      newPlaceName = "";
-      newPlaceDescription = "";
-      newLatitude = 0;
-      newLongitude = 0;
-      newCategory = "General";
-      newYear = 0;
-      newCounty = "";
-
-      loadCollection();
-
-    } catch (err) {
-
-      console.log(err);
-
-      error = "Server error";
-    }
-  }
-
-  async function deletePlacemark(id: string) {
-
-    await collectionService.deletePlacemark(id);
-
-    loadCollection();
-  }
-
-  function startEdit(p) {
-
-    editingId = p._id;
-
-    editedName = p.name;
-    editedDescription = p.description;
-    editedLatitude = p.latitude;
-    editedLongitude = p.longitude;
-    editedCategory = p.category;
-    editedYear = p.yearEstablished;
-    editedCounty = p.county;
-  }
-
-  async function saveEdit(id: string) {
-
-    await collectionService.updatePlacemark(
-      id,
-      {
-        name: editedName,
-        description: editedDescription,
-        latitude: editedLatitude,
-        longitude: editedLongitude,
-        category: editedCategory,
-        yearEstablished: editedYear,
-        county: editedCounty
+      
+      async function addPlacemark() {
+        
+        if (!selectedFiles.length) {
+          error = "Image required";
+          return;
+        }
+        
+        if (
+        !newPlaceName ||
+        !newPlaceDescription ||
+        !newLatitude ||
+        !newLongitude ||
+        !newYear ||
+        !newCounty
+        ) {
+          error = "All fields are required";
+          return;
+        }
+        
+        const fd = new FormData();
+        
+        fd.append("name", newPlaceName);
+        fd.append("description", newPlaceDescription);
+        fd.append("latitude", String(newLatitude));
+        fd.append("longitude", String(newLongitude));
+        fd.append("category", newCategory);
+        fd.append("yearEstablished", String(newYear));
+        fd.append("county", newCounty);
+        
+        selectedFiles.forEach((file) => {
+          fd.append("imagefiles", file);
+        });
+        
+        try {
+          
+          await collectionService.addPlacemark(params.id, fd);
+          
+          selectedFiles = [];
+          
+          newPlaceName = "";
+          newPlaceDescription = "";
+          newLatitude = 0;
+          newLongitude = 0;
+          newCategory = "General";
+          newYear = 0;
+          newCounty = "";
+          
+          loadCollection();
+          
+        } catch (err) {
+          
+          console.log(err);
+          
+          error = "Server error";
+        }
       }
-    );
-
-    editingId = null;
-
-    loadCollection();
-  }
-</script>
-
-<section class="section">
-  <div class="container">
-
-    {#if error}
-      <div class="notification is-danger">{error}</div>
-    {/if}
-
-    {#if collection}
-
-      <h1 class="title">{collection.name}</h1>
-
-      <div id="map" style="height: 500px;"></div>
-
-      <div class="columns is-multiline">
-
-        {#each collection.placemarks || [] as place}
-
+      
+      async function deletePlacemark(id: string) {
+        
+        await collectionService.deletePlacemark(id);
+        
+        loadCollection();
+      }
+      
+      function startEdit(p) {
+        
+        editingId = p._id;
+        
+        editedName = p.name;
+        editedDescription = p.description;
+        editedLatitude = p.latitude;
+        editedLongitude = p.longitude;
+        editedCategory = p.category;
+        editedYear = p.yearEstablished;
+        editedCounty = p.county;
+      }
+      
+      async function saveEdit(id: string) {
+        
+        await collectionService.updatePlacemark(
+        id,
+        {
+          name: editedName,
+          description: editedDescription,
+          latitude: editedLatitude,
+          longitude: editedLongitude,
+          category: editedCategory,
+          yearEstablished: editedYear,
+          county: editedCounty
+        }
+        );
+        
+        editingId = null;
+        
+        loadCollection();
+      }
+    </script>
+    
+    <section class="section">
+      <div class="container">
+        
+        {#if error}
+        <div class="notification is-danger">{error}</div>
+        {/if}
+        
+        {#if collection}
+        
+        <h1 class="title">{collection.name}</h1>
+        
+        <div id="map" style="height: 500px;"></div>
+        
+        <div class="columns is-multiline">
+          
+          {#each currentPlacemarks.placemarks || [] as place}
+          
           <PlacemarkCard
-            {place}
-            {editingId}
-            bind:editedName
-            bind:editedDescription
-            bind:editedLatitude
-            bind:editedLongitude
-            bind:editedCategory
-            bind:editedYear
-            bind:editedCounty
-            {startEdit}
-            {saveEdit}
-            {deletePlacemark}
+          {place}
+          {editingId}
+          bind:editedName
+          bind:editedDescription
+          bind:editedLatitude
+          bind:editedLongitude
+          bind:editedCategory
+          bind:editedYear
+          bind:editedCounty
+          {startEdit}
+          {saveEdit}
+          {deletePlacemark}
           />
-
-        {/each}
-
-      </div>
-
-      <AddPlacemarkForm
+          
+          {/each}
+          
+        </div>
+        
+        <AddPlacemarkForm
         bind:newPlaceName
         bind:newPlaceDescription
         bind:newLatitude
@@ -314,16 +318,16 @@
         bind:newCounty
         {handleFile}
         {addPlacemark}
-      />
-
-      <p class="mt-3">
-        Find coordinates:
-        <a href="https://www.latlong.net/" target="_blank">
-          latlong.net
-        </a>
-      </p>
-
-    {/if}
-
-  </div>
-</section>
+        />
+        
+        <p class="mt-3">
+          Find coordinates:
+          <a href="https://www.latlong.net/" target="_blank">
+            latlong.net
+          </a>
+        </p>
+        
+        {/if}
+        
+      </div>
+    </section>

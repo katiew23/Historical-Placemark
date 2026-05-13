@@ -1,6 +1,9 @@
 <script>
     
+    
     import { userService } from "$lib/services/user-service";
+    import { loggedInUser } from "$lib/runes.svelte";
+    
     
     let email = $state("");
     
@@ -26,6 +29,20 @@
                 return;
             }
             
+            loggedInUser.email = email;
+            
+            loggedInUser.name =
+            data.name || data.email || "";
+            
+            loggedInUser.role =
+            data.role || "";
+            
+            loggedInUser.token =
+            data.token || "";
+            
+            loggedInUser._id =
+            data._id || "";
+            
             localStorage.setItem("token", data.token);
             
             if (data.role) {
@@ -33,6 +50,8 @@
             }
             
             localStorage.setItem("name", email);
+
+            localStorage.setItem("_id", data._id);
             
             window.location.href = "/dashboard";
             
