@@ -1,4 +1,6 @@
 <script lang="ts">
+  
+  import { loggedInUser } from "$lib/runes.svelte";
   let {
     place,
     editingId,
@@ -61,6 +63,12 @@
   
   <footer class="card-footer">
     
+    {console.log(place)}
+
+  {#if place.userid === loggedInUser._id}
+    
+    
+    
     <button
     class="card-footer-item"
     onclick={() => startEdit(place)}
@@ -74,6 +82,8 @@
   >
   Delete
 </button>
+
+{/if}
 
 </footer>
 

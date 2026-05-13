@@ -21,6 +21,8 @@
             email,
             password
             );
+            
+            
             console.log(data);
             if (!data) {
                 
@@ -50,7 +52,7 @@
             }
             
             localStorage.setItem("name", email);
-
+            
             localStorage.setItem("_id", data._id);
             
             window.location.href = "/dashboard";

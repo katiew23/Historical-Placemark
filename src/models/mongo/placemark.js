@@ -22,12 +22,22 @@ const placemarkSchema = new Schema({
   },
   
   reviews: [
-    {
-      name: String,
-      text: String,
-      rating: Number
+  {
+    name: String,
+    text: String,
+    rating: Number,
+
+    userid: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
     }
-  ],
+  }
+],
+
+  userid: {
+  type: Schema.Types.ObjectId,
+  ref: "User"
+},
   collectionid: {
     type: Schema.Types.ObjectId,
     ref: "Collection"

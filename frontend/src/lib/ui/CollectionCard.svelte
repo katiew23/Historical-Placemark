@@ -30,9 +30,7 @@
     
     {:else}
     
-    {console.log(collection)}
-    {console.log(loggedInUser)}
-    
+  
     <p class="title is-5">{collection.name}</p>
     
     <p class="content">
