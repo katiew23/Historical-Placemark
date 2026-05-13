@@ -17,6 +17,7 @@ export const apiRoutes = [
   { method: "GET", path: "/api/collections/{id}", config: collectionApi.findOne },
   { method: "DELETE", path: "/api/collections", config: collectionApi.deleteAll },
   { method: "DELETE", path: "/api/collections/{id}", config: collectionApi.deleteOne },
+  { method: "PUT", path: "/api/collections/{id}", config: collectionApi.update },
 
   { method: "POST", path: "/api/collections/{id}/placemarks", config: placemarkApi.create },
   { method: "GET", path: "/api/placemarks", config: placemarkApi.find },

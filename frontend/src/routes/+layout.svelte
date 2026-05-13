@@ -5,10 +5,12 @@
   const { children } = $props();
 
   let role = $state("");
+  let name = $state("");
 
   function logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
+    localStorage.removeItem("name");
 
     window.location.href = "/";
   }
@@ -16,6 +18,7 @@
   onMount(async () => {
 
     role = localStorage.getItem("role") || "";
+    name = localStorage.getItem("name") || "";
 
     // load Leaflet properly
     if (!window.L) {
@@ -39,6 +42,8 @@
 
   <div class="navbar-end">
     <div class="navbar-item">
+
+    <p><span>{name}</span></p>
 
       <a href="/dashboard" class="button is-light">
         Dashboard

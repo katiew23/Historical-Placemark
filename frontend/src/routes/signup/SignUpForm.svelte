@@ -1,35 +1,30 @@
 <script>
+
+  import { userService } from "$lib/services/user-service";
+
   let firstName = $state("");
+
   let lastName = $state("");
+
   let email = $state("");
+
   let password = $state("");
 
   async function signup() {
 
     try {
 
-      const response = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password
-        })
+      const success = await userService.signup({
+        firstName,
+        lastName,
+        email,
+        password
       });
 
-      const text = await response.text();
+      if (!success) {
 
-      console.log("STATUS:", response.status);
-      console.log("RAW:", text);
-
-      if (!response.ok) {
         alert("Signup failed");
+
         return;
       }
 
@@ -42,6 +37,7 @@
       alert("Server error");
     }
   }
+
 </script>
 
 <div class="box">

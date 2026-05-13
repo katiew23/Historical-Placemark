@@ -2,12 +2,13 @@
   import { onMount, tick } from "svelte";
   import AddPlacemarkForm from "$lib/ui/AddPlacemarkForm.svelte";
   import PlacemarkCard from "$lib/ui/PlacemarkCard.svelte";
+  import { collectionService } from "$lib/services/collection-service";
 
   let L;
 
   const { params } = $props();
 
-  let collection = $state(null);
+  let collection = $state<any>(null);
   let error = $state("");
 
   let newPlaceName = $state("");
@@ -18,9 +19,9 @@
   let newYear = $state(0);
   let newCounty = $state("");
 
-  let selectedFiles = [];
+  let selectedFiles: File[] = [];
 
-  let editingId = $state(null);
+  let editingId = $state<string | null>(null);
 
   let editedName = $state("");
   let editedDescription = $state("");
@@ -50,21 +51,7 @@
 
     try {
 
-      const res = await fetch(
-        `http://localhost:3000/api/collections/${params.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          }
-        }
-      );
-
-      if (!res.ok) {
-        error = "Failed to load collection";
-        return;
-      }
-
-      const data = await res.json();
+      const data = await collectionService.getCollection(params.id);
 
       collection = data;
 
@@ -218,27 +205,7 @@
 
     try {
 
-      const res = await fetch(
-        `http://localhost:3000/api/collections/${params.id}/placemarks`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`
-          },
-          body: fd
-        }
-      );
-
-      if (!res.ok) {
-
-        const text = await res.text();
-
-        console.log("CREATE ERROR:", text);
-
-        error = "Failed to add placemark";
-
-        return;
-      }
+      await collectionService.addPlacemark(params.id, fd);
 
       selectedFiles = [];
 
@@ -260,17 +227,9 @@
     }
   }
 
-  async function deletePlacemark(id) {
+  async function deletePlacemark(id: string) {
 
-    await fetch(
-      `http://localhost:3000/api/placemarks/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        }
-      }
-    );
+    await collectionService.deletePlacemark(id);
 
     loadCollection();
   }
@@ -288,25 +247,18 @@
     editedCounty = p.county;
   }
 
-  async function saveEdit(id) {
+  async function saveEdit(id: string) {
 
-    await fetch(
-      `http://localhost:3000/api/placemarks/${id}`,
+    await collectionService.updatePlacemark(
+      id,
       {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`
-        },
-        body: JSON.stringify({
-          name: editedName,
-          description: editedDescription,
-          latitude: editedLatitude,
-          longitude: editedLongitude,
-          category: editedCategory,
-          yearEstablished: editedYear,
-          county: editedCounty
-        })
+        name: editedName,
+        description: editedDescription,
+        latitude: editedLatitude,
+        longitude: editedLongitude,
+        category: editedCategory,
+        yearEstablished: editedYear,
+        county: editedCounty
       }
     );
 

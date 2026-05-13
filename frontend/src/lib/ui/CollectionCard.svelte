@@ -2,7 +2,7 @@
   let {
     collection,
     editingId,
-    editedName,
+    editedName = $bindable(),
     startEdit,
     saveEdit,
     deleteCollection
