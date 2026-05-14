@@ -72,10 +72,10 @@ export const placemarkApi = {
     auth: { strategy: "jwt" },
     
     payload: {
-      output: "file",
-      parse: true,
-      multipart: true
-    },//this is turned off for tests
+    output: "file",
+    parse: true,
+    multipart: true
+   },//this is turned off for tests
     
     validate: {
       params: { id: IdSpec },

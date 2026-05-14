@@ -17,7 +17,7 @@ export const userApi = {
         if (user.password !== request.payload.password) {
           return Boom.unauthorized("Invalid password");
         }
-       
+        
         
         const token = createToken(user);
         
@@ -30,7 +30,7 @@ export const userApi = {
           success: true,
           token: token,
           role: role,
-            _id: user._id.toString()
+          _id: user._id.toString()
         }).code(201);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");
@@ -79,23 +79,44 @@ export const userApi = {
   },
   
   create: {
-    auth: false,
-    handler: async function (request, h) {
-      try {
-        const user = await db.userStore.addUser(request.payload);
-        if (user) {
-          return h.response(user).code(201);
-        }
-        return Boom.badImplementation("error creating user");
-      } catch (err) {
-        return Boom.serverUnavailable("Database Error");
+  auth: false,
+
+  handler: async function (request, h) {
+
+    try {
+
+      if (request.payload.email === "katiew23@gmail.com") {
+        request.payload.role = "admin";
+      } else {
+        request.payload.role = "user";
       }
-    },
+
+      const user = await db.userStore.addUser(request.payload);
+
+      if (user) {
+        return h.response(user).code(201);
+      }
+
+      return Boom.badImplementation("error creating user");
+
+    } catch (err) {
+      return Boom.serverUnavailable("Database Error");
+    }
+  },
+    
     tags: ["api"],
     description: "Create a user",
     notes: "Creates a user from the payload and returns the new user",
-    validate: { payload: UserSpec, failAction: validationError },
-    response: { schema: UserSpecPlus, failAction: validationError },
+    
+    validate: {
+      payload: UserSpec,
+      failAction: validationError
+    },
+    
+    response: {
+      schema: UserSpecPlus,
+      failAction: validationError
+    },
   },
   
   deleteOne: {

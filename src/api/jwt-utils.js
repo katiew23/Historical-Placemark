@@ -8,6 +8,10 @@ export function createToken(user) {
   const payload = {
     id: user._id,
     email: user.email,
+    role:
+    user.email === "katiew23@gmail.com"
+    ? "admin"
+    : "user",
   };
   const options = {
     algorithm: "HS256",
@@ -18,13 +22,22 @@ export function createToken(user) {
 
 export function decodeToken(token) {
   const userInfo = {};
+
   try {
-    const decoded = jwt.verify(token, process.env.cookie_password);
+
+    const decoded = jwt.verify(
+      token,
+      process.env.cookie_password
+    );
+
     userInfo.userId = decoded.id;
     userInfo.email = decoded.email;
+    userInfo.role = decoded.role;
+
   } catch (e) {
     console.log(e.message);
   }
+
   return userInfo;
 }
 
