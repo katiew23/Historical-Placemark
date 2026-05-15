@@ -1,6 +1,13 @@
-<script>
+<script lang="ts">
+
   import { loggedInUser } from "$lib/runes.svelte";
-  
+
+  interface Collection {
+    _id: string;
+    name: string;
+    userid: string;
+  }
+
   let {
     collection,
     editingId,
@@ -8,68 +15,84 @@
     startEdit,
     saveEdit,
     deleteCollection
-  } = $props();
+  } = $props<{
+    collection: Collection;
+    editingId: string | null;
+    editedName: string;
+    startEdit: (collection: Collection) => void;
+    saveEdit: (id: string) => void;
+    deleteCollection: (id: string) => void;
+  }>();
+
 </script>
 
 <div class="column is-one-third">
-  
+
   <div class="card">
-    
+
     <div class="card-content">
-      
+
       {#if editingId === collection._id}
-      
-      <input class="input" bind:value={editedName} />
-      
-      <button
-      class="button is-small is-success mt-2"
-      onclick={() => saveEdit(collection._id)}
-      >
-      Save
-    </button>
-    
-    {:else}
-    
-  
-    <p class="title is-5">{collection.name}</p>
-    
-    <p class="content">
-      A collection of historical places.
-    </p>
-    
-    {/if}
-    
-  </div>
-  
-  <footer class="card-footer">
-    
+
+        <input
+          class="input"
+          bind:value={editedName}
+        />
+
+        <button
+          class="button is-small is-success mt-2"
+          onclick={() => saveEdit(collection._id)}
+        >
+          Save
+        </button>
+
+      {:else}
+
+        <p class="title is-5">
+          {collection.name}
+        </p>
+
+        <p class="content">
+          A collection of historical places.
+        </p>
+
+      {/if}
+
+    </div>
+
+    <div class="card-content pt-0">
+
+  <div class="buttons mt-3">
+
     <a
-    href={`/collection/${collection._id}`}
-    class="card-footer-item"
+      href={`/collection/${collection._id}`}
+      class="button is-link is-light"
     >
-    View
-  </a>
-  
-  {#if collection.userid === loggedInUser._id}
-  
-  <button
-  class="card-footer-item"
-  onclick={() => startEdit(collection)}
-  >
-  Edit
-</button>
+      View
+    </a>
 
-<button
-class="card-footer-item"
-onclick={() => deleteCollection(collection._id)}
->
-Delete
-</button>
+    {#if collection.userid === loggedInUser._id}
 
-{/if}
+      <button
+        class="button is-warning is-light"
+        onclick={() => startEdit(collection)}
+      >
+        Edit
+      </button>
 
-</footer>
+      <button
+        class="button is-danger is-light"
+        onclick={() => deleteCollection(collection._id)}
+      >
+        Delete
+      </button>
+
+    {/if}
+
+  </div>
 
 </div>
+
+  </div>
 
 </div>

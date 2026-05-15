@@ -1,12 +1,10 @@
 <script lang="ts">
   
-  import { onMount } from "svelte";
-  
-  import ReviewCard from "$lib/ui/ReviewCard.svelte";
-  
-  import { placemarkService } from "$lib/services/placemark-service";
-  
+  import { onMount } from "svelte";  
+  import ReviewCard from "$lib/ui/ReviewCard.svelte";  
+  import { placemarkService } from "$lib/services/placemark-service";  
   import { page } from "$app/state";
+  
   
   const id = page.params.id;
   
@@ -18,7 +16,7 @@
     
     let uploadError = $state("");
     
-    // add review
+    //add review
     
     let reviewName = $state("");
     
@@ -26,7 +24,7 @@
     
     let reviewStars = $state(5);
     
-    // edit review
+    //edit review
     
     let editingReviewIndex = $state<number | null>(null);
       
@@ -230,18 +228,12 @@
           
           <div class="column is-half">
             
-            <div class="box">
-              
-              <p><strong>Category:</strong> {placemark.category}</p>
-              
-              <p><strong>County:</strong> {placemark.county}</p>
-              
-              <p><strong>Year:</strong> {placemark.yearEstablished}</p>
-              
-              <p><strong>Latitude:</strong> {placemark.latitude}</p>
-              
-              <p><strong>Longitude:</strong> {placemark.longitude}</p>
-              
+            <div class="box">              
+              <p><strong>Category:</strong> {placemark.category}</p>              
+              <p><strong>County:</strong> {placemark.county}</p>              
+              <p><strong>Year:</strong> {placemark.yearEstablished}</p>              
+              <p><strong>Latitude:</strong> {placemark.latitude}</p>              
+              <p><strong>Longitude:</strong> {placemark.longitude}</p>              
             </div>
             
             <div class="box mt-5">
@@ -291,43 +283,12 @@
               onclick={uploadImages}
               >
               Upload Images
-            </button>
-            
-          </div>
-          
-        </div>
-        
-      </div>
-      
-      {/if}
-      
-    </div>
-    
+            </button>            
+          </div>          
+        </div>        
+      </div>      
+      {/if}      
+    </div>    
   </section>
   
-  <style>
-    
-    .image-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    
-    .image-tile {
-      display: flex;
-      flex-direction: column;
-    }
-    
-    .gallery-image {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-      border-radius: 12px 12px 0 0;
-      transition: transform 0.3s ease;
-    }
-    
-    .gallery-image:hover {
-      transform: scale(1.02);
-    }
-    
-  </style>
+  

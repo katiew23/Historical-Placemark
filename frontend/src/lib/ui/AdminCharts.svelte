@@ -37,7 +37,7 @@
 
     new frappe.Chart("#adminChart", {
 
-      title: "Platform Overview",
+      title: "Platform Overview • Forbhreathnú Ardáin",
 
       type: "bar",
 
@@ -60,7 +60,7 @@
 
     new frappe.Chart("#categoryChart", {
 
-      title: "Placemarks by Category",
+      title: "Placemarks by Category • Catagóirí",
 
       type: "pie",
 
@@ -79,7 +79,7 @@
 
     new frappe.Chart("#roleChart", {
 
-      title: "Users by Role",
+      title: "Placemarks by Role • Róil",
 
       type: "donut",
 
@@ -98,7 +98,7 @@
 
     new frappe.Chart("#countyChart", {
 
-      title: "Placemarks by County",
+      title: "Placemarks by County • Contaetha",
 
       type: "line",
 

@@ -1,9 +1,25 @@
-<script>
-  let { users, deleteUser } = $props();
+<script lang="ts">
+
+  interface User {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    role: string;
+  }
+
+  let {
+    users,
+    deleteUser
+  } = $props<{
+    users: User[];
+    deleteUser: (id: string) => void;
+  }>();
+
 </script>
 
 <div class="box">
-  <h2 class="subtitle">Users</h2>
+  <h2 class="subtitle">Users • Úsáideoirí</h2>
 
   <table class="table is-fullwidth is-striped">
     <thead>

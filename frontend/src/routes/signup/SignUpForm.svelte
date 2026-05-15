@@ -1,25 +1,35 @@
-<script>
+<script lang="ts">
 
   import { userService } from "$lib/services/user-service";
 
-  let firstName = $state("");
+  interface SignupData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+  }
 
-  let lastName = $state("");
+  let firstName = $state<string>("");
 
-  let email = $state("");
+  let lastName = $state<string>("");
 
-  let password = $state("");
+  let email = $state<string>("");
 
-  async function signup() {
+  let password = $state<string>("");
+
+  async function signup(): Promise<void> {
 
     try {
 
-      const success = await userService.signup({
+      const signupData: SignupData = {
         firstName,
         lastName,
         email,
         password
-      });
+      };
+
+      const success =
+        await userService.signup(signupData);
 
       if (!success) {
 
@@ -30,7 +40,7 @@
 
       window.location.href = "/login";
 
-    } catch (err) {
+    } catch (err: unknown) {
 
       console.error(err);
 
@@ -43,43 +53,51 @@
 <div class="box">
 
   <div class="field">
+
     <input
       class="input"
       placeholder="First Name"
       bind:value={firstName}
     />
+
   </div>
 
   <div class="field">
+
     <input
       class="input"
       placeholder="Last Name"
       bind:value={lastName}
     />
+
   </div>
 
   <div class="field">
+
     <input
       class="input"
       placeholder="Email"
       bind:value={email}
     />
+
   </div>
 
   <div class="field">
+
     <input
       class="input"
       type="password"
       placeholder="Password"
       bind:value={password}
     />
+
   </div>
 
   <button
     class="button is-primary"
     onclick={signup}
   >
-    Sign Up
+    Sign Up • Cláraigh
   </button>
 
 </div>

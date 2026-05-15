@@ -1,68 +1,94 @@
-<script>
-    import LoginForm from "./login/LoginForm.svelte";
+<script lang="ts">
+  import LoginForm from "./login/LoginForm.svelte";
 </script>
 
-<section class="hero is-fullheight has-background-light">
+<section class="section pt-6">
 
-    <div class="hero-body">
+  <div
+    class="container"
+    style="max-width: 1200px;"
+  >
 
-        <div class="container">
+    <!-- HEADER -->
 
-            <div class="columns is-vcentered">
+    <div class="mb-6">
 
-                <!-- LEFT SIDE -->
+      <h1 class="title is-2 mb-1">
+        Historical Placemark
+      </h1>
 
-                <div class="column is-half has-text-centered">
-
-                    <h1 class="title is-1 has-text-dark">
-                        Historical Placemark
-                    </h1>
-
-                    <p class="subtitle is-5 mb-5">
-                        Explore and organise places of historical interest.
-                    </p>
-
-                    <img
-                        src="/images/reginalds.jpg"
-                        alt="Historical Placemark"
-                        class="landing-image"
-                    />
-
-                    <div class="mt-5">
-
-                        <a href="/signup">
-                            <button class="button is-primary is-medium mr-3">
-                                Sign Up
-                            </button>
-                        </a>
-
-                    </div>
-
-                </div>
-
-                <!-- RIGHT SIDE -->
-
-                <div class="column is-5 is-offset-1">
-
-                    <LoginForm />
-
-                </div>
-
-            </div>
-
-        </div>
+      <p class="has-text-grey">
+        Explore historical places across Ireland
+      </p>
 
     </div>
 
+    <!-- MAIN CONTENT -->
+
+    <div class="columns is-variable is-6">
+
+      <!-- LEFT -->
+
+      <div class="column is-8">
+
+        <div class="card main-image-card">
+
+          <div class="card-image">
+
+            <figure class="image">
+
+              <img
+                src="/images/reginalds.jpg"
+                alt="Historical Placemark"
+              />
+
+            </figure>
+
+          </div>
+
+          <div class="card-content">
+
+            <p class="title is-4 mb-2">
+              Reginald’s Tower
+            </p>
+
+            <p class="has-text-grey">
+              One of Ireland’s oldest civic buildings located in Waterford City.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="column is-4">
+
+        <LoginForm />
+
+        <div class="mt-4">
+
+          <a
+            href="/signup"
+            class="button is-fullwidth signup-button"
+            style="
+              height: 48px;
+              border-radius: 12px;
+              font-weight: 600;
+            "
+          >
+            Create Account
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
 </section>
 
-<style>
-
-    .landing-image {
-        max-width: 340px;
-        width: 100%;
-        border-radius: 16px;
-        box-shadow: 0 4px 18px rgba(0,0,0,0.15);
-    }
-
-</style>

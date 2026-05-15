@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
   
   import CollectionCard from "$lib/ui/CollectionCard.svelte";
@@ -35,13 +35,28 @@
     }
   }
   
+  const irishTranslations: Record<string, string> = {
+    Waterford: "Port Láirge",
+    Cork: "Corcaigh",
+    Dublin: "Baile Átha Cliath",
+    Galway: "Gaillimh",
+    Kilkenny: "Cill Chainnigh"
+  };
+  
   async function addCollection() {
     
     try {
       
+      const irishName =
+      irishTranslations[newCollectionName] || "";
+      
+      const finalName = irishName
+      ? `${newCollectionName} • ${irishName}`
+      : newCollectionName;
+      
       await collectionService.addCollection({
-        name: newCollectionName
-      });      
+        name: finalName
+      });
       
       newCollectionName = "";
       
@@ -93,7 +108,7 @@
       
       await loadCollections();
       
-            
+      
     } catch (err) {
       
       console.log(err);
@@ -112,7 +127,7 @@
     </h1>
     
     <p class="subtitle">
-      Explore your historical collections
+      Explore your historical collections • Bailiúcháin Stairiúla
     </p>
     
     {#if error}

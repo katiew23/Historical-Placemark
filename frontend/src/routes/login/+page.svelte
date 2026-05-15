@@ -1,13 +1,21 @@
-<script>
-    import LoginForm from "./LoginForm.svelte";
+<script lang="ts">
+  import LoginForm from "./LoginForm.svelte";
 </script>
 
 <section class="section">
-    <div class="container">
 
-        <h1 class="title">Log In</h1>
+  <div class="container">
 
-        <LoginForm />
+    <h1 class="title">
+      Log In • Logáil Isteach
+    </h1>
 
-    </div>
+    <p class="subtitle">
+      Access your historical collections and placemarks
+    </p>
+
+    <LoginForm />
+
+  </div>
+
 </section>

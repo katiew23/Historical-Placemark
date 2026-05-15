@@ -69,111 +69,204 @@
         }
       }
       
-      function initMap() {
-        
-        if (map) map.remove();
-        
-        map = L.map("map").setView([52.26, -7.11], 10);
-        
-        const baseLayer = L.tileLayer(
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-          attribution: "&copy; OpenStreetMap contributors"
-        }
-        ).addTo(map);
-        
-        const precipitationLayer = L.tileLayer(
-        "https://tile.openweathermap.org/map/precipitation_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-        {
-          attribution: "OpenWeatherMap"
-        }
-        );
-        
-        const tempLayer = L.tileLayer(
-        "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-        {
-          attribution: "OpenWeatherMap"
-        }
-        );
-        
-        const cloudsLayer = L.tileLayer(
-        "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
-        {
-          attribution: "OpenWeatherMap"
-        }
-        );
-        
-        L.control.layers(
-        {
-          "OpenStreetMap": baseLayer
-        },
-        {
-          "Precipitation": precipitationLayer,
-          "Temperature": tempLayer,
-          "Clouds": cloudsLayer
-        }
-        ).addTo(map);
-        
-        if (currentPlacemarks.placemarks?.length) {
-          
-          const markers: L.Marker[] = [];
-          
-          currentPlacemarks.placemarks.forEach((p) => {
-            
-            if (!isNaN(p.latitude) && !isNaN(p.longitude)) {
-              
-              fetch(
-              `https://api.openweathermap.org/data/2.5/weather?lat=${p.latitude}&lon=${p.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
-              )
-              .then((res) => res.json())
-              .then((weather) => {
-                
-                const marker = L.marker([p.latitude, p.longitude])
-                .addTo(map)
-                .bindPopup(`
-                  <b>${p.name}</b><br/>
-                  ${p.description || ""}<br/><br/>
+ function initMap() {
 
-                  <img 
-                    src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"
-                    width="60"
-                  /><br/>
+  if (map) map.remove();
 
-                  <strong>${weather.weather[0].description}</strong><br/>
-                  🌡️ Temp: ${weather.main.temp}°C<br/>
-                  💨 Wind: ${weather.wind.speed} km/h<br/>
-                  📊 Pressure: ${weather.main.pressure} hPa<br/><br/>
+  map = L.map("map").setView([52.26, -7.11], 10);
 
-                  ${p.img ? `<img src="${p.img}" width="140"/>` : ""}
-                `);
-                
-                markers.push(marker);
-                
-                if (markers.length > 0) {
-                  
-                  const group = L.featureGroup(markers);
-                  
-                  map.fitBounds(group.getBounds().pad(0.2));
-                }
-              });
+  // base map
+
+  const baseLayer = L.tileLayer(
+    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+    {
+      attribution: "&copy; OpenStreetMap contributors"
+    }
+  ).addTo(map);
+
+  // weather overlays
+
+  const tempLayer = L.tileLayer(
+    "https://tile.openweathermap.org/map/temp_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
+    {
+      attribution: "OpenWeatherMap"
+    }
+  );
+
+  const cloudsLayer = L.tileLayer(
+    "https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=af52a9802a4c633460b714fc47b6fb91",
+    {
+      attribution: "OpenWeatherMap"
+    }
+  );
+
+  // layer controls
+
+  L.control.layers(
+    {
+      "OpenStreetMap": baseLayer
+    },
+    {
+      "Temperature": tempLayer,
+      "Clouds": cloudsLayer
+    }
+  ).addTo(map);
+
+  // custom marker
+
+  const customIcon = L.icon({
+    iconUrl:
+      "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-violet.png",
+
+    shadowUrl:
+      "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+
+  // placemarks
+
+  if (currentPlacemarks.placemarks?.length) {
+
+    const markers: L.Marker[] = [];
+
+    currentPlacemarks.placemarks.forEach((p) => {
+
+      if (!isNaN(p.latitude) && !isNaN(p.longitude)) {
+
+        fetch(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${p.latitude}&lon=${p.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
+        )
+          .then((res) => res.json())
+          .then((weather) => {
+
+            const marker = L.marker(
+              [p.latitude, p.longitude],
+              {
+                icon: customIcon
+              }
+            )
+              .addTo(map)
+              .bindPopup(`
+                <div style="min-width:220px">
+
+                  <h3 style="
+                    margin-bottom:8px;
+                    font-size:18px;
+                    font-weight:600;
+                  ">
+                    ${p.name}
+                  </h3>
+
+                  <p style="
+                    margin-bottom:12px;
+                    color:#666;
+                  ">
+                    ${p.description || ""}
+                  </p>
+
+                  <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    margin-bottom:10px;
+                  ">
+
+                    <img 
+                      src="https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png"
+                      width="55"
+                    />
+
+                    <div>
+
+                      <strong>
+                        ${weather.weather[0].description}
+                      </strong>
+
+                      <br/>
+
+                      🌡️ ${weather.main.temp}°C
+
+                    </div>
+
+                  </div>
+
+                  <p>
+                    💨 Wind: ${weather.wind.speed} km/h
+                  </p>
+
+                  <p>
+                    📊 Pressure: ${weather.main.pressure} hPa
+                  </p>
+
+                  ${
+                    p.img
+                      ? `
+                        <img
+                          src="${p.img}"
+                          style="
+                            margin-top:14px;
+                            border-radius:12px;
+                            width:100%;
+                            height:140px;
+                            object-fit:cover;
+                          "
+                        />
+                      `
+                      : ""
+                  }
+
+                </div>
+              `);
+
+            markers.push(marker);
+
+            if (markers.length > 0) {
+
+              const group =
+                L.featureGroup(markers);
+
+              map.fitBounds(
+                group.getBounds().pad(0.2)
+              );
             }
           });
-        }
-        
-        map.on("click", (e: L.LeafletMouseEvent) => {
-          
-          newLatitude = Number(e.latlng.lat.toFixed(6));
-          newLongitude = Number(e.latlng.lng.toFixed(6));
-          
-          if ((window as any).__tempMarker) {
-            map.removeLayer((window as any).__tempMarker);
-          }
-          
-          (window as any).__tempMarker =
-          L.marker(e.latlng).addTo(map);
-        });
       }
-      
+    });
+  }
+
+  // click marker for adding placemarks
+
+  map.on(
+    "click",
+    (e: L.LeafletMouseEvent) => {
+
+      newLatitude =
+        Number(e.latlng.lat.toFixed(6));
+
+      newLongitude =
+        Number(e.latlng.lng.toFixed(6));
+
+      if ((window as any).__tempMarker) {
+
+        map.removeLayer(
+          (window as any).__tempMarker
+        );
+      }
+
+      (window as any).__tempMarker =
+        L.marker(
+          e.latlng,
+          {
+            icon: customIcon
+          }
+        ).addTo(map);
+    }
+  );
+}
       async function addPlacemark() {
         
         if (!selectedFiles.length) {

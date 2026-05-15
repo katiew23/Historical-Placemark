@@ -251,7 +251,7 @@
 
   <div class="container">
 
-    <h1 class="title">Admin Dashboard</h1>
+    <h1 class="title">Admin Dashboard • Painéal Riarthóra</h1>
 
     <!-- KPI CARDS -->
 
@@ -305,7 +305,7 @@
         class="button is-fullwidth is-success"
         onclick={toggleMap}
       >
-        Toggle Placemark Map
+        View Placemark Map
       </button>
 
       {#if showMap}
@@ -328,7 +328,7 @@
         class="button is-fullwidth is-link"
         onclick={() => showUsers = !showUsers}
       >
-        Toggle Users
+        View Users
       </button>
 
       {#if showUsers}
@@ -354,7 +354,7 @@
         class="button is-fullwidth is-info"
         onclick={() => showCollections = !showCollections}
       >
-        Toggle Collections
+        View Collections
       </button>
 
       {#if showCollections}
@@ -380,7 +380,7 @@
         class="button is-fullwidth is-warning"
         onclick={() => showPlacemarks = !showPlacemarks}
       >
-        Toggle Placemarks
+        View Placemarks
       </button>
 
       {#if showPlacemarks}
