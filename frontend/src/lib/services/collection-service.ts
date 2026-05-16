@@ -1,89 +1,144 @@
 import { api } from "./api";
 
 export const collectionService = {
-  
-  async getCollection(id: string) {
-    
+
+  async getCollection(
+    id: string,
+    token: string
+  ) {
+
     const response = await api.get(
-      `/collections/${id}`
+      `/collections/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return response.data;
   },
-  
+
   async updateCollection(
     id: string,
-    collectionData: object
+    collectionData: object,
+    token: string
   ) {
-    
+
     await api.put(
       `/collections/${id}`,
-      collectionData
+      collectionData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   },
-  
-  async getCollections() {
-    
+
+  async getCollections(token: string) {
+
     const response = await api.get(
-      "/collections"
+      "/collections",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return response.data;
   },
-  
-  async addCollection(collectionData: object) {
-    
+
+  async addCollection(
+    collectionData: object,
+    token: string
+  ) {
+
     await api.post(
       "/collections",
-      collectionData
+      collectionData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   },
-  
-  async deleteCollection(id: string) {
-    
+
+  async deleteCollection(
+    id: string,
+    token: string
+  ) {
+
     await api.delete(
-      `/collections/${id}`
+      `/collections/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   },
-  
+
   async addPlacemark(
     collectionId: string,
-    formData: FormData
+    formData: FormData,
+    token: string
   ) {
-    
+
     await api.post(
       `/collections/${collectionId}/placemarks`,
-      formData
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   },
-  
-  async deletePlacemark(id: string) {
-    
+
+  async deletePlacemark(
+    id: string,
+    token: string
+  ) {
+
     await api.delete(
-      `/placemarks/${id}`
+      `/placemarks/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   },
-  
+
   async updatePlacemark(
     id: string,
-    placemarkData: object
+    placemarkData: object,
+    token: string
   ) {
-    
+
     await api.put(
       `/placemarks/${id}`,
-      placemarkData
+      placemarkData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
     );
-    
+
     return true;
   }
 };

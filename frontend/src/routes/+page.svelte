@@ -1,7 +1,3 @@
-<script lang="ts">
-  import LoginForm from "./login/LoginForm.svelte";
-</script>
-
 <section class="section pt-6">
 
   <div
@@ -66,7 +62,17 @@
 
       <div class="column is-4">
 
-        <LoginForm />
+        <a
+          href="/login"
+          class="button is-primary is-fullwidth"
+          style="
+            height: 48px;
+            border-radius: 12px;
+            font-weight: 600;
+          "
+        >
+          Log In
+        </a>
 
         <div class="mt-4">
 
@@ -91,4 +97,3 @@
   </div>
 
 </section>
-

@@ -2,39 +2,90 @@ import { api } from "./api";
 
 export const adminService = {
 
-  async getUsers() {
+  async getUsers(token: string) {
 
-    const response = await api.get("/users");
-
-    return response.data;
-  },
-
-  async getCollections() {
-
-    const response = await api.get("/collections");
-
-    return response.data;
-  },
-
-  async getPlacemarks() {
-
-    const response = await api.get("/placemarks");
+    const response = await api.get(
+      "/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
 
     return response.data;
   },
 
-  async deleteUser(id: string) {
+  async getCollections(token: string) {
 
-    return await api.delete(`/users/${id}`);
+    const response = await api.get(
+      "/collections",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    return response.data;
   },
 
-  async deleteCollection(id: string) {
+  async getPlacemarks(token: string) {
 
-    return await api.delete(`/collections/${id}`);
+    const response = await api.get(
+      "/placemarks",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    return response.data;
   },
 
-  async deletePlacemark(id: string) {
+  async deleteUser(
+    id: string,
+    token: string
+  ) {
 
-    return await api.delete(`/placemarks/${id}`);
+    return await api.delete(
+      `/users/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  },
+
+  async deleteCollection(
+    id: string,
+    token: string
+  ) {
+
+    return await api.delete(
+      `/collections/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+  },
+
+  async deletePlacemark(
+    id: string,
+    token: string
+  ) {
+
+    return await api.delete(
+      `/placemarks/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
   }
 };

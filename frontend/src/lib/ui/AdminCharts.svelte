@@ -1,6 +1,7 @@
 <script lang="ts">
 
-  declare const frappe: any;
+  import { onMount } from "svelte";
+  import { Chart } from "frappe-charts";
 
   let {
     userCount,
@@ -16,35 +17,37 @@
     countyLabels,
     countyCounts
 
-  } = $props<{
+  } = $props();
 
-    userCount: number;
-    collectionCount: number;
-    placemarkCount: number;
+  function clearCharts() {
 
-    categoryLabels: string[];
-    categoryCounts: number[];
+    document
+      .querySelectorAll(".chart-container")
+      .forEach((c) => {
+        c.innerHTML = "";
+      });
+  }
 
-    roleLabels: string[];
-    roleCounts: number[];
+  onMount(() => {
 
-    countyLabels: string[];
-    countyCounts: number[];
+    clearCharts();
 
-  }>();
+    new Chart("#adminChart", {
 
-  function loadCharts(): void {
-
-    new frappe.Chart("#adminChart", {
-
-      title: "Platform Overview • Forbhreathnú Ardáin",
+      title:
+        "Platform Overview • Forbhreathnú Ardáin",
 
       type: "bar",
 
       height: 300,
 
       data: {
-        labels: ["Users", "Collections", "Placemarks"],
+
+        labels: [
+          "Users",
+          "Collections",
+          "Placemarks"
+        ],
 
         datasets: [
           {
@@ -58,15 +61,17 @@
       }
     });
 
-    new frappe.Chart("#categoryChart", {
+    new Chart("#categoryChart", {
 
-      title: "Placemarks by Category • Catagóirí",
+      title:
+        "Placemarks by Category • Catagóirí",
 
       type: "pie",
 
       height: 300,
 
       data: {
+
         labels: categoryLabels,
 
         datasets: [
@@ -77,15 +82,17 @@
       }
     });
 
-    new frappe.Chart("#roleChart", {
+    new Chart("#roleChart", {
 
-      title: "Placemarks by Role • Róil",
+      title:
+        "Users by Role • Róil",
 
       type: "donut",
 
       height: 300,
 
       data: {
+
         labels: roleLabels,
 
         datasets: [
@@ -96,15 +103,17 @@
       }
     });
 
-    new frappe.Chart("#countyChart", {
+    new Chart("#countyChart", {
 
-      title: "Placemarks by County • Contaetha",
+      title:
+        "Placemarks by County • Contaetha",
 
       type: "line",
 
       height: 300,
 
       data: {
+
         labels: countyLabels,
 
         datasets: [
@@ -114,35 +123,35 @@
         ]
       }
     });
-  }
 
-  $effect(() => {
+  });
 
-  if (
-    categoryLabels.length > 0 &&
-    roleLabels.length > 0 &&
-    countyLabels.length > 0
-  ) {
-
-    setTimeout(() => {
-      loadCharts();
-    }, 100);
-  }
-});
 </script>
 
 <div class="box">
-  <div id="adminChart"></div>
+  <div
+    id="adminChart"
+    class="chart-container"
+  ></div>
 </div>
 
 <div class="box">
-  <div id="categoryChart"></div>
+  <div
+    id="categoryChart"
+    class="chart-container"
+  ></div>
 </div>
 
 <div class="box">
-  <div id="roleChart"></div>
+  <div
+    id="roleChart"
+    class="chart-container"
+  ></div>
 </div>
 
 <div class="box">
-  <div id="countyChart"></div>
+  <div
+    id="countyChart"
+    class="chart-container"
+  ></div>
 </div>

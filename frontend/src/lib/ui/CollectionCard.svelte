@@ -71,7 +71,7 @@
       View
     </a>
 
-    {#if collection.userid === loggedInUser._id}
+    {#if loggedInUser._id && collection.userid === loggedInUser._id}
 
       <button
         class="button is-warning is-light"

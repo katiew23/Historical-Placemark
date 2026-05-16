@@ -93,7 +93,7 @@
     {review.text}
   </p>
   
-  {#if review.userid === loggedInUser._id}
+  {#if loggedInUser._id && review.userid === loggedInUser._id}
   
   <div class="buttons mt-3">
     

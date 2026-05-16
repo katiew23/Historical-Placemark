@@ -3,60 +3,49 @@
   import favicon from "$lib/assets/favicon.svg";
   import { loggedInUser } from "$lib/runes.svelte";
   import { onMount } from "svelte";
- 
 
-  const {
-    children
-  } = $props<{
+  let { data, children } = $props<{
+    data: any;
     children: () => unknown;
   }>();
 
+  $effect(() => {
+
+    if (data.session) {
+
+      loggedInUser.email =
+        data.session.email;
+
+      loggedInUser.name =
+        data.session.name;
+
+      loggedInUser.role =
+        data.session.role;
+
+      loggedInUser.token =
+        data.session.token;
+
+      loggedInUser._id =
+        data.session._id;
+    }
+
+  });
+
   async function logout(): Promise<void> {
 
-    loggedInUser.email = "";
+  loggedInUser.email = "";
 
-    loggedInUser.name = "";
+  loggedInUser.name = "";
 
-    loggedInUser.role = "";
+  loggedInUser.role = "";
 
-    loggedInUser.token = "";
+  loggedInUser.token = "";
 
-    loggedInUser._id = "";
+  loggedInUser._id = "";
 
-    localStorage.removeItem("token");
-
-    localStorage.removeItem("role");
-
-    localStorage.removeItem("name");
-
-    localStorage.removeItem("_id");
-
-    window.location.href = "/";
-  }
-
-  onMount(async () => {
-
-    loggedInUser.token =
-      localStorage.getItem("token") || "";
-
-    loggedInUser.role =
-      localStorage.getItem("role") || "";
-
-    loggedInUser.name =
-      localStorage.getItem("name") || "";
-
-    loggedInUser._id =
-      localStorage.getItem("_id") || "";
-
-    // load Leaflet properly
-
-    if (!(window as any).L) {
-
-      await import(
-        "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      );
-    }
-  });
+  window.location.href = "/logout";
+}
+  
 
 </script>
 
@@ -98,9 +87,13 @@
 
       <div class="navbar-item">
 
-        <p>
-          <span>{loggedInUser.name}</span>
-        </p>
+        <strong>
+          {loggedInUser.name}
+        </strong>
+
+      </div>
+
+      <div class="navbar-item">
 
         <a
           href="/dashboard"
@@ -109,7 +102,11 @@
           Dashboard
         </a>
 
-        {#if loggedInUser.role === "admin"}
+      </div>
+
+      {#if loggedInUser.role === "admin"}
+
+        <div class="navbar-item">
 
           <a
             href="/admin"
@@ -118,7 +115,11 @@
             Admin
           </a>
 
-        {/if}
+        </div>
+
+      {/if}
+
+      <div class="navbar-item">
 
         <a
           href="/about"
@@ -126,6 +127,10 @@
         >
           About
         </a>
+
+      </div>
+
+      <div class="navbar-item">
 
         <button
           class="button is-light"

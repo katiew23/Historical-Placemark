@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { adminService } from "$lib/services/admin-service";
 
   import UserTable from "$lib/ui/UserTable.svelte";
   import CollectionTable from "$lib/ui/CollectionTable.svelte";
   import PlacemarkTable from "$lib/ui/PlacemarkTable.svelte";
   import AdminCharts from "$lib/ui/AdminCharts.svelte";
+
+  import { adminService } from "$lib/services/admin-service";
+
+  import type { PageProps } from "./$types";
+
+  let { data }: PageProps = $props();
 
   interface User {
     _id: string;
@@ -24,220 +28,257 @@
   interface Placemark {
     _id: string;
     name?: string;
+    description?: string;
     category?: string;
     county?: string;
     latitude?: number;
     longitude?: number;
+    yearEstablished?: number;
   }
 
-  let users = $state<User[]>([]);
-  let collections = $state<Collection[]>([]);
-  let placemarks = $state<Placemark[]>([]);
+  let users = $state<User[]>(
+    data.users || []
+  );
 
-  let userCount = $state<number>(0);
-  let collectionCount = $state<number>(0);
-  let placemarkCount = $state<number>(0);
+  let collections = $state<Collection[]>(
+    data.collections || []
+  );
 
-  let categoryLabels = $state<string[]>([]);
-  let categoryCounts = $state<number[]>([]);
+  let placemarks = $state<Placemark[]>(
+    data.placemarks || []
+  );
 
-  let roleLabels = $state<string[]>([]);
-  let roleCounts = $state<number[]>([]);
+  let userCount =
+    data.userCount || 0;
 
-  let countyLabels = $state<string[]>([]);
-  let countyCounts = $state<number[]>([]);
+  let collectionCount =
+    data.collectionCount || 0;
+
+  let placemarkCount =
+    data.placemarkCount || 0;
+
+  let showUsers = $state(false);
+
+  let showCollections = $state(false);
+
+  let showPlacemarks = $state(false);
+
+  let showMap = $state(false);
 
   let map: any;
 
-  // COLLAPSIBLE TABLES
-  let showUsers = $state(false);
-  let showCollections = $state(false);
-  let showPlacemarks = $state(false);
-  let showMap = $state(false);
-
-  onMount(async () => {
-
-    // ADMIN PROTECTION
-    if (localStorage.getItem("role") !== "admin") {
-      window.location.href = "/dashboard";
-      return;
-    }
+  async function deleteUser(id: string) {
 
     try {
 
-      // USERS
-      users = await adminService.getUsers();
-      userCount = users.length;
-
-      // COLLECTIONS
-      collections = await adminService.getCollections();
-      collectionCount = collections.length;
-
-      // PLACEMARKS
-      placemarks = await adminService.getPlacemarks();
-      placemarkCount = placemarks.length;
-
-      // CATEGORY ANALYTICS
-      const categoryMap: Record<string, number> = {};
-
-      placemarks.forEach((placemark) => {
-
-        const category = placemark.category || "Unknown";
-
-        if (categoryMap[category]) {
-          categoryMap[category]++;
-        } else {
-          categoryMap[category] = 1;
-        }
-      });
-
-      categoryLabels = Object.keys(categoryMap);
-      categoryCounts = Object.values(categoryMap);
-
-      // ROLE ANALYTICS
-      const roleMap: Record<string, number> = {};
-
-      users.forEach((user) => {
-
-        const role = user.role || "Unknown";
-
-        if (roleMap[role]) {
-          roleMap[role]++;
-        } else {
-          roleMap[role] = 1;
-        }
-      });
-
-      roleLabels = Object.keys(roleMap);
-      roleCounts = Object.values(roleMap);
-
-      // COUNTY ANALYTICS
-      const countyMap: Record<string, number> = {};
-
-      placemarks.forEach((placemark) => {
-
-        const county = placemark.county || "Unknown";
-
-        if (countyMap[county]) {
-          countyMap[county]++;
-        } else {
-          countyMap[county] = 1;
-        }
-      });
-
-      countyLabels = Object.keys(countyMap);
-      countyCounts = Object.values(countyMap);
-
-    } catch (error) {
-      console.error("Admin dashboard error:", error);
-    }
-  });
-
-  async function deleteUser(id: string): Promise<void> {
-
-    try {
-
-      const response = await adminService.deleteUser(id);
-
-      if (response.status === 200 || response.status === 204) {
-
-        users = users.filter((u) => u._id !== id);
-        userCount = users.length;
-      }
-
-    } catch (error) {
-      console.error("Delete user failed:", error);
-    }
-  }
-
-  async function deleteCollection(id: string): Promise<void> {
-
-    try {
-
-      const response = await adminService.deleteCollection(id);
-
-      if (response.status === 200 || response.status === 204) {
-
-        collections = collections.filter((c) => c._id !== id);
-        collectionCount = collections.length;
-      }
-
-    } catch (error) {
-      console.error("Delete collection failed:", error);
-    }
-  }
-
-  async function deletePlacemark(id: string): Promise<void> {
-
-    try {
-
-      const response = await adminService.deletePlacemark(id);
-
-      if (response.status === 200 || response.status === 204) {
-
-        placemarks = placemarks.filter((p) => p._id !== id);
-        placemarkCount = placemarks.length;
-      }
-
-    } catch (error) {
-      console.error("Delete placemark failed:", error);
-    }
-  }
-
-
-
- function toggleMap(): void {
-
-  showMap = !showMap;
-
-  if (showMap) {
-
-    setTimeout(() => {
-
-      if (!map) {
-
-        map = L.map("adminMap").setView(
-          [53.4, -7.7],
-          7
+      const response =
+        await adminService.deleteUser(
+          id,
+          data.session.token
         );
 
-        L.tileLayer(
-          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          {
-            attribution: "&copy; OpenStreetMap contributors"
-          }
-        ).addTo(map);
+      if (
+        response.status === 200 ||
+        response.status === 204
+      ) {
 
-        placemarks.forEach((placemark) => {
+        users =
+          users.filter((u) => u._id !== id);
 
-          if (
-            placemark.latitude &&
-            placemark.longitude
-          ) {
-
-            L.marker([
-              placemark.latitude,
-              placemark.longitude
-            ])
-            .addTo(map)
-            .bindPopup(`
-              <b>${placemark.name}</b><br>
-              ${placemark.category}<br>
-              ${placemark.county}
-            `);
-          }
-        });
+        userCount =
+          users.length;
       }
 
-      map.invalidateSize();
+    } catch (error) {
 
-    }, 200);
+      console.log(error);
+    }
   }
-}
+
+  async function deleteCollection(
+    id: string
+  ) {
+
+    try {
+
+      const response =
+        await adminService.deleteCollection(
+          id,
+          data.session.token
+        );
+
+      if (
+        response.status === 200 ||
+        response.status === 204
+      ) {
+
+        collections =
+          collections.filter(
+            (c) => c._id !== id
+          );
+
+        collectionCount =
+          collections.length;
+      }
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  }
+
+  async function deletePlacemark(
+    id: string
+  ) {
+
+    try {
+
+      const response =
+        await adminService.deletePlacemark(
+          id,
+          data.session.token
+        );
+
+      if (
+        response.status === 200 ||
+        response.status === 204
+      ) {
+
+        placemarks =
+          placemarks.filter(
+            (p) => p._id !== id
+          );
+
+        placemarkCount--;
+      }
+
+    } catch (error) {
+
+      console.log(error);
+    }
+  }
+
+  function toggleMap(): void {
+
+    showMap = !showMap;
+
+    if (showMap) {
+
+      setTimeout(async () => {
+
+        // @ts-ignore
+        const L = window.L;
+
+        if (!map) {
+
+          map = L.map(
+            "adminMap"
+          ).setView(
+            [53.4, -7.7],
+            7
+          );
+
+          L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+              attribution:
+                "&copy; OpenStreetMap contributors"
+            }
+          ).addTo(map);
+
+          placemarks.forEach(
+            async (placemark) => {
+
+            if (
+              placemark.latitude &&
+              placemark.longitude
+            ) {
+
+              let weatherText =
+                "Weather unavailable";
+
+              try {
+
+                const response =
+                  await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${placemark.latitude}&lon=${placemark.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
+                  );
+
+                const weather =
+                  await response.json();
+
+                weatherText = `
+                  ${weather.main.temp}°C •
+                  ${weather.weather[0].main}
+                `;
+
+              } catch (error) {
+
+                console.log(
+                  "WEATHER ERROR:",
+                  error
+                );
+              }
+
+              L.marker([
+                placemark.latitude,
+                placemark.longitude
+              ])
+              .addTo(map)
+              .bindPopup(`
+
+                <div style="
+                  min-width:220px;
+                ">
+
+                  <h3 style="
+                    font-size:18px;
+                    font-weight:600;
+                    margin-bottom:8px;
+                  ">
+                    ${placemark.name}
+                  </h3>
+
+                  <p>
+                    ${placemark.description || ""}
+                  </p>
+
+                  <p>
+                    <strong>Category:</strong>
+                    ${placemark.category || ""}
+                  </p>
+
+                  <p>
+                    <strong>County:</strong>
+                    ${placemark.county || ""}
+                  </p>
+
+                  <p>
+                    <strong>Year:</strong>
+                    ${placemark.yearEstablished || ""}
+                  </p>
+
+                  <p>
+                    🌡️ ${weatherText}
+                  </p>
+
+                </div>
+              `);
+            }
+          });
+        }
+
+        map.invalidateSize();
+
+      }, 200);
+    }
+  }
+
 </script>
 
 <svelte:head>
-  <script src="https://unpkg.com/frappe-charts@1.6.2/dist/frappe-charts.min.umd.js"></script>
+
+  <script src="https://unpkg.com/frappe-charts@1.6.2/dist/frappe-charts.min.iife.js"></script>
 
   <link
     rel="stylesheet"
@@ -245,59 +286,83 @@
   />
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 </svelte:head>
 
 <section class="section">
 
   <div class="container">
 
-    <h1 class="title">Admin Dashboard • Painéal Riarthóra</h1>
-
-    <!-- KPI CARDS -->
+    <h1 class="title">
+      Admin Dashboard • Painéal Riarthóra
+    </h1>
 
     <div class="columns">
 
       <div class="column">
+
         <div class="box has-text-centered">
-          <p class="heading">Users</p>
-          <p class="title">{userCount}</p>
+
+          <p class="heading">
+            Users
+          </p>
+
+          <p class="title">
+            {userCount}
+          </p>
+
         </div>
+
       </div>
 
       <div class="column">
+
         <div class="box has-text-centered">
-          <p class="heading">Collections</p>
-          <p class="title">{collectionCount}</p>
+
+          <p class="heading">
+            Collections
+          </p>
+
+          <p class="title">
+            {collectionCount}
+          </p>
+
         </div>
+
       </div>
 
       <div class="column">
+
         <div class="box has-text-centered">
-          <p class="heading">Placemarks</p>
-          <p class="title">{placemarkCount}</p>
+
+          <p class="heading">
+            Placemarks
+          </p>
+
+          <p class="title">
+            {placemarkCount}
+          </p>
+
         </div>
+
       </div>
 
     </div>
 
-    <!-- CHARTS -->
-
     <AdminCharts
-      {userCount}
-      {collectionCount}
-      {placemarkCount}
+      userCount={userCount}
+      collectionCount={collectionCount}
+      placemarkCount={placemarkCount}
 
-      {categoryLabels}
-      {categoryCounts}
+      categoryLabels={data.categoryLabels}
+      categoryCounts={data.categoryCounts}
 
-      {roleLabels}
-      {roleCounts}
+      roleLabels={data.roleLabels}
+      roleCounts={data.roleCounts}
 
-      {countyLabels}
-      {countyCounts}
+      countyLabels={data.countyLabels}
+      countyCounts={data.countyCounts}
     />
-
-    <!-- MAP -->
 
     <div class="box">
 
@@ -320,15 +385,13 @@
 
     </div>
 
-    <!-- USERS -->
-
     <div class="box">
 
       <button
         class="button is-fullwidth is-link"
         onclick={() => showUsers = !showUsers}
       >
-        View Users
+        Toggle Users
       </button>
 
       {#if showUsers}
@@ -346,15 +409,13 @@
 
     </div>
 
-    <!-- COLLECTIONS -->
-
     <div class="box">
 
       <button
         class="button is-fullwidth is-info"
         onclick={() => showCollections = !showCollections}
       >
-        View Collections
+        Toggle Collections
       </button>
 
       {#if showCollections}
@@ -372,15 +433,13 @@
 
     </div>
 
-    <!-- PLACEMARKS -->
-
     <div class="box">
 
       <button
         class="button is-fullwidth is-warning"
         onclick={() => showPlacemarks = !showPlacemarks}
       >
-        View Placemarks
+        Toggle Placemarks
       </button>
 
       {#if showPlacemarks}

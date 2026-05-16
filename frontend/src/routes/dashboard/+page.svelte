@@ -1,40 +1,29 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  
+
   import CollectionCard from "$lib/ui/CollectionCard.svelte";
   import AddCollectionForm from "$lib/ui/AddCollectionForm.svelte";
   import { currentCollections } from "$lib/runes.svelte";
   import { collectionService } from "$lib/services/collection-service";
-  
-  //let collections = $state([]);
+
+  import type { PageProps } from "./$types";
+
+  let { data }: PageProps = $props();
+
+  let collections = data.collections;
+
+  const token = data.session.token;
+
+  currentCollections.collections =
+    collections;
+
   let error = $state("");
-  
+
   let newCollectionName = $state("");
-  
+
   let editingId = $state(null);
+
   let editedName = $state("");
-  
-  onMount(() => {
-    loadCollections();
-  });
-  
-  async function loadCollections() {
-    
-    try {
-      
-      const data =
-      await collectionService.getCollections();
-      
-      currentCollections.collections = data;
-      
-    } catch (err) {
-      
-      console.log(err);
-      
-      error = "Server error";
-    }
-  }
-  
+
   const irishTranslations: Record<string, string> = {
     Waterford: "Port Láirge",
     Cork: "Corcaigh",
@@ -42,80 +31,85 @@
     Galway: "Gaillimh",
     Kilkenny: "Cill Chainnigh"
   };
-  
+
   async function addCollection() {
-    
+
     try {
-      
+
       const irishName =
-      irishTranslations[newCollectionName] || "";
-      
+        irishTranslations[newCollectionName] || "";
+
       const finalName = irishName
-      ? `${newCollectionName} • ${irishName}`
-      : newCollectionName;
-      
-      await collectionService.addCollection({
-        name: finalName
-      });
-      
-      newCollectionName = "";
-      
-      await loadCollections();
-      
+        ? `${newCollectionName} • ${irishName}`
+        : newCollectionName;
+
+      await collectionService.addCollection(
+        {
+          name: finalName
+        },
+        token
+      );
+
+      window.location.reload();
+
     } catch (err) {
-      
+
       console.log(err);
-      
+
       error = "Server error";
     }
   }
-  
+
   async function deleteCollection(id) {
-    
+
     try {
-      
-      await collectionService.deleteCollection(id);
-      
-      await loadCollections();
-      
+
+      await collectionService.deleteCollection(
+        id,
+        token
+      );
+
+      window.location.reload();
+
     } catch (err) {
-      
+
       console.log(err);
-      
+
       error = "Server error";
     }
   }
-  
+
   function startEdit(collection) {
-    
+
     editingId = collection._id;
-    
+
     editedName = collection.name;
   }
-  
+
   async function saveEdit(id) {
-    
+
     try {
-      
+
       await collectionService.updateCollection(
-      id,
-      {
-        name: editedName
-      }
+        id,
+        {
+          name: editedName
+        },
+        token
       );
-      
+
       editingId = null;
-      
-      await loadCollections();
-      
-      
+
+      window.location.reload();
+
     } catch (err) {
-      
+
       console.log(err);
-      
+
       error = "Server error";
     }
   }
+
 </script>
 
 <section class="section">

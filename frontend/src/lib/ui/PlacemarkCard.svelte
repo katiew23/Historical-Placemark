@@ -102,15 +102,51 @@
 
         </a>
 
-        <p>
-          {place.description}
-        </p>
+        <div class="content mt-2">
+
+          <p>
+            {place.description}
+          </p>
+
+          <p>
+            <strong>Category:</strong>
+            {place.category}
+          </p>
+
+          <p>
+            <strong>County:</strong>
+            {place.county}
+          </p>
+
+          <p>
+            <strong>Latitude:</strong>
+            {place.latitude}
+          </p>
+
+          <p>
+            <strong>Longitude:</strong>
+            {place.longitude}
+          </p>
+
+          <p>
+            <strong>Year:</strong>
+            {place.yearEstablished}
+          </p>
+
+        </div>
+
+        <a
+          href={`/placemark/${place._id}`}
+          class="button is-link is-light mt-3"
+        >
+          View
+        </a>
 
       {/if}
 
     </div>
 
-    {#if place.userid === loggedInUser._id}
+    {#if loggedInUser._id && place.userid === loggedInUser._id}
 
       <div class="card-content pt-0">
 
