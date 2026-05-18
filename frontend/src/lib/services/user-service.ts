@@ -1,40 +1,32 @@
-import { api } from "./api";
+import { userMongoStore } from "$lib/models/mongo/user-store";
+import type { User } from "$lib/models/mongo/user";
 
 export const userService = {
-
-  async signup(user) {
-
+  async signup(user: User): Promise<boolean> {
     try {
-
-      const response = await api.post(
-        "/users",
-        user
-      );
-
-      return response.status === 201;
-
+      const newUser = await userMongoStore.addUser(user);
+      return !!newUser;
     } catch {
-
       return false;
     }
   },
 
-  async login(email, password) {
-
+  async login(email: string, password: string) {
     try {
+      const user = await userMongoStore.getUserByEmail(email);
 
-      const response = await api.post(
-        "/users/authenticate",
-        {
-          email,
-          password
-        }
-      );
+      if (user && user.password === password) {
+        return {
+          token: user._id?.toString() || "",
+          role: user.role || "user",
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+          _id: user._id?.toString() || ""
+        };
+      }
 
-      return response.data;
-
+      return null;
     } catch {
-
       return null;
     }
   }

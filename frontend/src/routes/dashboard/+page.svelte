@@ -3,7 +3,7 @@
   import CollectionCard from "$lib/ui/CollectionCard.svelte";
   import AddCollectionForm from "$lib/ui/AddCollectionForm.svelte";
   import { currentCollections } from "$lib/runes.svelte";
-  import { collectionService } from "$lib/services/collection-service";
+  
 
   import type { PageProps } from "./$types";
 
@@ -11,7 +11,7 @@
 
   let collections = data.collections;
 
-  const token = data.session.token;
+  //const token = data.session.token;
 
   currentCollections.collections =
     collections;
@@ -33,51 +33,44 @@
   };
 
   async function addCollection() {
+  try {
+    const irishName = irishTranslations[newCollectionName] || "";
 
-    try {
+    const finalName = irishName
+      ? `${newCollectionName} • ${irishName}`
+      : newCollectionName;
 
-      const irishName =
-        irishTranslations[newCollectionName] || "";
+    const formData = new FormData();
+    formData.append("name", finalName);
 
-      const finalName = irishName
-        ? `${newCollectionName} • ${irishName}`
-        : newCollectionName;
+    await fetch("?/addCollection", {
+      method: "POST",
+      body: formData
+    });
 
-      await collectionService.addCollection(
-        {
-          name: finalName
-        },
-        token
-      );
-
-      window.location.reload();
-
-    } catch (err) {
-
-      console.log(err);
-
-      error = "Server error";
-    }
+    window.location.reload();
+  } catch (err) {
+    console.log(err);
+    error = "Server error";
   }
+}
 
   async function deleteCollection(id) {
+  try {
+    const formData = new FormData();
+    formData.append("id", id);
 
-    try {
+    await fetch("?/deleteCollection", {
+      method: "POST",
+      body: formData
+    });
 
-      await collectionService.deleteCollection(
-        id,
-        token
-      );
-
-      window.location.reload();
-
-    } catch (err) {
-
-      console.log(err);
-
-      error = "Server error";
-    }
+    window.location.reload();
+  } catch (err) {
+    console.log(err);
+    error = "Server error";
   }
+}
 
   function startEdit(collection) {
 
@@ -87,28 +80,23 @@
   }
 
   async function saveEdit(id) {
+  try {
+    const formData = new FormData();
+    formData.append("id", id);
+    formData.append("name", editedName);
 
-    try {
+    await fetch("?/updateCollection", {
+      method: "POST",
+      body: formData
+    });
 
-      await collectionService.updateCollection(
-        id,
-        {
-          name: editedName
-        },
-        token
-      );
-
-      editingId = null;
-
-      window.location.reload();
-
-    } catch (err) {
-
-      console.log(err);
-
-      error = "Server error";
-    }
+    editingId = null;
+    window.location.reload();
+  } catch (err) {
+    console.log(err);
+    error = "Server error";
   }
+}
 
 </script>
 

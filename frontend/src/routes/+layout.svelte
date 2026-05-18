@@ -2,7 +2,7 @@
 
   import favicon from "$lib/assets/favicon.svg";
   import { loggedInUser } from "$lib/runes.svelte";
-  import { onMount } from "svelte";
+ // import { onMount } from "svelte";
 
   let { data, children } = $props<{
     data: any;

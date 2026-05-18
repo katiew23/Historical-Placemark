@@ -1,74 +1,90 @@
-import { api } from "./api";
+import { placemarkMongoStore } from "$lib/models/mongo/placemark-store";
+import type { Review } from "$lib/models/mongo/placemark";
+import { imageStore } from "$lib/models/image-store";
 
 export const placemarkService = {
-
-  async getPlacemark(
-    id: string,
-    token: string
-  ) {
-
-    const response = await api.get(
-      `/placemarks/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
-    return response.data;
+  async getPlacemark(id: string) {
+    const placemark = await placemarkMongoStore.getPlacemarkById(id);
+    return JSON.parse(JSON.stringify(placemark));
   },
-
+  
   async uploadImages(
     placemarkId: string,
     formData: FormData,
-    token: string
+    userId: string
   ) {
-
-    await api.post(
-      `/placemarks/${placemarkId}/uploadimage`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-    );
-
+    const placemark = await placemarkMongoStore.getPlacemarkById(placemarkId);
+    
+    if (!placemark) {
+      return false;
+    }
+    
+    const files = formData
+    .getAll("imagefiles")
+    .filter((file): file is File => file instanceof File && file.size > 0);
+    
+    if (!files.length) {
+      return false;
+    }
+    
+    const uploadedImages = [];
+    
+    for (const file of files) {
+      const uploaded = await imageStore.uploadImage(file);
+      uploadedImages.push(uploaded);
+    }
+    
+    const existingImages = placemark.images || [];
+    
+    const newImageUrls = uploadedImages.map((image) => image.url);
+    
+    const reviewer = formData.get("reviewer") as string;
+    const reviewText = formData.get("review") as string;
+    const rating = Number(formData.get("rating"));
+    
+    const existingReviews = placemark.reviews || [];
+    
+    const newReviews = uploadedImages.map((image) => ({
+      name: reviewer,
+      text: reviewText,
+      rating,
+      userid: userId,
+      image: image.url
+    }));
+    
+    await placemarkMongoStore.updatePlacemark(placemarkId, {
+      img: placemark.img || uploadedImages[0].url,
+      imgId: placemark.imgId || uploadedImages[0].public_id,
+      images: [...existingImages, ...newImageUrls],
+      reviews: [...existingReviews, ...newReviews]
+    });
+    
     return true;
   },
-
+  
   async saveReview(
     placemarkId: string,
     index: number,
-    reviewData: object,
-    token: string
+    reviewData: Review
   ) {
-
-    await api.put(
-      `/placemarks/${placemarkId}/reviews/${index}`,
-      reviewData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
+    const updatedPlacemark = await placemarkMongoStore.updateReview(
+      placemarkId,
+      index,
+      reviewData
     );
+    
+    return JSON.parse(JSON.stringify(updatedPlacemark));
   },
-
+  
   async deleteReview(
     placemarkId: string,
-    index: number,
-    token: string
+    index: number
   ) {
-
-    await api.delete(
-      `/placemarks/${placemarkId}/reviews/${index}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
+    const updatedPlacemark = await placemarkMongoStore.deleteReview(
+      placemarkId,
+      index
     );
+    
+    return JSON.parse(JSON.stringify(updatedPlacemark));
   }
 };

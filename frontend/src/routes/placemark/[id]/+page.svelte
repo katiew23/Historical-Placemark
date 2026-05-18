@@ -1,15 +1,10 @@
 <script lang="ts">
-
   import ReviewCard from "$lib/ui/ReviewCard.svelte";
-  import { placemarkService } from "$lib/services/placemark-service";
   import type { PageProps } from "./$types";
-  import { page } from "$app/state";
 
   let { data }: PageProps = $props();
 
-  const id = page.params.id;
-
-  const token = data.session?.token || "";
+  const placemark = data.placemark;
 
   let error = $state("");
 
@@ -17,15 +12,11 @@
 
   let uploadError = $state("");
 
-  // add review
-
   let reviewName = $state("");
 
   let reviewText = $state("");
 
   let reviewStars = $state(5);
-
-  // edit review
 
   let editingReviewIndex = $state<number | null>(null);
 
@@ -35,119 +26,124 @@
 
   let editedReviewStars = $state(5);
 
-  function handleFiles(e) {
+  function handleFiles(e: Event) {
+    const input = e.target as HTMLInputElement;
 
-    // @ts-ignore
-    selectedFiles = Array.from(e.target.files);
+    if (input.files) {
+      selectedFiles = Array.from(input.files);
+    }
   }
 
   async function uploadImages() {
-
     uploadError = "";
 
     if (!selectedFiles.length) {
-
       uploadError = "Please select images";
-
       return;
     }
 
     const fd = new FormData();
 
     selectedFiles.forEach((file) => {
-
       fd.append("imagefiles", file);
     });
 
     fd.append("reviewer", reviewName);
-
     fd.append("review", reviewText);
-
     fd.append("rating", String(reviewStars));
 
     try {
+      const response = await fetch("?/uploadImages", {
+        method: "POST",
+        body: fd
+      });
 
-      await placemarkService.uploadImages(
-        id,
-        fd,
-        token
-      );
+      if (!response.ok) {
+        const text = await response.text();
+        console.log("UPLOAD FAILED:", response.status, text);
+        uploadError = "Upload failed";
+        return;
+      }
 
       selectedFiles = [];
-
       reviewName = "";
-
       reviewText = "";
-
       reviewStars = 5;
 
       window.location.reload();
-
     } catch (err) {
-
       console.log("UPLOAD ERROR:", err);
-
       uploadError = "Server error";
     }
   }
 
-  function startReviewEdit(index) {
-
+  function startReviewEdit(index: number) {
     editingReviewIndex = index;
 
     editedReviewName =
-      data.placemark.reviews?.[index]?.name || "";
+      placemark.reviews?.[index]?.name || "";
 
     editedReviewText =
-      data.placemark.reviews?.[index]?.text || "";
+      placemark.reviews?.[index]?.text || "";
 
     editedReviewStars =
-      data.placemark.reviews?.[index]?.rating || 5;
+      placemark.reviews?.[index]?.rating || 5;
   }
 
-  async function saveReview(index) {
-
+  async function saveReview(index: number) {
     try {
+      const fd = new FormData();
 
-      await placemarkService.saveReview(
-        id,
-        index,
-        {
-          name: editedReviewName,
-          text: editedReviewText,
-          rating: editedReviewStars
-        },
-        token
-      );
+      fd.append("index", String(index));
+      fd.append("name", editedReviewName);
+      fd.append("text", editedReviewText);
+      fd.append("rating", String(editedReviewStars));
+
+      const response = await fetch("?/saveReview", {
+        method: "POST",
+        body: fd
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        console.log("SAVE REVIEW FAILED:", response.status, text);
+        error = "Review update failed";
+        return;
+      }
 
       editingReviewIndex = null;
 
       window.location.reload();
-
     } catch (err) {
-
       console.log("SAVE REVIEW ERROR:", err);
+      error = "Server error";
     }
   }
 
-  async function deleteReview(index) {
-
+  async function deleteReview(index: number) {
     try {
+      const fd = new FormData();
 
-      await placemarkService.deleteReview(
-        id,
-        index,
-        token
-      );
+      fd.append("index", String(index));
+
+      const response = await fetch("?/deleteReview", {
+        method: "POST",
+        body: fd
+      });
+
+      if (!response.ok) {
+        const text = await response.text();
+        console.log("DELETE REVIEW FAILED:", response.status, text);
+        error = "Review delete failed";
+        return;
+      }
 
       window.location.reload();
-
     } catch (err) {
-
       console.log("DELETE REVIEW ERROR:", err);
+      error = "Server error";
     }
   }
-
 </script>
 
 <section class="section">

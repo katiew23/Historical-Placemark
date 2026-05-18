@@ -1,18 +1,12 @@
 import { adminService } from "$lib/services/admin-service";
-import type { PageServerLoad } from "./$types";
+import type { PageServerLoad, Actions } from "./$types";
 
-export const load: PageServerLoad = async ({
-  parent
-}) => {
-
+export const load: PageServerLoad = async ({ parent }) => {
   const { session } = await parent();
 
   try {
-
     if (!session) {
-
       return {
-
         users: [],
         collections: [],
         placemarks: [],
@@ -34,104 +28,61 @@ export const load: PageServerLoad = async ({
       };
     }
 
-    const usersResponse =
-      await adminService.getUsers(
-        session.token
-      );
+    const usersResponse = await adminService.getUsers();
+    const collectionsResponse = await adminService.getCollections();
+    const placemarksResponse = await adminService.getPlacemarks();
 
-    const collectionsResponse =
-      await adminService.getCollections(
-        session.token
-      );
-
-    const placemarksResponse =
-      await adminService.getPlacemarks(
-        session.token
-      );
-
-    const users =
-      usersResponse.users || usersResponse;
-
-    const collections =
-      collectionsResponse.collections || collectionsResponse;
-
-    const placemarks =
-      placemarksResponse.placemarks || placemarksResponse;
-
-    // CATEGORY CHART
+    const users = usersResponse.users || usersResponse;
+    const collections = collectionsResponse.collections || collectionsResponse;
+    const placemarks = placemarksResponse.placemarks || placemarksResponse;
 
     const categoryMap: Record<string, number> = {};
 
     placemarks.forEach((p: any) => {
-
       if (!categoryMap[p.category]) {
-
         categoryMap[p.category] = 0;
       }
 
       categoryMap[p.category]++;
     });
 
-    const categoryLabels =
-      Object.keys(categoryMap);
-
-    const categoryCounts =
-      Object.values(categoryMap);
-
-    // ROLE CHART
+    const categoryLabels = Object.keys(categoryMap);
+    const categoryCounts = Object.values(categoryMap);
 
     const roleMap: Record<string, number> = {};
 
     users.forEach((u: any) => {
-
       if (!roleMap[u.role]) {
-
         roleMap[u.role] = 0;
       }
 
       roleMap[u.role]++;
     });
 
-    const roleLabels =
-      Object.keys(roleMap);
-
-    const roleCounts =
-      Object.values(roleMap);
-
-    // COUNTY CHART
+    const roleLabels = Object.keys(roleMap);
+    const roleCounts = Object.values(roleMap);
 
     const countyMap: Record<string, number> = {};
 
     placemarks.forEach((p: any) => {
-
       if (!countyMap[p.county]) {
-
         countyMap[p.county] = 0;
       }
 
       countyMap[p.county]++;
     });
 
-    const countyLabels =
-      Object.keys(countyMap);
-
-    const countyCounts =
-      Object.values(countyMap);
+    const countyLabels = Object.keys(countyMap);
+    const countyCounts = Object.values(countyMap);
 
     return {
-
       users,
       collections,
       placemarks,
 
-      userCount:
-        users.length,
-
-      collectionCount:
-        collections.length,
-
-      placemarkCount:
-        placemarks.length,
+      userCount: users.length,
+      collectionCount: collections.length,
+      placemarkCount: placemarks.length,
 
       categoryLabels,
       categoryCounts,
@@ -144,16 +95,10 @@ export const load: PageServerLoad = async ({
 
       session
     };
-
   } catch (err) {
-
-    console.log(
-      "ADMIN SERVER ERROR:",
-      err
-    );
+    console.log("ADMIN SERVER ERROR:", err);
 
     return {
-
       users: [],
       collections: [],
       placemarks: [],
@@ -173,5 +118,34 @@ export const load: PageServerLoad = async ({
 
       session
     };
+  }
+};
+
+export const actions: Actions = {
+  deleteUser: async ({ request }) => {
+    const form = await request.formData();
+    const id = form.get("id") as string;
+
+    await adminService.deleteUser(id);
+
+    return { success: true };
+  },
+
+  deleteCollection: async ({ request }) => {
+    const form = await request.formData();
+    const id = form.get("id") as string;
+
+    await adminService.deleteCollection(id);
+
+    return { success: true };
+  },
+
+  deletePlacemark: async ({ request }) => {
+    const form = await request.formData();
+    const id = form.get("id") as string;
+
+    await adminService.deletePlacemark(id);
+
+    return { success: true };
   }
 };

@@ -22,7 +22,7 @@ export const actions = {
         const password =
         form.get("password") as string;
         
-        const data: LoginResponse =
+        const data: LoginResponse | null =
         await userService.login(email, password);
         
         if (!data) {
