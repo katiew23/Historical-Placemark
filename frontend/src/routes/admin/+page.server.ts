@@ -149,3 +149,5 @@ export const actions: Actions = {
     return { success: true };
   }
 };
+
+//loads all admin data for the dashboard, users, collections, placemarks and stats for each. Also handles admin delete actions for users, collections and placemarks.

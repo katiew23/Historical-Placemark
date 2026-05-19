@@ -45,32 +45,37 @@
     </h2>
 
     <p>
-      Historical Placemark is a full-stack web application designed to
+      Historical Placemark is a SvelteKit web application designed to
       explore and manage historical sites across Ireland through
-      interactive collections, placemarks, analytics, and mapping tools.
+      collections, placemarks, analytics, images, reviews, and mapping tools.
     </p>
 
     <p>
-      Users can create collections, upload images, review historical
-      locations, and explore placemarks using interactive Leaflet maps
-      integrated throughout the application.
+      Users can create collections, add placemarks, upload images, edit
+      placemark details, leave reviews, and explore historical locations
+      using interactive Leaflet maps.
     </p>
 
     <p>
-      The application includes an admin dashboard featuring analytics,
-      charts, collection management, and interactive visualisations for
-      monitoring user and placemark activity.
+      The application includes weather map layers and live weather
+      information for placemark locations, adding extra context to each
+      historical site.
     </p>
 
     <p>
-      The frontend was developed using SvelteKit and TypeScript with the
-      Bulma CSS framework. The backend API was developed using Node.js,
-      Hapi, and MongoDB Atlas.
+      The admin dashboard provides analytics, charts, user management,
+      collection management, placemark management, and an interactive
+      placemark map.
     </p>
 
     <p>
-      Authentication and protected routes are implemented using JSON Web
-      Tokens (JWT), allowing secure access to collections, placemarks,
+      The application was developed using SvelteKit, TypeScript, Bulma,
+      Leaflet, MongoDB Atlas, Cloudinary, and server-side SvelteKit actions.
+    </p>
+
+    <p>
+      Authentication and protected routes are handled using server-side
+      cookies, allowing logged-in users to access collections, placemarks,
       reviews, and admin functionality.
     </p>
 

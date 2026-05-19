@@ -34,7 +34,7 @@ export const actions = {
             
             email: data.email || email,
             
-            name: email,
+            name: data.name || email,
             
             role: data.role || "",
             
@@ -45,7 +45,7 @@ export const actions = {
         
         cookies.set(
             "placemark-user",
-            JSON.stringify(session),
+            JSON.stringify(session),//saves the login session in a cookie so the user stays logged in when they navigate around the site
             {
                 path: "/",
                 httpOnly: true,

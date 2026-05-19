@@ -35,7 +35,7 @@
 
               <img
                 src="/images/reginalds.jpg"
-                alt="Historical Placemark"
+                alt="Reginald’s Tower"
               />
 
             </figure>

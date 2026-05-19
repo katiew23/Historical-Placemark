@@ -31,3 +31,5 @@ export const userService = {
     }
   }
 };
+
+//Authentication is handled using MongoDB user records and server-side cookies. After login, the user session is stored in a placemark-user cookie.

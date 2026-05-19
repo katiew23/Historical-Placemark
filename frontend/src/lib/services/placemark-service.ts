@@ -88,3 +88,6 @@ export const placemarkService = {
     return JSON.parse(JSON.stringify(updatedPlacemark));
   }
 };
+
+//This file contains placemark business logic for the SvelteKit app. It connects the server actions to the MongoDB placemark store and Cloudinary image store.
+//The getPlacemark function retrieves a placemark by its ID and returns it as a plain JavaScript object. The uploadImages function handles image uploads for a placemark, saving the images to Cloudinary and updating the placemark record with the new image URLs and reviews. The saveReview and deleteReview functions allow for updating and deleting reviews associated with a placemark.

@@ -1,6 +1,19 @@
 <script lang="ts">
   import { loggedInUser } from "$lib/runes.svelte";
 
+  interface Review {
+    image?: string;
+    name?: string;
+    text?: string;
+    rating?: number | string;
+    userid?: string;
+  }
+
+  interface Placemark {
+    name: string;
+    images?: string[];
+  }
+
   let {
     placemark,
 
@@ -21,9 +34,19 @@
     saveReview,
 
     deleteReview
-  } = $props();
+  } = $props<{
+    placemark: Placemark;
+    review: Review;
+    index: number;
+    editingReviewIndex: number | null;
+    editedReviewName: string;
+    editedReviewText: string;
+    editedReviewStars: number;
+    startReviewEdit: (index: number) => void;
+    saveReview: (index: number) => void;
+    deleteReview: (index: number) => void;
+  }>();
 </script>
-
 <div class="image-tile">
   {#if review.image}
     <img

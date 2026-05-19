@@ -3,11 +3,13 @@ export const loggedInUser = $state({
   name: "",
   role: "",
   token: "",
-_id: ""
+  _id: ""
 });
+
 export const currentCollections = $state({
   collections: []
 });
+
 export const currentPlacemarks = $state({
   placemarks: []
 });

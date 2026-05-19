@@ -1,14 +1,16 @@
 <script lang="ts">
   import ReviewCard from "$lib/ui/ReviewCard.svelte";
   import type { PageProps } from "./$types";
+  import WeatherForecastChart from "$lib/ui/WeatherForecastChart.svelte";//this is my trend projection that suits this app
 
-  let { data }: PageProps = $props();
+  let { data }: PageProps = $props();//placmark data is passed in from the server load function
 
+  // svelte-ignore state_referenced_locally
   const placemark = data.placemark;
 
   let error = $state("");
 
-  let selectedFiles: File[] = [];
+  let selectedFiles: File[] = [];//stores selected image files before upload
 
   let uploadError = $state("");
 
@@ -241,6 +243,11 @@
             </p>
 
           </div>
+
+          <WeatherForecastChart
+            latitude={data.placemark.latitude}
+            longitude={data.placemark.longitude}
+          />
 
           <div class="box mt-5">
 

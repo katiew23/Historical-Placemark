@@ -1,12 +1,12 @@
 import { placemarkService } from "$lib/services/placemark-service";
 import type { Actions, PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ params, parent }) => {
-  const { session } = await parent();
+export const load: PageServerLoad = async ({ params, parent }) => { //load the placemark before the page displays
+  const { session } = await parent(); //this gets the logged in session from +layout.server.ts
 
   try {
     if (session) {
-      const placemark = await placemarkService.getPlacemark(params.id);
+      const placemark = await placemarkService.getPlacemark(params.id); //this get the placemark from MongoDB using the id in the URL
 
       return {
         placemark,

@@ -35,27 +35,30 @@
     longitude?: number;
     yearEstablished?: number;
   }
-  
+  // svelte-ignore state_referenced_locally
   let users = $state<User[]>(
   data.users || []
   );
-  
+  // svelte-ignore state_referenced_locally
   let collections = $state<Collection[]>(
   data.collections || []
   );
-  
+  // svelte-ignore state_referenced_locally
   let placemarks = $state<Placemark[]>(
   data.placemarks || []
   );
-  
-  let userCount =
-  data.userCount || 0;
-  
-  let collectionCount =
-  data.collectionCount || 0;
-  
-  let placemarkCount =
-  data.placemarkCount || 0;
+  // svelte-ignore state_referenced_locally
+  let userCount = $state(
+  data.userCount || 0
+  );
+  // svelte-ignore state_referenced_locally
+  let collectionCount = $state(
+  data.collectionCount || 0
+  );
+  // svelte-ignore state_referenced_locally
+  let placemarkCount = $state(
+  data.placemarkCount || 0
+  );
   
   let showUsers = $state(false);
   

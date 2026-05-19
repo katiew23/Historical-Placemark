@@ -76,3 +76,4 @@ export const actions: Actions = {
     return { success: true };
   }
 };
+//server side crud for placemarks, load, add, delete and update. Also handles image uploads and review saving for placemarks.

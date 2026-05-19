@@ -60,3 +60,5 @@ export const actions: Actions = {
     return { success: true };
   }
 };
+
+//server side crud for collections, load, add, delete and update. 

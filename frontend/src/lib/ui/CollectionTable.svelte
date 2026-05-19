@@ -60,3 +60,5 @@
   </table>
 
 </div>
+
+//admin table for displaying collection keeps collections table out of admin svelte file and allows for reuse in other places if needed

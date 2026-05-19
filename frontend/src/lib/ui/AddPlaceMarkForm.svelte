@@ -1,15 +1,33 @@
 <script lang="ts">
   let {
     newPlaceName = $bindable(),
+
     newPlaceDescription = $bindable(),
+
     newLatitude = $bindable(),
+
     newLongitude = $bindable(),
+
     newCategory = $bindable(),
+
     newYear = $bindable(),
+
     newCounty = $bindable(),
+
     handleFile,
+
     addPlacemark
-  } = $props();
+  } = $props<{
+    newPlaceName: string;
+    newPlaceDescription: string;
+    newLatitude: number;
+    newLongitude: number;
+    newCategory: string;
+    newYear: number;
+    newCounty: string;
+    handleFile: (e: Event) => void;
+    addPlacemark: () => void;
+  }>();
 </script>
 
 <div class="box mt-5">

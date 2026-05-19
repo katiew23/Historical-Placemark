@@ -8,16 +8,16 @@
   
   import type { PageProps } from "./$types";
   
-  let { data }: PageProps = $props();
+  let { data }: PageProps = $props();//gets collection data from the server load function
   
+  // svelte-ignore state_referenced_locally
   console.log(data);
   
+  // svelte-ignore state_referenced_locally
   const collection = data.collection;
   
-  console.log(
-  "COLLECTION DATA:",
-  collection
-  );
+  // svelte-ignore state_referenced_locally
+  console.log( "COLLECTION DATA:", collection );
   
   //const token = data.session.token;
   
@@ -77,7 +77,7 @@
       Array.from(e.target.files);
     }
     
-    onMount(async () => {
+    onMount(async () => { //loads leaflet only in the browser
       
       const leaflet =
       await import("leaflet");
