@@ -50,5 +50,3 @@
   </table>
 </div>
 
-//displays all user in a table on the admin page
-//keeps the user table separate for better organization and readability. Also includes delete button for each user that calls the deleteUser function passed in as a prop from the admin page.

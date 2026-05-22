@@ -49,4 +49,3 @@
   </button>
 
 </form>
-//actual form inputs and submit button for the signup page. The form uses the POST method to send data to the server when the user submits the form. Each input field is bound to a state variable using Svelte's bind:value directive, allowing the component to keep track of the user's input. The name attribute on each input field ensures that the data is properly sent to the server when the form is submitted.

@@ -1,3 +1,7 @@
+<script lang="ts">
+  import { loggedInUser } from "$lib/runes.svelte";
+</script>
+
 <section class="section pt-6">
 
   <div
@@ -62,33 +66,51 @@
 
       <div class="column is-4">
 
-        <a
-          href="/login"
-          class="button is-primary is-fullwidth"
-          style="
-            height: 48px;
-            border-radius: 12px;
-            font-weight: 600;
-          "
-        >
-          Log In
-        </a>
-
-        <div class="mt-4">
+        {#if loggedInUser.token}
 
           <a
-            href="/signup"
-            class="button is-fullwidth signup-button"
+            href="/dashboard"
+            class="button is-primary is-fullwidth"
             style="
               height: 48px;
               border-radius: 12px;
               font-weight: 600;
             "
           >
-            Create Account
+            Go to Dashboard
           </a>
 
-        </div>
+        {:else}
+
+          <a
+            href="/login"
+            class="button is-primary is-fullwidth"
+            style="
+              height: 48px;
+              border-radius: 12px;
+              font-weight: 600;
+            "
+          >
+            Log In
+          </a>
+
+          <div class="mt-4">
+
+            <a
+              href="/signup"
+              class="button is-fullwidth signup-button"
+              style="
+                height: 48px;
+                border-radius: 12px;
+                font-weight: 600;
+              "
+            >
+              Create Account
+            </a>
+
+          </div>
+
+        {/if}
 
       </div>
 

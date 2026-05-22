@@ -1,9 +1,20 @@
 <script lang="ts">
-
   import { loggedInUser } from "$lib/runes.svelte";
 
-  let {
+  interface Place {
+    _id: string;
+    name: string;
+    description?: string;
+    latitude: number;
+    longitude: number;
+    category?: string;
+    yearEstablished?: number;
+    county?: string;
+    img?: string;
+    userid?: string;
+  }
 
+  let {
     place,
 
     editingId,
@@ -28,25 +39,45 @@
 
     deletePlacemark
 
-  } = $props();
-
+  } = $props<{
+    place: Place;
+    editingId: string | null;
+    editedName: string;
+    editedDescription: string;
+    editedLatitude: string;
+    editedLongitude: string;
+    editedCategory: string;
+    editedYear: string;
+    editedCounty: string;
+    startEdit: (place: Place) => void;
+    saveEdit: (id: string) => void;
+    deletePlacemark: (id: string) => void;
+  }>();
 </script>
 
 <div class="column is-one-third">
 
-  <div class="card">
+  <div class="card placemark-card">
+
+    {#if place.img}
+
+      <div class="card-image">
+
+        <figure class="image is-4by3">
+
+          <img
+            src={place.img}
+            alt={place.name}
+            class="placemark-card-image"
+          />
+
+        </figure>
+
+      </div>
+
+    {/if}
 
     <div class="card-content">
-
-      {#if place.img}
-
-        <img
-          src={place.img}
-          alt={place.name}
-          class="mb-4"
-        />
-
-      {/if}
 
       {#if editingId === place._id}
 
@@ -96,7 +127,7 @@
 
         <a href={`/placemark/${place._id}`}>
 
-          <p class="title is-6">
+          <p class="title is-5 mb-2">
             {place.name}
           </p>
 

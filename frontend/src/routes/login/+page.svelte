@@ -20,4 +20,3 @@
 
 </section>
 
-//page wrapper heading intro form component 

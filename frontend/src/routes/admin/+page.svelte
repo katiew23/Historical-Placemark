@@ -4,6 +4,7 @@
   import CollectionTable from "$lib/ui/CollectionTable.svelte";
   import PlacemarkTable from "$lib/ui/PlacemarkTable.svelte";
   import AdminCharts from "$lib/ui/AdminCharts.svelte";
+  import PlacemarkMap from "$lib/ui/PlacemarkMap.svelte";
   
   //import { adminService } from "$lib/services/admin-service";
   
@@ -31,33 +32,39 @@
     description?: string;
     category?: string;
     county?: string;
-    latitude?: number;
-    longitude?: number;
+    latitude: number;
+    longitude: number;
     yearEstablished?: number;
   }
+
   // svelte-ignore state_referenced_locally
   let users = $state<User[]>(
-  data.users || []
+    data.users || []
   );
+
   // svelte-ignore state_referenced_locally
   let collections = $state<Collection[]>(
-  data.collections || []
+    data.collections || []
   );
+
   // svelte-ignore state_referenced_locally
   let placemarks = $state<Placemark[]>(
-  data.placemarks || []
+    data.placemarks || []
   );
+
   // svelte-ignore state_referenced_locally
   let userCount = $state(
-  data.userCount || 0
+    data.userCount || 0
   );
+
   // svelte-ignore state_referenced_locally
   let collectionCount = $state(
-  data.collectionCount || 0
+    data.collectionCount || 0
   );
+
   // svelte-ignore state_referenced_locally
   let placemarkCount = $state(
-  data.placemarkCount || 0
+    data.placemarkCount || 0
   );
   
   let showUsers = $state(false);
@@ -67,8 +74,6 @@
   let showPlacemarks = $state(false);
   
   let showMap = $state(false);
-  
-  let map: any;
   
   async function deleteUser(id: string) {
     try {
@@ -103,6 +108,7 @@
       console.log(error);
     }
   }
+
   async function deletePlacemark(id: string) {
     try {
       const formData = new FormData();
@@ -121,133 +127,14 @@
   }
   
   function toggleMap(): void {
-    
     showMap = !showMap;
-    
-    if (showMap) {
-      
-      setTimeout(async () => {
-        
-        // @ts-ignore
-        const L = window.L;
-        
-        if (!map) {
-          
-          map = L.map(
-          "adminMap"
-          ).setView(
-          [53.4, -7.7],
-          7
-          );
-          
-          L.tileLayer(
-          "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-          {
-            attribution:
-            "&copy; OpenStreetMap contributors"
-          }
-          ).addTo(map);
-          
-          placemarks.forEach(
-          async (placemark) => {
-            
-            if (
-            placemark.latitude &&
-            placemark.longitude
-            ) {
-              
-              let weatherText =
-              "Weather unavailable";
-              
-              try {
-                
-                const response =
-                await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${placemark.latitude}&lon=${placemark.longitude}&appid=af52a9802a4c633460b714fc47b6fb91&units=metric`
-                );
-                
-                const weather =
-                await response.json();
-                
-                weatherText = `
-                  ${weather.main.temp}°C •
-                  ${weather.weather[0].main}
-                `;
-                
-              } catch (error) {
-                
-                console.log(
-                "WEATHER ERROR:",
-                error
-                );
-              }
-              
-              L.marker([
-              placemark.latitude,
-              placemark.longitude
-              ])
-              .addTo(map)
-              .bindPopup(`
-
-                <div style="
-                  min-width:220px;
-                ">
-
-                  <h3 style="
-                    font-size:18px;
-                    font-weight:600;
-                    margin-bottom:8px;
-                  ">
-                    ${placemark.name}
-                  </h3>
-
-                  <p>
-                    ${placemark.description || ""}
-                  </p>
-
-                  <p>
-                    <strong>Category:</strong>
-                    ${placemark.category || ""}
-                  </p>
-
-                  <p>
-                    <strong>County:</strong>
-                    ${placemark.county || ""}
-                  </p>
-
-                  <p>
-                    <strong>Year:</strong>
-                    ${placemark.yearEstablished || ""}
-                  </p>
-
-                  <p>
-                    🌡️ ${weatherText}
-                  </p>
-
-                </div>
-              `);
-            }
-          });
-        }
-        
-        map.invalidateSize();
-        
-      }, 200);
-    }
   }
   
 </script>
 
 <svelte:head>
 
-<script src="https://unpkg.com/frappe-charts@1.6.2/dist/frappe-charts.min.iife.js"></script>
-
-<link
-rel="stylesheet"
-href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/frappe-charts@1.6.2/dist/frappe-charts.min.iife.js"></script>
 
 </svelte:head>
 
@@ -312,113 +199,111 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     </div>
     
     <AdminCharts
-    userCount={userCount}
-    collectionCount={collectionCount}
-    placemarkCount={placemarkCount}
-    
-    categoryLabels={data.categoryLabels}
-    categoryCounts={data.categoryCounts}
-    
-    roleLabels={data.roleLabels}
-    roleCounts={data.roleCounts}
-    
-    countyLabels={data.countyLabels}
-    countyCounts={data.countyCounts}
+      userCount={userCount}
+      collectionCount={collectionCount}
+      placemarkCount={placemarkCount}
+      categoryLabels={data.categoryLabels}
+      categoryCounts={data.categoryCounts}
+      roleLabels={data.roleLabels}
+      roleCounts={data.roleCounts}
+      countyLabels={data.countyLabels}
+      countyCounts={data.countyCounts}
     />
     
     <div class="box">
       
       <button
-      class="button is-fullwidth is-success"
-      onclick={toggleMap}
+        class="button is-fullwidth is-success"
+        onclick={toggleMap}
       >
-      View Placemark Map
-    </button>
+        View Placemark Map
+      </button>
     
-    {#if showMap}
+      {#if showMap}
     
-    <div
-    id="adminMap"
-    class="mt-4"
-    style="height: 500px;"
-    ></div>
+        <div class="mt-4">
+          <PlacemarkMap
+            mapId="adminMap"
+            {placemarks}
+          />
+        </div>
     
-    {/if}
+      {/if}
     
+    </div>
+  
+    <div class="box">
+    
+      <button
+        class="button is-fullwidth is-link"
+        onclick={() => showUsers = !showUsers}
+      >
+        View Users
+      </button>
+  
+      {#if showUsers}
+  
+        <div class="mt-4">
+    
+          <UserTable
+            {users}
+            {deleteUser}
+          />
+    
+        </div>
+  
+      {/if}
+  
+    </div>
+
+    <div class="box">
+  
+      <button
+        class="button is-fullwidth is-info"
+        onclick={() => showCollections = !showCollections}
+      >
+        View Collections
+      </button>
+
+      {#if showCollections}
+
+        <div class="mt-4">
+  
+          <CollectionTable
+            {collections}
+            {deleteCollection}
+          />
+  
+        </div>
+
+      {/if}
+
+    </div>
+
+    <div class="box">
+  
+      <button
+        class="button is-fullwidth is-warning"
+        onclick={() => showPlacemarks = !showPlacemarks}
+      >
+        View Placemarks
+      </button>
+
+      {#if showPlacemarks}
+
+        <div class="mt-4">
+  
+          <PlacemarkTable
+            {placemarks}
+            {deletePlacemark}
+          />
+  
+        </div>
+
+      {/if}
+
+    </div>
+
   </div>
-  
-  <div class="box">
-    
-    <button
-    class="button is-fullwidth is-link"
-    onclick={() => showUsers = !showUsers}
-    >
-    Toggle Users
-  </button>
-  
-  {#if showUsers}
-  
-  <div class="mt-4">
-    
-    <UserTable
-    {users}
-    {deleteUser}
-    />
-    
-  </div>
-  
-  {/if}
-  
-</div>
-
-<div class="box">
-  
-  <button
-  class="button is-fullwidth is-info"
-  onclick={() => showCollections = !showCollections}
-  >
-  Toggle Collections
-</button>
-
-{#if showCollections}
-
-<div class="mt-4">
-  
-  <CollectionTable
-  {collections}
-  {deleteCollection}
-  />
-  
-</div>
-
-{/if}
-
-</div>
-
-<div class="box">
-  
-  <button
-  class="button is-fullwidth is-warning"
-  onclick={() => showPlacemarks = !showPlacemarks}
-  >
-  Toggle Placemarks
-</button>
-
-{#if showPlacemarks}
-
-<div class="mt-4">
-  
-  <PlacemarkTable
-  {placemarks}
-  {deletePlacemark}
-  />
-  
-</div>
-
-{/if}
-
-</div>
-
-</div>
 
 </section>

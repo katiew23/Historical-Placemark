@@ -64,3 +64,8 @@
     class="chart-container"
     ></div>
 </div>
+<style>
+    :global(#weatherForecastChart .title) {
+        font-size: 1.2rem;
+    }
+</style>

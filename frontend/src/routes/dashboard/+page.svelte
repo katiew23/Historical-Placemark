@@ -25,21 +25,50 @@
 
   let editedName = $state("");
 
-  const irishTranslations: Record<string, string> = {
-    Waterford: "Port Láirge",
-    Cork: "Corcaigh",
-    Dublin: "Baile Átha Cliath",
-    Galway: "Gaillimh",
-    Kilkenny: "Cill Chainnigh"
-  };
-
+  
   async function addCollection() {
   try {
-    const irishName = irishTranslations[newCollectionName] || "";
+    const cleanedName = newCollectionName.trim();
+
+    const irishTranslations: Record<string, string> = {
+      waterford: "Port Láirge",
+      cork: "Corcaigh",
+      dublin: "Baile Átha Cliath",
+      galway: "Gaillimh",
+      kilkenny: "Cill Chainnigh",
+      kerry: "Ciarraí",
+      limerick: "Luimneach",
+      clare: "An Clár",
+      mayo: "Maigh Eo",
+      sligo: "Sligeach",
+      donegal: "Dún na nGall",
+      wexford: "Loch Garman",
+      wicklow: "Cill Mhantáin",
+      meath: "An Mhí",
+      louth: "Lú",
+      carlow: "Ceatharlach",
+      laois: "Laois",
+      offaly: "Uíbh Fhailí",
+      westmeath: "An Iarmhí",
+      longford: "An Longfort",
+      roscommon: "Ros Comáin",
+      leitrim: "Liatroim",
+      cavan: "An Cabhán",
+      monaghan: "Muineachán",
+      tipperary: "Tiobraid Árann",
+      armagh: "Ard Mhacha",
+      antrim: "Aontroim",
+      down: "An Dún",
+      derry: "Doire",
+      tyrone: "Tír Eoghain",
+      fermanagh: "Fear Manach"
+    };
+
+    const irishName = irishTranslations[cleanedName.toLowerCase()] || "";
 
     const finalName = irishName
-      ? `${newCollectionName} • ${irishName}`
-      : newCollectionName;
+      ? `${cleanedName} • ${irishName}`
+      : cleanedName;
 
     const formData = new FormData();
     formData.append("name", finalName);
@@ -147,5 +176,3 @@
   
 </section>
 
-//dashboard receives data.collections from dashboar server, puts them in currentCollections store, displays each one using collection card and uses add collection to add a new collection
-//posts to named server actions add collections, delete collection and update collection to manage collections, reloads the page after each action to show the updated list of collections
