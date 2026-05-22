@@ -11,9 +11,6 @@ import { userMongoStore } from "./mongo/user-mongo-store.js";
 import { collectionMongoStore } from "./mongo/collection-mongo-store.js";
 import { placemarkMongoStore } from "./mongo/placemark-mongo-store.js";
 
-import { firebaseCollectionStore } from "./firebase/firebase-collection-store.js";
-import { firebasePlacemarkStore } from "./firebase/firebase-placemark-store.js";
-
 export const db = {
   userStore: null,
   collectionStore: null,
@@ -21,7 +18,6 @@ export const db = {
 
   init(storeType) {
     switch (storeType) {
-
       case "json":
         this.userStore = userJsonStore;
         this.collectionStore = collectionJsonStore;
@@ -35,20 +31,17 @@ export const db = {
         connectMongo();
         break;
 
-      case "firebase":
-        connectMongo(); // users still come from Mongo
-        this.userStore = userMongoStore;
-        this.collectionStore = firebaseCollectionStore;
-        this.placemarkStore = firebasePlacemarkStore;
-        break;
-
       default:
         this.userStore = userMemStore;
         this.collectionStore = collectionMemStore;
         this.placemarkStore = placemarkMemStore;
-    } // ended up not being able to connect it 
+    }
   }
 };
+
+// This file decides which database implementation is used.
+// Controllers call db.collectionStore.addCollection(), etc.
+// They do not care which database is active; db.js decides through init().
 
 // this file decides which database implementation and the init function calls it 
 // controllers are calling db.collectionStore.addCollection() they dont care what database is used db.js decides cause of the init()
